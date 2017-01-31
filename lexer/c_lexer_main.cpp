@@ -1,4 +1,4 @@
-#include "histogram.hpp"
+#include "c_lexer.hpp"
 
 #include <vector>
 #include <algorithm>
@@ -10,6 +10,8 @@
 
 // Define the instance of the variable that is declared in the header
 TokenValue yylval;
+int LineNum = 1;
+int ColNum = 0;
 int main()
 {
     std::string s;
@@ -19,6 +21,8 @@ int main()
         if(type==None){
             break; // No more tokens
         }else if(type==Keyword){
+          std::cout << "\"Keyword\"\t\"Text\": " << "\"" << *yylval.wordValue << "\"";
+          s = *yylval.wordValue;
         }else if(type==Identifier){
             std::cout << "\"Identifier\"\t\"Text\": " << "\"" << *yylval.wordValue << "\"";
             s = *yylval.wordValue;

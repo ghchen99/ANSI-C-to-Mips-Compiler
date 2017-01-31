@@ -20,9 +20,9 @@ void count();
 
 
 %%
-
+(auto|double|int|struct|break|else|long|switch|case|enum|register|typedef|char|extern|return|union) {count();std::string s(yytext);yylval.wordValue = new std::string();*yylval.wordValue = s;return Keyword;}
+(const|float|short|unsigned|continue|for|signed|void|default|goto|volatile|do|if|static|while) {count();std::string s(yytext);yylval.wordValue = new std::string();*yylval.wordValue = s;return Keyword;}
 [A-Za-z]([A-Za-z]|[0-9])*	{count();std::string s(yytext);yylval.wordValue = new std::string();*yylval.wordValue = s;return Identifier;}
-
 [\n] {LineNum += 1; ColNum = 0;}
 [ \t\v\n\f]		{}
 . {}

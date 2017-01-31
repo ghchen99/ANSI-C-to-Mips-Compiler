@@ -18,7 +18,6 @@ union TokenValue{
 };
 
 
-
 // This is a global variable used to move the
 // attribute value from the lexer back to the
 // main program.
@@ -26,8 +25,8 @@ union TokenValue{
 // the name that will be automatially generated
 // by Bison (see next lab).
 extern TokenValue yylval;
-extern int LineNum = 1;
-extern int ColNum = 0;
+extern int LineNum;
+extern int ColNum;
 
 // This is the lexer function defined by flex. Each
 // time it is called, a token type value will be
