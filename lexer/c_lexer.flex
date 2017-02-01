@@ -17,12 +17,13 @@ void count();
 
 /* End the embedded code section. */
 %}
-
-
+KEYWORD (auto|double|int|struct|break|else|long|switch|case|enum|register|typedef|char|extern|return|union|const|float|short|unsigned|continue|for|signed|void|default|goto|volatile|do|if|static|while)
+OPERATOR (\.\.\.)|(\>\>\=)|(\<\<\=)|(\+\=)|(\-\=)|(\*\=)|(\/\=)|(\%\=)|(\&\=)|(\^\=)|(\|\=)|(\>\>)|(\<\<)|(\+\+)|(\-\-)|(\-\>)|(\&\&)|(\|\|)|(\<\=)|(\>\=)|(\=\=)|(\!\=)|(\;)|(\{)|(\})|(\,)|(\:)|(\=)|(\()|(\))|(\[)|(\])|(\.)|(\&)|(\!)|(\~)|(\-)|(\+)|(\*)|(\/)|(\%)|(\<)|(\>)|(\^)|(\|)|(\?)
 %%
-(auto|double|int|struct|break|else|long|switch|case|enum|register|typedef|char|extern|return|union) {count();std::string s(yytext);yylval.wordValue = new std::string();*yylval.wordValue = s;return Keyword;}
-(const|float|short|unsigned|continue|for|signed|void|default|goto|volatile|do|if|static|while) {count();std::string s(yytext);yylval.wordValue = new std::string();*yylval.wordValue = s;return Keyword;}
+{KEYWORD} {count();std::string s(yytext);yylval.wordValue = new std::string();*yylval.wordValue = s;return Keyword;}
 [A-Za-z]([A-Za-z]|[0-9])*	{count();std::string s(yytext);yylval.wordValue = new std::string();*yylval.wordValue = s;return Identifier;}
+{OPERATOR} {count();std::string s(yytext);yylval.wordValue = new std::string();*yylval.wordValue = s;return Operator;}
+
 [\n] {LineNum += 1; ColNum = 0;}
 [ \t\v\n\f]		{}
 . {}

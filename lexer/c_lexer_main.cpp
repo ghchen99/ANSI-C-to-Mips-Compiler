@@ -15,18 +15,21 @@ int ColNum = 0;
 int main()
 {
     std::string s;
+    std::cout << "[" << std::endl;
     while(1){
         TokenType type=(TokenType)yylex();
-        std::cout << "\"Class\": ";
+        //std::cout << "\"Class\": ";
         if(type==None){
             break; // No more tokens
         }else if(type==Keyword){
-          std::cout << "\"Keyword\"\t\"Text\": " << "\"" << *yylval.wordValue << "\"";
+            std::cout << "{\"Class\": " << "\"Keyword\"\t\"Text\": " << "\"" << *yylval.wordValue << "\"";
           s = *yylval.wordValue;
         }else if(type==Identifier){
-            std::cout << "\"Identifier\"\t\"Text\": " << "\"" << *yylval.wordValue << "\"";
+            std::cout << "{\"Class\": " << "\"Identifier\"\t\"Text\": " << "\"" << *yylval.wordValue << "\"";
             s = *yylval.wordValue;
         }else if(type==Operator){
+            std::cout << "{\"Class\": " << "\"Operator\"\t\"Text\": " << "\"" << *yylval.wordValue << "\"";
+            s = *yylval.wordValue;
         }else if(type==Constant){
         }else if(type==StringLiteral){
         }else if(type==Invalid){
@@ -35,7 +38,9 @@ int main()
             return 1;
         }
         std::cout << "\t\"sourceline\": " << LineNum;
-        std::cout << "\t\"colume\" : " << ColNum - s.size() + 1 <<std::endl;
+        std::cout << "\t\"colume\" : " << ColNum - s.size() + 1 << "}," << std::endl;
     }
+    std::cout << "{}" << std::endl;
+    std::cout << "]" << std::endl;
     return 0;
 }
