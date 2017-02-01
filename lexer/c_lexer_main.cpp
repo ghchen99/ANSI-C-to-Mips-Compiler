@@ -31,8 +31,14 @@ int main()
             std::cout << "{\"Class\": " << "\"Operator\"\t\"Text\": " << "\"" << *yylval.wordValue << "\"";
             s = *yylval.wordValue;
         }else if(type==Constant){
+            std::cout << "{\"Class\": " << "\"Constant\"\t\"Text\": " << "\"" << *yylval.wordValue << "\"";
+            s = *yylval.wordValue;
         }else if(type==StringLiteral){
+            std::cout << "{\"Class\": " << "\"StringLiteral\"\t\"Text\": " << "\"" << *yylval.wordValue << "\"";
+            s = *yylval.wordValue;
         }else if(type==Invalid){
+            std::cout << "{\"Class\": " << "\"Invalid\"\t\"Text\": " << "\"" << *yylval.wordValue << "\"";
+            s = *yylval.wordValue;
         }else{
             assert(0); // There are only three token types.
             return 1;
