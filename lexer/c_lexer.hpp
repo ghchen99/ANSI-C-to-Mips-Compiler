@@ -9,7 +9,8 @@ enum TokenType{
     Operator = 3,
     Constant = 4,
     StringLiteral = 5,
-    Invalid = 6
+    Invalid = 6,
+    Prepo = 7
 };
 
 union TokenValue{
@@ -27,6 +28,7 @@ union TokenValue{
 extern TokenValue yylval;
 extern int LineNum;
 extern int ColNum;
+extern std::string SourceFile;
 
 // This is the lexer function defined by flex. Each
 // time it is called, a token type value will be

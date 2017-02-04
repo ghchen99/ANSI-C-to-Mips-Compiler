@@ -1,13 +1,10 @@
+CPPFLAGS += -W -Wall -g -std=gnu++11
 
+	
+c_lexer.yy.cpp : lexer/c_lexer.flex
+	flex -o lexer/c_lexer.yy.cpp lexer/c_lexer.flex
 
-bin/c_lexer :
-    echo "No current build commands for C lexer."
-    exit 1
-    
-bin/c_parser :
-    echo "No current build commands for C parser."
-    exit 1
+main : lexer/c_lexer.yy.cpp lexer/c_lexer_main.cpp
+	g++ $(CPPFLAGS) -o bin/c_lexer lexer/c_lexer.yy.cpp lexer/c_lexer_main.cpp
 
-bin/c_compiler :
-    echo "No current build commands for C compile."
-    exit 1
+bin/c_lexer: c_lexer.yy.cpp main

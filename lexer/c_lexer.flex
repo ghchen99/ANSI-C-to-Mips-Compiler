@@ -13,6 +13,7 @@
 #include <string>
 #include <iostream>
 #include "c_lexer.hpp"
+std::string sourceline;
 void count();
 
 /* End the embedded code section. */
@@ -25,20 +26,20 @@ HEX 0[xX][A-Fa-f0-9]+([u|U|l|L]*)?
 OCT [0-7]+([u|U|l|L]*)?
 INTEGER [0-9]+([u|U|l|L]*)?
 FLOAT [0-9]*\.[0-9]+([eE][+-][0-9]+)?(F|f|l|L)?|[0-9]+[eE][+-][0-9]+(F|f|l|L)?
-
+PREPROCESS \#([ ][0-9]+[ ])(\"(.*)\")[ 0-4]*
 %%
 {KEYWORD} {count();std::string s(yytext);yylval.wordValue = new std::string();*yylval.wordValue = s;return Keyword;}
-[A-Za-z]([A-Za-z]|[0-9])*	{count();std::string s(yytext);yylval.wordValue = new std::string();*yylval.wordValue = s;return Identifier;}
+{PREPROCESS}	{count();std::string s(yytext);yylval.wordValue = new std::string();*yylval.wordValue = s;return Prepo;}
+[A-Za-z/_]([A-Za-z/_]|[0-9])*	{count();std::string s(yytext);yylval.wordValue = new std::string();*yylval.wordValue = s;return Identifier;}
 {INTEGER} {count();std::string s(yytext);yylval.wordValue = new std::string();*yylval.wordValue = s;return Constant;}
 {CHAR} {count();std::string s(yytext);yylval.wordValue = new std::string();*yylval.wordValue = s;return Constant;}
 {HEX} {count();std::string s(yytext);yylval.wordValue = new std::string();*yylval.wordValue = s;return Constant;}
-{OCT} {count();std::string s(yytext);yylval.wordValue = new std::string();*yylval.wordValue = s;return Constant;}
 {FLOAT} {count();std::string s(yytext);yylval.wordValue = new std::string();*yylval.wordValue = s;return Constant;}
 {STRINGLITERAL} {count();std::string s(yytext);yylval.wordValue = new std::string();*yylval.wordValue = s;return StringLiteral;}
 {OPERATOR} {count();std::string s(yytext);yylval.wordValue = new std::string();*yylval.wordValue = s;return Operator;}
 
 [\n] {LineNum += 1; ColNum = 0;}
-[ \t\v\n\f]		{}
+[ \t\v\f]		{count();}
 . {count();std::string s(yytext);yylval.wordValue = new std::string();*yylval.wordValue = s;return Invalid;}
 
 
