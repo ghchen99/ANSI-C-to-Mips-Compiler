@@ -37,7 +37,7 @@ int main()
               std::cout << "\t\"SourceLine\": " << x << ",";
               std::cout << "\t\"SourceFile\": " << SourceFile << ",";
           }
-         std::cout << "\t\"colume\" : " << ColNum - s.size() + 1 << "}," << std::endl;
+         std::cout << "\t\"column\" : " << ColNum - s.size() + 1 << "}," << std::endl;
         }else if(type==Identifier){
             std::cout << "{\"Class\": " << "\"Identifier\",\t\"Text\": " << "\"" << *yylval.wordValue << "\",";
             std::cout << "\t\"streamline\": " << LineNum << ",";
@@ -48,7 +48,7 @@ int main()
                 std::cout << "\t\"SourceLine\": " << x << ",";
                 std::cout << "\t\"SourceFile\": " << SourceFile << ",";
             }
-            std::cout << "\t\"colume\" : " << ColNum - s.size() + 1 << "}," << std::endl;
+            std::cout << "\t\"column\" : " << ColNum - s.size() + 1 << "}," << std::endl;
         }else if(type==Operator){
             std::cout << "{\"Class\": " << "\"Operator\",\t\"Text\": " << "\"" << *yylval.wordValue << "\",";
             std::cout << "\t\"streamline\": " << LineNum << ",";
@@ -59,7 +59,7 @@ int main()
                 std::cout << "\t\"SourceLine\": " << x << ",";
                 std::cout << "\t\"SourceFile\": " << SourceFile << ",";
             }
-            std::cout << "\t\"colume\" : " << ColNum - s.size() + 1 << "}," << std::endl;
+            std::cout << "\t\"column\" : " << ColNum - s.size() + 1 << "}," << std::endl;
         }else if(type==Constant){
             std::cout << "{\"Class\": " << "\"Constant\",\t\"Text\": " << "\"" << *yylval.wordValue << "\",";
             std::cout << "\t\"streamline\": " << LineNum << ",";
@@ -70,7 +70,7 @@ int main()
                 std::cout << "\t\"SourceLine\": " << x <<",";
                 std::cout << "\t\"SourceFile\": " << SourceFile <<",";
             }
-            std::cout << "\t\"colume\" : " << ColNum - s.size() + 1 << "}," << std::endl;
+            std::cout << "\t\"column\" : " << ColNum - s.size() + 1 << "}," << std::endl;
         }else if(type==StringLiteral){
             std::cout << "{\"Class\": " << "\"StringLiteral\",\t\"Text\": " << *yylval.wordValue << ",";
             std::cout << "\t\"streamline\": " << LineNum << ",";
@@ -81,7 +81,7 @@ int main()
                 std::cout << "\t\"SourceLine\": " << x << ",";
                 std::cout << "\t\"SourceFile\": " << SourceFile << "," ;
             }
-            std::cout << "\t\"colume\" : " << ColNum - s.size() + 1 << "}," << std::endl;
+            std::cout << "\t\"column\" : " << ColNum - s.size() + 1 << "}," << std::endl;
         }else if(type==Invalid){
             std::cout << "{\"Class\": " << "\"Invalid\",\t\"Text\": " << "\"" << *yylval.wordValue << "\",";
             std::cout << "\t\"streamline\": " << LineNum << ",";
@@ -92,7 +92,7 @@ int main()
                 std::cout << "\t\"SourceLine\": " << x << ",";
                 std::cout << "\t\"SourceFile\": " << SourceFile << ",";
             }
-                std::cout << "\t\"colume\" : " << ColNum - s.size() + 1 << "}," << std::endl;
+                std::cout << "\t\"column\" : " << ColNum - s.size() + 1 << "}," << std::endl;
         }else if(type==Prepo){
             s = *yylval.wordValue;
             //std::cout << std::endl << s << std::endl;
