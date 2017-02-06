@@ -1,7 +1,6 @@
 
 # 942 "/usr/include/stdio.h" 3 4
-sdasadas
+
 # 2 "tmp.c" 2
-typedef
 
 # 2 "tmp.c"
