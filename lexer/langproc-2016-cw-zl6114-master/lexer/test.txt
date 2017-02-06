@@ -1,6 +1,0 @@
-
-# 942 "/usr/include/stdio.h" 3 4
-
-# 2 "tmp.c" 2
-
-# 2 "tmp.c"
