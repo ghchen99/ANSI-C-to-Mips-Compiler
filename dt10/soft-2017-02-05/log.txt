@@ -1,0 +1,84 @@
+Note that each submission has not been looked at manually, they
+have only been randomly sampled to get an idea if the test automation.
+is working for most submission. If the build system appears
+to be broken, please raise an issue (though stability of these
+runs is not a huge priority).
+
+zl6114 : Cloning repo
+Cloning into 'zl6114'...
+zl6114 : Fetching repo
+zl6114 : Checking out branch soft-2017-02-05 if it exists...
+error: pathspec 'soft-2017-02-05' did not match any file(s) known to git.
+zl6114 : Checking out specified hash and creating new branch soft-2017-02-05
+Switched to a new branch 'soft-2017-02-05'
+Already on 'soft-2017-02-05'
+zl6114 : Checking we're on the right hash 23f23b35f0c01925f67d85afb34e7cb1ebe0fc38...
+cd tmp/$U && git rev-parse $RUN
+
+log_msg "########################################################"
+zl6114 : ########################################################
+log_msg "## Building"
+zl6114 : ## Building
+
+log_msg "Cleaning"
+zl6114 : Cleaning
+(cd $REPO && rm bin/c_lexer)
+(cd $REPO && make clean)
+make: Warning: File 'makefile' has modification time 458 s in the future
+make: *** No rule to make target 'clean'.  Stop.
+
+log_msg "Building"
+zl6114 : Building
+(cd $REPO && make bin/c_lexer)
+make: Warning: File 'makefile' has modification time 458 s in the future
+flex -o lexer/c_lexer.yy.cpp lexer/c_lexer.flex
+g++ -W -Wall -g -std=gnu++11 -o bin/c_lexer lexer/c_lexer.yy.cpp lexer/c_lexer_main.cpp
+lexer/c_lexer.yy.cpp: In function ‘int yy_get_next_buffer()’:
+lexer/c_lexer.yy.cpp:1252:44: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+  if ((int) ((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
+                                            ^
+lexer/c_lexer.yy.cpp: At global scope:
+lexer/c_lexer.yy.cpp:1328:17: warning: ‘void yyunput(int, char*)’ defined but not used [-Wunused-function]
+     static void yyunput (int c, char * yy_bp )
+                 ^
+make: warning:  Clock skew detected.  Your build may be incomplete.
+
+if [[ ! -f $REPO/bin/c_lexer ]]; then
+    log_msg "No executable build"
+    exit 0;
+fi
+
+log_msg "########################################################"
+zl6114 : ########################################################
+log_msg "## Executing"
+zl6114 : ## Executing
+
+log_msg "Generating input"
+zl6114 : Generating input
+echo -e 'int x;\n# 5 "stdio.h"\nint y;' > $LOGDIR/in.c
+cat $LOGDIR/in.c
+int x;
+# 5 "stdio.h"
+int y;
+
+log_msg "Running lexer"
+zl6114 : Running lexer
+cat $LOGDIR/in.c | (cd $REPO && bin/c_lexer) > $LOGDIR/out.json
+
+log_msg "Checking JSON formatting"
+zl6114 : Checking JSON formatting
+cp scripts/cw1-soft-json.py $LOGDIR/c1-soft-json.py
+cat $LOGDIR/out.json | python $LOGDIR/c1-soft-json.py > $LOGDIR/out-pretty.json
+Traceback (most recent call last):
+  File "tmp/zl6114/dt10/soft-2017-02-05/c1-soft-json.py", line 7, in <module>
+    tokens=json.load(sys.stdin)
+  File "/usr/lib/python2.7/json/__init__.py", line 291, in load
+    **kw)
+  File "/usr/lib/python2.7/json/__init__.py", line 339, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python2.7/json/decoder.py", line 364, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python2.7/json/decoder.py", line 380, in raw_decode
+    obj, end = self.scan_once(s, idx)
+ValueError: Expecting , delimiter: line 2 column 21 (char 22)
+zl6114 : Test Complete
