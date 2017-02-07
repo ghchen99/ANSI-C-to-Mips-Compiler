@@ -1,0 +1,45 @@
+[
+    {
+        "Class": "Keyword", 
+        "Text": "int", 
+        "column": 1, 
+        "streamline": 1
+    }, 
+    {
+        "Class": "Identifier", 
+        "Text": "x", 
+        "column": 5, 
+        "streamline": 1
+    }, 
+    {
+        "Class": "Operator", 
+        "Text": ";", 
+        "column": 6, 
+        "streamline": 1
+    }, 
+    {
+        "Class": "Keyword", 
+        "SourceFile": "stdio.h", 
+        "SourceLine": 5, 
+        "Text": "int", 
+        "column": 1, 
+        "streamline": 3
+    }, 
+    {
+        "Class": "Identifier", 
+        "SourceFile": "stdio.h", 
+        "SourceLine": 5, 
+        "Text": "y", 
+        "column": 5, 
+        "streamline": 3
+    }, 
+    {
+        "Class": "Operator", 
+        "SourceFile": "stdio.h", 
+        "SourceLine": 5, 
+        "Text": ";", 
+        "column": 6, 
+        "streamline": 3
+    }, 
+    {}
+]

@@ -1,0 +1,9 @@
+[
+{"Class": "Keyword",	"Text": "int",	"streamline": 1,	"column" : 1},
+{"Class": "Identifier",	"Text": "x",	"streamline": 1,	"column" : 5},
+{"Class": "Operator",	"Text": ";",	"streamline": 1,	"column" : 6},
+{"Class": "Keyword",	"Text": "int",	"streamline": 3,	"SourceLine": 5,	"SourceFile": "stdio.h",	"column" : 1},
+{"Class": "Identifier",	"Text": "y",	"streamline": 3,	"SourceLine": 5,	"SourceFile": "stdio.h",	"column" : 5},
+{"Class": "Operator",	"Text": ";",	"streamline": 3,	"SourceLine": 5,	"SourceFile": "stdio.h",	"column" : 6},
+{}
+]
