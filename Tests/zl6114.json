@@ -90,7 +90,7 @@
         "3": "Theta(k)"
       },
       "answer": "0",
-      "confidence": "4"
+      "confidence": "High"
     },
     {
       "qid": 3,
@@ -108,7 +108,7 @@
         "3": "No, because of rule 3"
       },
       "answer": "0",
-      "confidence": "4"
+      "confidence": "High"
     },
     {
       "qid": 4,
@@ -124,7 +124,7 @@
         "3": "O(2^k)"
       },
       "answer": "2",
-      "confidence": "3"
+      "confidence": "Low"
     },
     {
       "qid": 5,
@@ -138,8 +138,8 @@
         "2": "Consuming a character could take us from SA to SB",
         "3": "SB is in the epsilon closure of SA"
       },
-      "answer": "3",
-      "confidence": "3"
+      "answer": "0",
+      "confidence": "Medium"
     },
     {
       "qid": 6,
@@ -154,7 +154,7 @@
         "3": "This extension requires back-tracking."
       },
       "answer": "3",
-      "confidence": "5"
+      "confidence": "High"
     },
     {
       "qid": 7,
@@ -168,8 +168,8 @@
         "2": "No, you cannot implement an NFA as a Moore machine due to possible epsilon transitions.",
         "3": "Yes, using k parallel m x k lookup tables (i.e. ROMs with log2(m)-bit address and k-bit data)."
       },
-      "answer": "?",
-      "confidence": "?"
+      "answer": "2",
+      "confidence": "Medium"
     },
     {
       "qid": 8,
@@ -181,7 +181,7 @@
         "3": "A lexer does not use a grammar."
       },
       "answer": "0",
-      "confidence": "4"
+      "confidence": "Medium"
     },
     {
       "qid": 9,
@@ -193,7 +193,7 @@
         "3": "It takes the lexer one step closer to enlightenment."
       },
       "answer": "1",
-      "confidence": "4"
+      "confidence": "Medium"
     }
   ]
 }
