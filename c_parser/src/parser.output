@@ -1,0 +1,283 @@
+Terminals unused in grammar
+
+   T_COMMA
+   T_CONTROL_FLOW
+
+
+Grammar
+
+    0 $accept: ROOT $end
+
+    1 ROOT: PROGRAM
+
+    2 PROGRAM: VARIABLE
+    3        | FUNCTION
+    4        | SCOPE
+
+    5 FUNCTION: TYPE_SPECIFIER T_VARIABLE PARAMETER SCOPE
+
+    6 PARAMETER: T_LBRACKET T_RBRACKET
+    7          | T_LBRACKET TYPE_SPECIFIER T_VARIABLE T_RBRACKET
+
+    8 SCOPE: T_LCURLYBRACKET T_RCURLYBRACKET
+    9      | T_LCURLYBRACKET VARIABLE T_RCURLYBRACKET
+
+   10 VARIABLE: TYPE_SPECIFIER T_VARIABLE T_SIMICOLOUMN
+   11         | TYPE_SPECIFIER T_VARIABLE T_EQUAL T_VARIABLE T_SIMICOLOUMN
+
+   12 TYPE_SPECIFIER: T_INT
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+T_COMMA (258)
+T_LCURLYBRACKET (259) 8 9
+T_RCURLYBRACKET (260) 8 9
+T_LBRACKET (261) 6 7
+T_RBRACKET (262) 6 7
+T_SIMICOLOUMN (263) 10 11
+T_INT (264) 12
+T_CONTROL_FLOW (265)
+T_VARIABLE (266) 5 7 10 11
+T_EQUAL (267) 11
+
+
+Nonterminals, with rules where they appear
+
+$accept (13)
+    on left: 0
+ROOT (14)
+    on left: 1, on right: 0
+PROGRAM (15)
+    on left: 2 3 4, on right: 1
+FUNCTION (16)
+    on left: 5, on right: 3
+PARAMETER (17)
+    on left: 6 7, on right: 5
+SCOPE (18)
+    on left: 8 9, on right: 4 5
+VARIABLE (19)
+    on left: 10 11, on right: 2 9
+TYPE_SPECIFIER (20)
+    on left: 12, on right: 5 7 10 11
+
+
+State 0
+
+    0 $accept: . ROOT $end
+
+    T_LCURLYBRACKET  shift, and go to state 1
+    T_INT            shift, and go to state 2
+
+    ROOT            go to state 3
+    PROGRAM         go to state 4
+    FUNCTION        go to state 5
+    SCOPE           go to state 6
+    VARIABLE        go to state 7
+    TYPE_SPECIFIER  go to state 8
+
+
+State 1
+
+    8 SCOPE: T_LCURLYBRACKET . T_RCURLYBRACKET
+    9      | T_LCURLYBRACKET . VARIABLE T_RCURLYBRACKET
+
+    T_RCURLYBRACKET  shift, and go to state 9
+    T_INT            shift, and go to state 2
+
+    VARIABLE        go to state 10
+    TYPE_SPECIFIER  go to state 11
+
+
+State 2
+
+   12 TYPE_SPECIFIER: T_INT .
+
+    $default  reduce using rule 12 (TYPE_SPECIFIER)
+
+
+State 3
+
+    0 $accept: ROOT . $end
+
+    $end  shift, and go to state 12
+
+
+State 4
+
+    1 ROOT: PROGRAM .
+
+    $default  reduce using rule 1 (ROOT)
+
+
+State 5
+
+    3 PROGRAM: FUNCTION .
+
+    $default  reduce using rule 3 (PROGRAM)
+
+
+State 6
+
+    4 PROGRAM: SCOPE .
+
+    $default  reduce using rule 4 (PROGRAM)
+
+
+State 7
+
+    2 PROGRAM: VARIABLE .
+
+    $default  reduce using rule 2 (PROGRAM)
+
+
+State 8
+
+    5 FUNCTION: TYPE_SPECIFIER . T_VARIABLE PARAMETER SCOPE
+   10 VARIABLE: TYPE_SPECIFIER . T_VARIABLE T_SIMICOLOUMN
+   11         | TYPE_SPECIFIER . T_VARIABLE T_EQUAL T_VARIABLE T_SIMICOLOUMN
+
+    T_VARIABLE  shift, and go to state 13
+
+
+State 9
+
+    8 SCOPE: T_LCURLYBRACKET T_RCURLYBRACKET .
+
+    $default  reduce using rule 8 (SCOPE)
+
+
+State 10
+
+    9 SCOPE: T_LCURLYBRACKET VARIABLE . T_RCURLYBRACKET
+
+    T_RCURLYBRACKET  shift, and go to state 14
+
+
+State 11
+
+   10 VARIABLE: TYPE_SPECIFIER . T_VARIABLE T_SIMICOLOUMN
+   11         | TYPE_SPECIFIER . T_VARIABLE T_EQUAL T_VARIABLE T_SIMICOLOUMN
+
+    T_VARIABLE  shift, and go to state 15
+
+
+State 12
+
+    0 $accept: ROOT $end .
+
+    $default  accept
+
+
+State 13
+
+    5 FUNCTION: TYPE_SPECIFIER T_VARIABLE . PARAMETER SCOPE
+   10 VARIABLE: TYPE_SPECIFIER T_VARIABLE . T_SIMICOLOUMN
+   11         | TYPE_SPECIFIER T_VARIABLE . T_EQUAL T_VARIABLE T_SIMICOLOUMN
+
+    T_LBRACKET     shift, and go to state 16
+    T_SIMICOLOUMN  shift, and go to state 17
+    T_EQUAL        shift, and go to state 18
+
+    PARAMETER  go to state 19
+
+
+State 14
+
+    9 SCOPE: T_LCURLYBRACKET VARIABLE T_RCURLYBRACKET .
+
+    $default  reduce using rule 9 (SCOPE)
+
+
+State 15
+
+   10 VARIABLE: TYPE_SPECIFIER T_VARIABLE . T_SIMICOLOUMN
+   11         | TYPE_SPECIFIER T_VARIABLE . T_EQUAL T_VARIABLE T_SIMICOLOUMN
+
+    T_SIMICOLOUMN  shift, and go to state 17
+    T_EQUAL        shift, and go to state 18
+
+
+State 16
+
+    6 PARAMETER: T_LBRACKET . T_RBRACKET
+    7          | T_LBRACKET . TYPE_SPECIFIER T_VARIABLE T_RBRACKET
+
+    T_RBRACKET  shift, and go to state 20
+    T_INT       shift, and go to state 2
+
+    TYPE_SPECIFIER  go to state 21
+
+
+State 17
+
+   10 VARIABLE: TYPE_SPECIFIER T_VARIABLE T_SIMICOLOUMN .
+
+    $default  reduce using rule 10 (VARIABLE)
+
+
+State 18
+
+   11 VARIABLE: TYPE_SPECIFIER T_VARIABLE T_EQUAL . T_VARIABLE T_SIMICOLOUMN
+
+    T_VARIABLE  shift, and go to state 22
+
+
+State 19
+
+    5 FUNCTION: TYPE_SPECIFIER T_VARIABLE PARAMETER . SCOPE
+
+    T_LCURLYBRACKET  shift, and go to state 1
+
+    SCOPE  go to state 23
+
+
+State 20
+
+    6 PARAMETER: T_LBRACKET T_RBRACKET .
+
+    $default  reduce using rule 6 (PARAMETER)
+
+
+State 21
+
+    7 PARAMETER: T_LBRACKET TYPE_SPECIFIER . T_VARIABLE T_RBRACKET
+
+    T_VARIABLE  shift, and go to state 24
+
+
+State 22
+
+   11 VARIABLE: TYPE_SPECIFIER T_VARIABLE T_EQUAL T_VARIABLE . T_SIMICOLOUMN
+
+    T_SIMICOLOUMN  shift, and go to state 25
+
+
+State 23
+
+    5 FUNCTION: TYPE_SPECIFIER T_VARIABLE PARAMETER SCOPE .
+
+    $default  reduce using rule 5 (FUNCTION)
+
+
+State 24
+
+    7 PARAMETER: T_LBRACKET TYPE_SPECIFIER T_VARIABLE . T_RBRACKET
+
+    T_RBRACKET  shift, and go to state 26
+
+
+State 25
+
+   11 VARIABLE: TYPE_SPECIFIER T_VARIABLE T_EQUAL T_VARIABLE T_SIMICOLOUMN .
+
+    $default  reduce using rule 11 (VARIABLE)
+
+
+State 26
+
+    7 PARAMETER: T_LBRACKET TYPE_SPECIFIER T_VARIABLE T_RBRACKET .
+
+    $default  reduce using rule 7 (PARAMETER)

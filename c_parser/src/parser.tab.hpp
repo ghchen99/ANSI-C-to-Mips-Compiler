@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_SRC_MATHS_PARSER_TAB_HPP_INCLUDED
-# define YY_YY_SRC_MATHS_PARSER_TAB_HPP_INCLUDED
+#ifndef YY_YY_SRC_PARSER_TAB_HPP_INCLUDED
+# define YY_YY_SRC_PARSER_TAB_HPP_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -40,7 +40,7 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 1 "parser.y" /* yacc.c:1909  */
+#line 1 "src/parser.y" /* yacc.c:1909  */
 
   #include "header.hpp"
 
@@ -54,22 +54,24 @@ extern int yydebug;
   int yylex(void);
   void yyerror(const char *);
 
-#line 58 "maths_parser.tab.hpp" /* yacc.c:1909  */
+#line 58 "src/parser.tab.hpp" /* yacc.c:1909  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
-enum yytokentype{
-    T_VARIABLE = 0;
-    T_CONTROL_FLOW = 1;
-    T_INT = 2;
-    T_SIMICOLOUMN = 3;
-    T_LBRACKET = 4;
-    T_RBRACKET = 5;
-    T_LCURLYBRACKET = 6;
-    T_RCURLYBRACKET = 7;
-    T_COMMA = 8;
-};
+  enum yytokentype
+  {
+    T_COMMA = 258,
+    T_LCURLYBRACKET = 259,
+    T_RCURLYBRACKET = 260,
+    T_LBRACKET = 261,
+    T_RBRACKET = 262,
+    T_SIMICOLOUMN = 263,
+    T_INT = 264,
+    T_CONTROL_FLOW = 265,
+    T_VARIABLE = 266,
+    T_EQUAL = 267
+  };
 #endif
 
 /* Value type.  */
@@ -77,12 +79,12 @@ enum yytokentype{
 
 union YYSTYPE
 {
-#line 17 "parser.y" /* yacc.c:1909  */
+#line 17 "src/parser.y" /* yacc.c:1909  */
 
   const Program *prog;
   std::string *string;
 
-#line 85 "parser.tab.hpp" /* yacc.c:1909  */
+#line 88 "src/parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -95,4 +97,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_SRC_MATHS_PARSER_TAB_HPP_INCLUDED  */
+#endif /* !YY_YY_SRC_PARSER_TAB_HPP_INCLUDED  */
