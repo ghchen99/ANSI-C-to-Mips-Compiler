@@ -14,13 +14,14 @@ public:
 
     virtual void print() const override
     {
-        std::cout << "in declaration path" << '\n';
+        //std::cout << "in declaration path" << '\n';
         std::cout << "<Variable id=\"" ;
         declaration1 -> print();
         std::cout << "\" />" << std::endl;
     }
 
     ~declaration(){
+        delete declaration1;
     }
 
 };

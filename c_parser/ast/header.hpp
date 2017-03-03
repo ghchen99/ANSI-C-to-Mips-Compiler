@@ -6,6 +6,9 @@
 #include "ast_declaration.hpp"
 #include "ast_declaration_specifiers.hpp"
 #include "ast_all_declaration.hpp"
+#include "ast_number.hpp"
+#include "ast_init_declarator.hpp"
+#include "ast_unary_expression.hpp"
 
 
 

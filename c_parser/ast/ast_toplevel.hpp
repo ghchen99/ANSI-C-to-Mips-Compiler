@@ -3,7 +3,7 @@
 
 #include <string>
 #include <iostream>
-#include <map>
+#include <vector>
 
 
 // ########  #######  ########     ##       ######## ##     ## ######## ##
@@ -25,6 +25,8 @@ public:
     Program(){
     }
 
+
+
     virtual void print() const =0;
 
 };
@@ -45,10 +47,12 @@ public:
     virtual void print() const override
     {
         Program_call1 -> print();
-        Program_call1 -> print();
+        Program_call2 -> print();
     }
 
     ~Program_call(){
+        delete Program_call1;
+        delete Program_call2;
     }
 
 };

@@ -7,9 +7,14 @@ extern "C" int fileno(FILE *stream);
 #include "parser.tab.hpp"
 %}
 VARIABLE [A-Za-z/_]([A-Za-z/_]|[0-9])*
+NUMBER [-]?[0-9]+([.][0-9]*)?
 %%
 [=]             { return T_EQUAL;}
 [*]             { return T_STAR;}
+[+]             { return T_PLUS;}
+[-]             { return T_MINUS;}
+[/]             { return T_DIVIDE;}
+[%]             { return T_MOD;}
 [,]             { return T_COMMA;}
 [{]             { return T_LCURLYBRACKET;}
 [}]             { return T_RCURLYBRACKET;}
@@ -20,6 +25,7 @@ int             { return T_INT; }
 if              { return T_CONTROL_FLOW; }
 while           { return T_CONTROL_FLOW; }
 for             { return T_CONTROL_FLOW; }
+{NUMBER}        { yylval.number=strtod(yytext, 0); return T_NUMBER; }
 {VARIABLE}      { yylval.string=new std::string(yytext);return T_VARIABLE; }
 [ \t\r\n]+		{;}
 .               {exit(1);}
