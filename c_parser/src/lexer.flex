@@ -9,6 +9,7 @@ extern "C" int fileno(FILE *stream);
 VARIABLE [A-Za-z/_]([A-Za-z/_]|[0-9])*
 %%
 [=]             { return T_EQUAL;}
+[*]             { return T_STAR;}
 [,]             { return T_COMMA;}
 [{]             { return T_LCURLYBRACKET;}
 [}]             { return T_RCURLYBRACKET;}

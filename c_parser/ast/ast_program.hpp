@@ -6,6 +6,14 @@
 #include <map>
 
 
+// ########  #######  ########     ##       ######## ##     ## ######## ##
+//    ##    ##     ## ##     ##    ##       ##       ##     ## ##       ##
+//    ##    ##     ## ##     ##    ##       ##       ##     ## ##       ##
+//    ##    ##     ## ########     ##       ######   ##     ## ######   ##
+//    ##    ##     ## ##           ##       ##        ##   ##  ##       ##
+//    ##    ##     ## ##           ##       ##         ## ##   ##       ##
+//    ##     #######  ##           ######## ########    ###    ######## ########
+
 class Program
 {
 public:
@@ -34,13 +42,36 @@ public:
 
     virtual void print() const override
     {
-        std::cout << "\t<Variable id=\"" << id;
+        std::cout << "<Variable id=\"" << id;
         std::cout << "\" />" << std::endl;
     }
 
 	~Variable(){
 	}
 };
+
+class MultipleVariable
+	: public Program
+{
+private:
+    const Program *Variable1;
+    const Program *Variable2;
+public:
+    MultipleVariable(const Program *_Variable1,const Program *_Variable2)
+        : Variable1(_Variable1),
+          Variable2(_Variable2)
+    {}
+
+    virtual void print() const override
+    {
+        Variable1 -> print();
+        Variable2 -> print();
+    }
+
+	~MultipleVariable(){
+	}
+};
+
 
 class Scope
 	: public Program
@@ -54,9 +85,9 @@ public:
 
     virtual void print() const override
     {
-        std::cout << "<Scope>" ;
+        std::cout << "<Scope>\n" ;
         Variable -> print();
-        std::cout << "</Scope>" << std::endl;
+        std::cout << "</Scope>" << "\n";
     }
 
 	~Scope(){
@@ -78,7 +109,7 @@ public:
     virtual void print() const override
     {
         std::cout << "<Parameter id=\"" << id;
-        std::cout << "\" />" << std::endl;
+        std::cout << "\" />" << "\n";
     }
 
 	~Parameter(){
@@ -123,12 +154,42 @@ public:
     virtual void print() const override
     {
         std::cout << "<Function id=\"" << id;
-        std::cout << "\" />" << std::endl;
+        std::cout << "\" />" << "\n";
         Parameter -> print();
         Scope -> print();
+        std::cout << "</Function>" << '\n';
     }
 
 	~Function(){
+	}
+
+};
+
+class FunctionNoParam
+	: public Program
+{
+private:
+    const std::string type;
+    const std::string id;
+    const Program *Scope;
+public:
+    FunctionNoParam(const std::string _type,
+             const std::string _id,
+             const Program *_Scope)
+        : type(_type),
+          id(_id),
+          Scope(_Scope)
+    {}
+
+    virtual void print() const override
+    {
+        std::cout << "<Function id=\"" << id;
+        std::cout << "\" />" << "\n";
+        Scope -> print();
+        std::cout << "</Function>" << '\n';
+    }
+
+	~FunctionNoParam(){
 	}
 
 };

@@ -1,1 +1,6 @@
-int x;
+#include <stdio.h>
+
+main()
+{
+    int;
+}

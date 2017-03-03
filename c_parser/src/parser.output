@@ -1,7 +1,13 @@
 Terminals unused in grammar
 
    T_COMMA
+   T_LCURLYBRACKET
+   T_RCURLYBRACKET
+   T_LBRACKET
+   T_RBRACKET
    T_CONTROL_FLOW
+   T_EQUAL
+   T_RETURN
 
 
 Grammar
@@ -10,22 +16,26 @@ Grammar
 
     1 ROOT: PROGRAM
 
-    2 PROGRAM: VARIABLE
-    3        | FUNCTION
-    4        | SCOPE
+    2 PROGRAM: ALL_DECLEARARION
+    3        | PROGRAM ALL_DECLEARARION
 
-    5 FUNCTION: TYPE_SPECIFIER T_VARIABLE PARAMETER SCOPE
+    4 ALL_DECLEARARION: DECLARATION
 
-    6 PARAMETER: T_LBRACKET T_RBRACKET
-    7          | T_LBRACKET TYPE_SPECIFIER T_VARIABLE T_RBRACKET
+    5 DECLARATION: DECLARATION_SPECIFIERS T_SIMICOLOUMN
+    6            | DECLARATION_SPECIFIERS INIT_DECLARATOR_LIST T_SIMICOLOUMN
 
-    8 SCOPE: T_LCURLYBRACKET T_RCURLYBRACKET
-    9      | T_LCURLYBRACKET VARIABLE T_RCURLYBRACKET
+    7 DECLARATION_SPECIFIERS: TYPE_SPECIFIER
 
-   10 VARIABLE: TYPE_SPECIFIER T_VARIABLE T_SIMICOLOUMN
-   11         | TYPE_SPECIFIER T_VARIABLE T_EQUAL T_VARIABLE T_SIMICOLOUMN
+    8 INIT_DECLARATOR_LIST: INIT_DECLARATOR
 
-   12 TYPE_SPECIFIER: T_INT
+    9 INIT_DECLARATOR: DECLARATOR
+
+   10 DECLARATOR: T_STAR DIRECT_DECLARATOR
+   11           | DIRECT_DECLARATOR
+
+   12 DIRECT_DECLARATOR: T_VARIABLE
+
+   13 TYPE_SPECIFIER: T_INT
 
 
 Terminals, with rules where they appear
@@ -33,251 +43,198 @@ Terminals, with rules where they appear
 $end (0) 0
 error (256)
 T_COMMA (258)
-T_LCURLYBRACKET (259) 8 9
-T_RCURLYBRACKET (260) 8 9
-T_LBRACKET (261) 6 7
-T_RBRACKET (262) 6 7
-T_SIMICOLOUMN (263) 10 11
-T_INT (264) 12
+T_LCURLYBRACKET (259)
+T_RCURLYBRACKET (260)
+T_LBRACKET (261)
+T_RBRACKET (262)
+T_SIMICOLOUMN (263) 5 6
+T_INT (264) 13
 T_CONTROL_FLOW (265)
-T_VARIABLE (266) 5 7 10 11
-T_EQUAL (267) 11
+T_VARIABLE (266) 12
+T_EQUAL (267)
+T_RETURN (268)
+T_STAR (269) 10
 
 
 Nonterminals, with rules where they appear
 
-$accept (13)
+$accept (15)
     on left: 0
-ROOT (14)
+ROOT (16)
     on left: 1, on right: 0
-PROGRAM (15)
-    on left: 2 3 4, on right: 1
-FUNCTION (16)
-    on left: 5, on right: 3
-PARAMETER (17)
-    on left: 6 7, on right: 5
-SCOPE (18)
-    on left: 8 9, on right: 4 5
-VARIABLE (19)
-    on left: 10 11, on right: 2 9
-TYPE_SPECIFIER (20)
-    on left: 12, on right: 5 7 10 11
+PROGRAM (17)
+    on left: 2 3, on right: 1 3
+ALL_DECLEARARION (18)
+    on left: 4, on right: 2 3
+DECLARATION (19)
+    on left: 5 6, on right: 4
+DECLARATION_SPECIFIERS (20)
+    on left: 7, on right: 5 6
+INIT_DECLARATOR_LIST (21)
+    on left: 8, on right: 6
+INIT_DECLARATOR (22)
+    on left: 9, on right: 8
+DECLARATOR (23)
+    on left: 10 11, on right: 9
+DIRECT_DECLARATOR (24)
+    on left: 12, on right: 10 11
+TYPE_SPECIFIER (25)
+    on left: 13, on right: 7
 
 
 State 0
 
     0 $accept: . ROOT $end
 
-    T_LCURLYBRACKET  shift, and go to state 1
-    T_INT            shift, and go to state 2
+    T_INT  shift, and go to state 1
 
-    ROOT            go to state 3
-    PROGRAM         go to state 4
-    FUNCTION        go to state 5
-    SCOPE           go to state 6
-    VARIABLE        go to state 7
-    TYPE_SPECIFIER  go to state 8
+    ROOT                    go to state 2
+    PROGRAM                 go to state 3
+    ALL_DECLEARARION        go to state 4
+    DECLARATION             go to state 5
+    DECLARATION_SPECIFIERS  go to state 6
+    TYPE_SPECIFIER          go to state 7
 
 
 State 1
 
-    8 SCOPE: T_LCURLYBRACKET . T_RCURLYBRACKET
-    9      | T_LCURLYBRACKET . VARIABLE T_RCURLYBRACKET
+   13 TYPE_SPECIFIER: T_INT .
 
-    T_RCURLYBRACKET  shift, and go to state 9
-    T_INT            shift, and go to state 2
-
-    VARIABLE        go to state 10
-    TYPE_SPECIFIER  go to state 11
+    $default  reduce using rule 13 (TYPE_SPECIFIER)
 
 
 State 2
 
-   12 TYPE_SPECIFIER: T_INT .
+    0 $accept: ROOT . $end
 
-    $default  reduce using rule 12 (TYPE_SPECIFIER)
+    $end  shift, and go to state 8
 
 
 State 3
 
-    0 $accept: ROOT . $end
+    1 ROOT: PROGRAM .
+    3 PROGRAM: PROGRAM . ALL_DECLEARARION
 
-    $end  shift, and go to state 12
+    T_INT  shift, and go to state 1
+
+    $default  reduce using rule 1 (ROOT)
+
+    ALL_DECLEARARION        go to state 9
+    DECLARATION             go to state 5
+    DECLARATION_SPECIFIERS  go to state 6
+    TYPE_SPECIFIER          go to state 7
 
 
 State 4
 
-    1 ROOT: PROGRAM .
-
-    $default  reduce using rule 1 (ROOT)
-
-
-State 5
-
-    3 PROGRAM: FUNCTION .
-
-    $default  reduce using rule 3 (PROGRAM)
-
-
-State 6
-
-    4 PROGRAM: SCOPE .
-
-    $default  reduce using rule 4 (PROGRAM)
-
-
-State 7
-
-    2 PROGRAM: VARIABLE .
+    2 PROGRAM: ALL_DECLEARARION .
 
     $default  reduce using rule 2 (PROGRAM)
 
 
+State 5
+
+    4 ALL_DECLEARARION: DECLARATION .
+
+    $default  reduce using rule 4 (ALL_DECLEARARION)
+
+
+State 6
+
+    5 DECLARATION: DECLARATION_SPECIFIERS . T_SIMICOLOUMN
+    6            | DECLARATION_SPECIFIERS . INIT_DECLARATOR_LIST T_SIMICOLOUMN
+
+    T_SIMICOLOUMN  shift, and go to state 10
+    T_VARIABLE     shift, and go to state 11
+    T_STAR         shift, and go to state 12
+
+    INIT_DECLARATOR_LIST  go to state 13
+    INIT_DECLARATOR       go to state 14
+    DECLARATOR            go to state 15
+    DIRECT_DECLARATOR     go to state 16
+
+
+State 7
+
+    7 DECLARATION_SPECIFIERS: TYPE_SPECIFIER .
+
+    $default  reduce using rule 7 (DECLARATION_SPECIFIERS)
+
+
 State 8
-
-    5 FUNCTION: TYPE_SPECIFIER . T_VARIABLE PARAMETER SCOPE
-   10 VARIABLE: TYPE_SPECIFIER . T_VARIABLE T_SIMICOLOUMN
-   11         | TYPE_SPECIFIER . T_VARIABLE T_EQUAL T_VARIABLE T_SIMICOLOUMN
-
-    T_VARIABLE  shift, and go to state 13
-
-
-State 9
-
-    8 SCOPE: T_LCURLYBRACKET T_RCURLYBRACKET .
-
-    $default  reduce using rule 8 (SCOPE)
-
-
-State 10
-
-    9 SCOPE: T_LCURLYBRACKET VARIABLE . T_RCURLYBRACKET
-
-    T_RCURLYBRACKET  shift, and go to state 14
-
-
-State 11
-
-   10 VARIABLE: TYPE_SPECIFIER . T_VARIABLE T_SIMICOLOUMN
-   11         | TYPE_SPECIFIER . T_VARIABLE T_EQUAL T_VARIABLE T_SIMICOLOUMN
-
-    T_VARIABLE  shift, and go to state 15
-
-
-State 12
 
     0 $accept: ROOT $end .
 
     $default  accept
 
 
+State 9
+
+    3 PROGRAM: PROGRAM ALL_DECLEARARION .
+
+    $default  reduce using rule 3 (PROGRAM)
+
+
+State 10
+
+    5 DECLARATION: DECLARATION_SPECIFIERS T_SIMICOLOUMN .
+
+    $default  reduce using rule 5 (DECLARATION)
+
+
+State 11
+
+   12 DIRECT_DECLARATOR: T_VARIABLE .
+
+    $default  reduce using rule 12 (DIRECT_DECLARATOR)
+
+
+State 12
+
+   10 DECLARATOR: T_STAR . DIRECT_DECLARATOR
+
+    T_VARIABLE  shift, and go to state 11
+
+    DIRECT_DECLARATOR  go to state 17
+
+
 State 13
 
-    5 FUNCTION: TYPE_SPECIFIER T_VARIABLE . PARAMETER SCOPE
-   10 VARIABLE: TYPE_SPECIFIER T_VARIABLE . T_SIMICOLOUMN
-   11         | TYPE_SPECIFIER T_VARIABLE . T_EQUAL T_VARIABLE T_SIMICOLOUMN
+    6 DECLARATION: DECLARATION_SPECIFIERS INIT_DECLARATOR_LIST . T_SIMICOLOUMN
 
-    T_LBRACKET     shift, and go to state 16
-    T_SIMICOLOUMN  shift, and go to state 17
-    T_EQUAL        shift, and go to state 18
-
-    PARAMETER  go to state 19
+    T_SIMICOLOUMN  shift, and go to state 18
 
 
 State 14
 
-    9 SCOPE: T_LCURLYBRACKET VARIABLE T_RCURLYBRACKET .
+    8 INIT_DECLARATOR_LIST: INIT_DECLARATOR .
 
-    $default  reduce using rule 9 (SCOPE)
+    $default  reduce using rule 8 (INIT_DECLARATOR_LIST)
 
 
 State 15
 
-   10 VARIABLE: TYPE_SPECIFIER T_VARIABLE . T_SIMICOLOUMN
-   11         | TYPE_SPECIFIER T_VARIABLE . T_EQUAL T_VARIABLE T_SIMICOLOUMN
+    9 INIT_DECLARATOR: DECLARATOR .
 
-    T_SIMICOLOUMN  shift, and go to state 17
-    T_EQUAL        shift, and go to state 18
+    $default  reduce using rule 9 (INIT_DECLARATOR)
 
 
 State 16
 
-    6 PARAMETER: T_LBRACKET . T_RBRACKET
-    7          | T_LBRACKET . TYPE_SPECIFIER T_VARIABLE T_RBRACKET
+   11 DECLARATOR: DIRECT_DECLARATOR .
 
-    T_RBRACKET  shift, and go to state 20
-    T_INT       shift, and go to state 2
-
-    TYPE_SPECIFIER  go to state 21
+    $default  reduce using rule 11 (DECLARATOR)
 
 
 State 17
 
-   10 VARIABLE: TYPE_SPECIFIER T_VARIABLE T_SIMICOLOUMN .
+   10 DECLARATOR: T_STAR DIRECT_DECLARATOR .
 
-    $default  reduce using rule 10 (VARIABLE)
+    $default  reduce using rule 10 (DECLARATOR)
 
 
 State 18
 
-   11 VARIABLE: TYPE_SPECIFIER T_VARIABLE T_EQUAL . T_VARIABLE T_SIMICOLOUMN
+    6 DECLARATION: DECLARATION_SPECIFIERS INIT_DECLARATOR_LIST T_SIMICOLOUMN .
 
-    T_VARIABLE  shift, and go to state 22
-
-
-State 19
-
-    5 FUNCTION: TYPE_SPECIFIER T_VARIABLE PARAMETER . SCOPE
-
-    T_LCURLYBRACKET  shift, and go to state 1
-
-    SCOPE  go to state 23
-
-
-State 20
-
-    6 PARAMETER: T_LBRACKET T_RBRACKET .
-
-    $default  reduce using rule 6 (PARAMETER)
-
-
-State 21
-
-    7 PARAMETER: T_LBRACKET TYPE_SPECIFIER . T_VARIABLE T_RBRACKET
-
-    T_VARIABLE  shift, and go to state 24
-
-
-State 22
-
-   11 VARIABLE: TYPE_SPECIFIER T_VARIABLE T_EQUAL T_VARIABLE . T_SIMICOLOUMN
-
-    T_SIMICOLOUMN  shift, and go to state 25
-
-
-State 23
-
-    5 FUNCTION: TYPE_SPECIFIER T_VARIABLE PARAMETER SCOPE .
-
-    $default  reduce using rule 5 (FUNCTION)
-
-
-State 24
-
-    7 PARAMETER: T_LBRACKET TYPE_SPECIFIER T_VARIABLE . T_RBRACKET
-
-    T_RBRACKET  shift, and go to state 26
-
-
-State 25
-
-   11 VARIABLE: TYPE_SPECIFIER T_VARIABLE T_EQUAL T_VARIABLE T_SIMICOLOUMN .
-
-    $default  reduce using rule 11 (VARIABLE)
-
-
-State 26
-
-    7 PARAMETER: T_LBRACKET TYPE_SPECIFIER T_VARIABLE T_RBRACKET .
-
-    $default  reduce using rule 7 (PARAMETER)
+    $default  reduce using rule 6 (DECLARATION)

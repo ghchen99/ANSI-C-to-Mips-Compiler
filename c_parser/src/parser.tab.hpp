@@ -70,7 +70,9 @@ extern int yydebug;
     T_INT = 264,
     T_CONTROL_FLOW = 265,
     T_VARIABLE = 266,
-    T_EQUAL = 267
+    T_EQUAL = 267,
+    T_RETURN = 268,
+    T_STAR = 269
   };
 #endif
 
@@ -84,7 +86,7 @@ union YYSTYPE
   const Program *prog;
   std::string *string;
 
-#line 88 "src/parser.tab.hpp" /* yacc.c:1909  */
+#line 90 "src/parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
