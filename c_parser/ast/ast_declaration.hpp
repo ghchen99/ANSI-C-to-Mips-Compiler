@@ -26,4 +26,30 @@ public:
 
 };
 
+class deco_list
+    : public Program
+{
+private:
+    const Program *declaration1;
+    const Program *declaration2;
+public:
+    deco_list(const Program *_declaration1,const Program *_declaration2)
+        :declaration1(_declaration1),
+         declaration2(_declaration2)
+    {}
+
+
+    virtual void print() const override
+    {
+        //std::cout << "in declaration path" << '\n';
+        declaration1 -> print();
+        declaration2 -> print();
+    }
+
+    ~deco_list(){
+        delete declaration1;
+        delete declaration2;
+    }
+
+};
 #endif

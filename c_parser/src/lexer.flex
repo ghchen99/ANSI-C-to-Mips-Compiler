@@ -9,6 +9,8 @@ extern "C" int fileno(FILE *stream);
 VARIABLE [A-Za-z/_]([A-Za-z/_]|[0-9])*
 NUMBER [-]?[0-9]+([.][0-9]*)?
 %%
+
+[...]			{ return(T_ELLIPSIS); }
 [=]             { return T_EQUAL;}
 [*]             { return T_STAR;}
 [+]             { return T_PLUS;}

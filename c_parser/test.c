@@ -2,6 +2,5 @@
 
 main()
 {
-    int z;
-    int X = z = 2;
+    void int x;
 }

@@ -77,7 +77,8 @@ extern int yydebug;
     T_PLUS = 271,
     T_MINUS = 272,
     T_DIVIDE = 273,
-    T_MOD = 274
+    T_MOD = 274,
+    T_ELLIPSIS = 275
   };
 #endif
 
@@ -92,7 +93,7 @@ union YYSTYPE
   std::string *string;
   double number;
 
-#line 96 "src/parser.tab.hpp" /* yacc.c:1909  */
+#line 97 "src/parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
