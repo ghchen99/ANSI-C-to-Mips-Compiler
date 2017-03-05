@@ -61,24 +61,58 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    T_COMMA = 258,
-    T_LCURLYBRACKET = 259,
-    T_RCURLYBRACKET = 260,
-    T_LBRACKET = 261,
-    T_RBRACKET = 262,
-    T_SIMICOLOUMN = 263,
-    T_INT = 264,
-    T_CONTROL_FLOW = 265,
-    T_VARIABLE = 266,
-    T_EQUAL = 267,
-    T_RETURN = 268,
-    T_STAR = 269,
-    T_NUMBER = 270,
-    T_PLUS = 271,
-    T_MINUS = 272,
-    T_DIVIDE = 273,
-    T_MOD = 274,
-    T_ELLIPSIS = 275
+    T_ELSE = 258,
+    T_FOR = 259,
+    T_IF = 260,
+    T_INT = 261,
+    T_RETURN = 262,
+    T_WHILE = 263,
+    T_NUMBER = 264,
+    T_VARIABLE = 265,
+    T_ELLIPSIS = 266,
+    T_RIGHT_ASSIGN = 267,
+    T_LEFT_ASSIGN = 268,
+    T_ADD_ASSIGN = 269,
+    T_SUB_ASSIGN = 270,
+    T_MUL_ASSIGN = 271,
+    T_DIV_ASSIGN = 272,
+    T_MOD_ASSIGN = 273,
+    T_AND_ASSIGN = 274,
+    T_XOR_ASSIGN = 275,
+    T_OR_ASSIGN = 276,
+    T_RIGHT_OP = 277,
+    T_LEFT_OP = 278,
+    T_INC_OP = 279,
+    T_DEC_OP = 280,
+    T_PTR_OP = 281,
+    T_AND_OP = 282,
+    T_OR_OP = 283,
+    T_LE_OP = 284,
+    T_GE_OP = 285,
+    T_EQ_OP = 286,
+    T_NE_OP = 287,
+    T_INEXCLUS_OR = 288,
+    T_EXCLUS_OR = 289,
+    T_SIMICOLOUMN = 290,
+    T_LCURLYBRACKET = 291,
+    T_RCURLYBRACKET = 292,
+    T_COMMA = 293,
+    T_COLOUMN = 294,
+    T_EQUAL = 295,
+    T_LBRACKET = 296,
+    T_RBRACKET = 297,
+    T_LSQUAREBRACKET = 298,
+    T_RSQUAREBRACKET = 299,
+    T_DOT = 300,
+    T_AMPERSAND = 301,
+    T_EXCLAMATION = 302,
+    T_TILDE = 303,
+    T_MINUS = 304,
+    T_PLUS = 305,
+    T_STAR = 306,
+    T_DIVIDE = 307,
+    T_MOD = 308,
+    T_QUESTIONMARK = 309
   };
 #endif
 
@@ -93,7 +127,7 @@ union YYSTYPE
   std::string *string;
   double number;
 
-#line 97 "src/parser.tab.hpp" /* yacc.c:1909  */
+#line 131 "src/parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

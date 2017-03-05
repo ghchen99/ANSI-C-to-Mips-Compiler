@@ -13,6 +13,7 @@
 #include "ast_parameter.hpp"
 #include "ast_scope.hpp"
 #include "ast_direct_declarator.hpp"
+#include "ast_if.hpp"
 
 extern const Program *parseAST();
 

@@ -1,14 +1,16 @@
-#ifndef ast_scope_hpp
-#define ast_scope_hpp
+#ifndef ast_if_hpp
+#define ast_if_hpp
 
-class Scope
+class If
     : public Program
 {
 private:
+    const Program *scope0;
     const Program *scope1;
 public:
-    Scope(const Program *_scope1)
-        :scope1(_scope1)
+    If(const Program *_scope0, const Program *_scope1)
+        :scope0(_scope0)
+        ,scope1(_scope1)
     {}
 
 
@@ -20,21 +22,23 @@ public:
         std::cout << "</Scope>" << std::endl;
     }
 
-    ~Scope(){
+    ~If(){
         delete scope1;
     }
 
 };
 
-class DoubleScope
+class IfElse
     : public Program
 {
 private:
+    const Program *scope0;
     const Program *scope1;
     const Program *scope2;
 public:
-    DoubleScope(const Program *_scope1, const Program *_scope2)
-        :scope1(_scope1)
+    IfElse(const Program *_scope0,const Program *_scope1,const Program *_scope2)
+        :scope0(_scope0)
+        ,scope1(_scope1)
         ,scope2(_scope2)
     {}
 
@@ -44,33 +48,15 @@ public:
         //std::cout << "in declaration path" << '\n';
         std::cout << "<Scope>" << std::endl;
         scope1 -> print();
+        std::cout << "</Scope>" << std::endl;
+        std::cout << "<Scope>" << std::endl;
         scope2 -> print();
         std::cout << "</Scope>" << std::endl;
     }
 
-    ~DoubleScope(){
+    ~IfElse(){
         delete scope1;
         delete scope2;
-    }
-
-};
-
-class EmptyScope
-    : public Program
-{
-public:
-    EmptyScope()
-    {}
-
-
-    virtual void print() const override
-    {
-        //std::cout << "in declaration path" << '\n';
-        std::cout << "<Scope>" << std::endl;
-        std::cout << "</Scope>" << std::endl;
-    }
-
-    ~EmptyScope(){
     }
 
 };
