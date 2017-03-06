@@ -36,8 +36,9 @@
 %type <prog> INIT_DECLARATOR INIT_DECLARATOR_LIST INITIALIZER ASSIGNMENT_EXPRESSION
 %type <prog> UNARY_EXPRESSION POSTFIX_EXPRESSION PRIMARY_EXPRESSION RE_DECLARATION
 %type <prog> FUNCTION COMPOUND_STATEMENT PARAM_DECLARATION_LIST
-%type <prog> STATEMENT STATEMENT_LIST
+%type <prog> STATEMENT STATEMENT_LIST IF_STATEMENT EXPRESSION DECLARATION_LIST
 %type <string> T_INT T_VARIABLE TYPE_SPECIFIER DECLARATION_SPECIFIERS OPERATOR
+%type <string> EXPRESSION_OPERATOR
 %type <number> T_NUMBER
 
 %start ROOT
@@ -60,7 +61,7 @@ FUNCTION : DECLARATION_SPECIFIERS DECLARATOR T_LBRACKET PARAM_DECLARATION_LIST T
          | DECLARATOR T_LBRACKET T_RBRACKET COMPOUND_STATEMENT {$$ = new FunctionNoParam($1,$4);}
 
 COMPOUND_STATEMENT : T_LCURLYBRACKET T_RCURLYBRACKET {$$ = new EmptyScope();}
-                   | T_LCURLYBRACKET DECLARATION T_RCURLYBRACKET {$$ = new Scope($2);}
+                   | T_LCURLYBRACKET DECLARATION_LIST T_RCURLYBRACKET {$$ = new Scope($2);}
                    | T_LCURLYBRACKET STATEMENT_LIST T_RCURLYBRACKET {$$ = new Scope($2);}
                    //| T_LCURLYBRACKET DECLARATION_LIST STATEMENT_LIST T_RCURLYBRACKET {$$ = new DoubleScope($2,$3);}*/
 
@@ -68,19 +69,38 @@ STATEMENT_LIST : STATEMENT { $$ = $1; }
                | STATEMENT_LIST STATEMENT { $$ = new Program_call($1,$2); }
 
 STATEMENT : COMPOUND_STATEMENT { $$ = $1;}
-          /*| IF_STATEMENT { $$ = $1;}
-          | ITERATION_STATEMENT { $$ = $1;}
-          | JUMP_STATEMENT { $$ = $1;}
+          | IF_STATEMENT { $$ = $1;}
+          //| ITERATION_STATEMENT { $$ = $1;}
+         /* | JUMP_STATEMENT { $$ = $1;}
           | LABELED_STATEMENT { $$ = $1;}
           | EXPRESSION_STATEMENT { $$ = $1;}*/
 
-/*
+IF_STATEMENT : T_IF T_LBRACKET EXPRESSION T_RBRACKET STATEMENT { $$ = new If($3,$5);}
+             | T_IF T_LBRACKET EXPRESSION T_RBRACKET T_LCURLYBRACKET DECLARATION_LIST T_RCURLYBRACKET T_ELSE STATEMENT
+             {$$ = new IfElse($3,$6,$9);}
+
+
+
+EXPRESSION : INITIALIZER { $$ = $1;}
+           | T_LBRACKET ASSIGNMENT_EXPRESSION T_RBRACKET { $$ = $2;}
+           | PRIMARY_EXPRESSION EXPRESSION_OPERATOR INITIALIZER { $$ = $3;}
+
+EXPRESSION_OPERATOR : T_EQ_OP {$$ = new std::string("==");}
+                    | T_NE_OP {$$ = new std::string("!=");}
+                    | T_GE_OP {$$ = new std::string(">=");}
+                    | T_LE_OP {$$ = new std::string("<=");}
+                    | T_OR_OP {$$ = new std::string("||");}
+                    | T_AND_OP {$$ = new std::string("&&");}
+
 DECLARATION_LIST : DECLARATION { $$ = $1; }
-                 | DECLARATION_LIST DECLARATION { }*/
+                 | DECLARATION_LIST DECLARATION { $$ = new Program_call($1,$2); }
 
 PARAM_DECLARATION_LIST : DECLARATION_SPECIFIERS DECLARATOR { $$ = new parameter($2); }
                        | DECLARATION_SPECIFIERS DECLARATOR T_COMMA PARAM_DECLARATION_LIST
                         { $$ = new MutiplyParameter($2,$4); }
+
+/*MULTI_DECLARATION : DECLARATION { $$ = $1;}
+                  | MULTI_DECLARATION DECLARATION { $$ = new Program_call($1,$2);}*/
 
 DECLARATION : DECLARATION_SPECIFIERS T_SIMICOLOUMN { $$ = new Empty();}
             | DECLARATION_SPECIFIERS INIT_DECLARATOR_LIST T_SIMICOLOUMN { $$ = new declaration($2);}
@@ -110,7 +130,7 @@ INITIALIZER : ASSIGNMENT_EXPRESSION { $$ = $1;}
             //| T_LCURLYBRACKET INIT_DECLARATOR_LIST T_COMMA T_RCURLYBRACKET
 
 ASSIGNMENT_EXPRESSION : UNARY_EXPRESSION { $$ = $1; }
-                     // | UNARY_EXPRESSION ASSIGNMENT_OPERATOR ASSIGNMENT_EXPRESSION
+                      //| UNARY_EXPRESSION ASSIGNMENT_OPERATOR ASSIGNMENT_EXPRESSION {}
 
 UNARY_EXPRESSION : POSTFIX_EXPRESSION { $$ = $1; }
                  | PRIMARY_EXPRESSION OPERATOR UNARY_EXPRESSION { $$ = new unary_expression($3);}
@@ -120,6 +140,8 @@ OPERATOR : T_MINUS {$$ = new std::string("-");}
          | T_STAR  {$$ = new std::string("*");}
          | T_DIVIDE  {$$ = new std::string("/");}
          | T_MOD  {$$ = new std::string("%%");}
+         | T_EQUAL {$$ = new std::string("=");}
+
 /*CAST_EXPRESSION : UNARY_EXPRESSION { $$ = $1;}*/
 
 POSTFIX_EXPRESSION : PRIMARY_EXPRESSION { $$ = $1; }
