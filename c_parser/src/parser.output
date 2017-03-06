@@ -1,7 +1,6 @@
 Terminals unused in grammar
 
    T_FOR
-   T_RETURN
    T_WHILE
    T_ELLIPSIS
    T_RIGHT_ASSIGN
@@ -51,187 +50,201 @@ Grammar
    10 COMPOUND_STATEMENT: T_LCURLYBRACKET T_RCURLYBRACKET
    11                   | T_LCURLYBRACKET DECLARATION_LIST T_RCURLYBRACKET
    12                   | T_LCURLYBRACKET STATEMENT_LIST T_RCURLYBRACKET
+   13                   | T_LCURLYBRACKET DECLARATION_LIST STATEMENT_LIST T_RCURLYBRACKET
 
-   13 STATEMENT_LIST: STATEMENT
-   14               | STATEMENT_LIST STATEMENT
+   14 STATEMENT_LIST: STATEMENT
+   15               | STATEMENT_LIST STATEMENT
 
-   15 STATEMENT: COMPOUND_STATEMENT
-   16          | IF_STATEMENT
+   16 STATEMENT: COMPOUND_STATEMENT
+   17          | IF_STATEMENT
+   18          | JUMP_STATEMENT
 
-   17 IF_STATEMENT: T_IF T_LBRACKET EXPRESSION T_RBRACKET STATEMENT
-   18             | T_IF T_LBRACKET EXPRESSION T_RBRACKET T_LCURLYBRACKET DECLARATION_LIST T_RCURLYBRACKET T_ELSE STATEMENT
+   19 IF_STATEMENT: T_IF T_LBRACKET EXPRESSION T_RBRACKET STATEMENT
+   20             | T_IF T_LBRACKET EXPRESSION T_RBRACKET STATEMENT T_ELSE STATEMENT
 
-   19 EXPRESSION: INITIALIZER
-   20           | T_LBRACKET ASSIGNMENT_EXPRESSION T_RBRACKET
-   21           | PRIMARY_EXPRESSION EXPRESSION_OPERATOR INITIALIZER
+   21 JUMP_STATEMENT: T_RETURN T_SIMICOLOUMN
+   22               | T_RETURN EXPRESSION T_SIMICOLOUMN
+   23               | T_GOTO T_VARIABLE T_SIMICOLOUMN
+   24               | T_BREAK T_SIMICOLOUMN
+   25               | T_CONTINUE T_SIMICOLOUMN
 
-   22 EXPRESSION_OPERATOR: T_EQ_OP
-   23                    | T_NE_OP
-   24                    | T_GE_OP
-   25                    | T_LE_OP
-   26                    | T_OR_OP
-   27                    | T_AND_OP
+   26 EXPRESSION: INITIALIZER
+   27           | T_LBRACKET ASSIGNMENT_EXPRESSION T_RBRACKET
+   28           | PRIMARY_EXPRESSION EXPRESSION_OPERATOR INITIALIZER
 
-   28 DECLARATION_LIST: DECLARATION
-   29                 | DECLARATION_LIST DECLARATION
+   29 EXPRESSION_OPERATOR: T_EQ_OP
+   30                    | T_NE_OP
+   31                    | T_GE_OP
+   32                    | T_LE_OP
+   33                    | T_OR_OP
+   34                    | T_AND_OP
 
-   30 PARAM_DECLARATION_LIST: DECLARATION_SPECIFIERS DECLARATOR
-   31                       | DECLARATION_SPECIFIERS DECLARATOR T_COMMA PARAM_DECLARATION_LIST
+   35 DECLARATION_LIST: DECLARATION
+   36                 | DECLARATION_LIST DECLARATION
 
-   32 DECLARATION: DECLARATION_SPECIFIERS T_SIMICOLOUMN
-   33            | DECLARATION_SPECIFIERS INIT_DECLARATOR_LIST T_SIMICOLOUMN
-   34            | RE_DECLARATION
+   37 PARAM_DECLARATION_LIST: DECLARATION_SPECIFIERS DECLARATOR
+   38                       | DECLARATION_SPECIFIERS DECLARATOR T_COMMA PARAM_DECLARATION_LIST
 
-   35 RE_DECLARATION: INIT_DECLARATOR_LIST T_SIMICOLOUMN
+   39 DECLARATION: DECLARATION_SPECIFIERS T_SIMICOLOUMN
+   40            | DECLARATION_SPECIFIERS INIT_DECLARATOR_LIST T_SIMICOLOUMN
+   41            | RE_DECLARATION
 
-   36 DECLARATION_SPECIFIERS: TYPE_SPECIFIER
+   42 RE_DECLARATION: INIT_DECLARATOR_LIST T_SIMICOLOUMN
 
-   37 INIT_DECLARATOR_LIST: INIT_DECLARATOR
+   43 DECLARATION_SPECIFIERS: TYPE_SPECIFIER
 
-   38 INIT_DECLARATOR: DECLARATOR
-   39                | DECLARATOR T_EQUAL INITIALIZER
+   44 INIT_DECLARATOR_LIST: INIT_DECLARATOR
 
-   40 DECLARATOR: T_STAR DIRECT_DECLARATOR
-   41           | DIRECT_DECLARATOR
+   45 INIT_DECLARATOR: DECLARATOR
+   46                | DECLARATOR T_EQUAL INITIALIZER
 
-   42 DIRECT_DECLARATOR: T_VARIABLE
+   47 DECLARATOR: T_STAR DIRECT_DECLARATOR
+   48           | DIRECT_DECLARATOR
 
-   43 TYPE_SPECIFIER: T_INT
+   49 DIRECT_DECLARATOR: T_VARIABLE
 
-   44 INITIALIZER: ASSIGNMENT_EXPRESSION
+   50 TYPE_SPECIFIER: T_INT
 
-   45 ASSIGNMENT_EXPRESSION: UNARY_EXPRESSION
+   51 INITIALIZER: ASSIGNMENT_EXPRESSION
 
-   46 UNARY_EXPRESSION: POSTFIX_EXPRESSION
-   47                 | PRIMARY_EXPRESSION OPERATOR UNARY_EXPRESSION
+   52 ASSIGNMENT_EXPRESSION: UNARY_EXPRESSION
 
-   48 OPERATOR: T_MINUS
-   49         | T_PLUS
-   50         | T_STAR
-   51         | T_DIVIDE
-   52         | T_MOD
-   53         | T_EQUAL
+   53 UNARY_EXPRESSION: POSTFIX_EXPRESSION
+   54                 | PRIMARY_EXPRESSION OPERATOR UNARY_EXPRESSION
 
-   54 POSTFIX_EXPRESSION: PRIMARY_EXPRESSION
+   55 OPERATOR: T_MINUS
+   56         | T_PLUS
+   57         | T_STAR
+   58         | T_DIVIDE
+   59         | T_MOD
+   60         | T_EQUAL
 
-   55 PRIMARY_EXPRESSION: T_VARIABLE
-   56                   | T_NUMBER
+   61 POSTFIX_EXPRESSION: PRIMARY_EXPRESSION
+
+   62 PRIMARY_EXPRESSION: T_VARIABLE
+   63                   | T_NUMBER
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 error (256)
-T_ELSE (258) 18
-T_FOR (259)
-T_IF (260) 17 18
-T_INT (261) 43
-T_RETURN (262)
-T_WHILE (263)
-T_NUMBER (264) 56
-T_VARIABLE (265) 42 55
-T_ELLIPSIS (266)
-T_RIGHT_ASSIGN (267)
-T_LEFT_ASSIGN (268)
-T_ADD_ASSIGN (269)
-T_SUB_ASSIGN (270)
-T_MUL_ASSIGN (271)
-T_DIV_ASSIGN (272)
-T_MOD_ASSIGN (273)
-T_AND_ASSIGN (274)
-T_XOR_ASSIGN (275)
-T_OR_ASSIGN (276)
-T_RIGHT_OP (277)
-T_LEFT_OP (278)
-T_INC_OP (279)
-T_DEC_OP (280)
-T_PTR_OP (281)
-T_AND_OP (282) 27
-T_OR_OP (283) 26
-T_LE_OP (284) 25
-T_GE_OP (285) 24
-T_EQ_OP (286) 22
-T_NE_OP (287) 23
-T_INEXCLUS_OR (288)
-T_EXCLUS_OR (289)
-T_SIMICOLOUMN (290) 32 33 35
-T_LCURLYBRACKET (291) 10 11 12 18
-T_RCURLYBRACKET (292) 10 11 12 18
-T_COMMA (293) 31
-T_COLOUMN (294)
-T_EQUAL (295) 39 53
-T_LBRACKET (296) 6 7 8 9 17 18 20
-T_RBRACKET (297) 6 7 8 9 17 18 20
-T_LSQUAREBRACKET (298)
-T_RSQUAREBRACKET (299)
-T_DOT (300)
-T_AMPERSAND (301)
-T_EXCLAMATION (302)
-T_TILDE (303)
-T_MINUS (304) 48
-T_PLUS (305) 49
-T_STAR (306) 40 50
-T_DIVIDE (307) 51
-T_MOD (308) 52
-T_QUESTIONMARK (309)
+T_FOR (258)
+T_IF (259) 19 20
+T_INT (260) 50
+T_RETURN (261) 21 22
+T_WHILE (262)
+T_NUMBER (263) 63
+T_VARIABLE (264) 23 49 62
+T_ELLIPSIS (265)
+T_RIGHT_ASSIGN (266)
+T_LEFT_ASSIGN (267)
+T_ADD_ASSIGN (268)
+T_SUB_ASSIGN (269)
+T_MUL_ASSIGN (270)
+T_DIV_ASSIGN (271)
+T_MOD_ASSIGN (272)
+T_AND_ASSIGN (273)
+T_XOR_ASSIGN (274)
+T_OR_ASSIGN (275)
+T_RIGHT_OP (276)
+T_LEFT_OP (277)
+T_INC_OP (278)
+T_DEC_OP (279)
+T_PTR_OP (280)
+T_AND_OP (281) 34
+T_OR_OP (282) 33
+T_LE_OP (283) 32
+T_GE_OP (284) 31
+T_EQ_OP (285) 29
+T_NE_OP (286) 30
+T_INEXCLUS_OR (287)
+T_EXCLUS_OR (288)
+T_SIMICOLOUMN (289) 21 22 23 24 25 39 40 42
+T_LCURLYBRACKET (290) 10 11 12 13
+T_RCURLYBRACKET (291) 10 11 12 13
+T_COMMA (292) 38
+T_COLOUMN (293)
+T_EQUAL (294) 46 60
+T_LBRACKET (295) 6 7 8 9 19 20 27
+T_RBRACKET (296) 6 7 8 9 19 20 27
+T_LSQUAREBRACKET (297)
+T_RSQUAREBRACKET (298)
+T_DOT (299)
+T_AMPERSAND (300)
+T_EXCLAMATION (301)
+T_TILDE (302)
+T_MINUS (303) 55
+T_PLUS (304) 56
+T_STAR (305) 47 57
+T_DIVIDE (306) 58
+T_MOD (307) 59
+T_QUESTIONMARK (308)
+T_GOTO (309) 23
+T_BREAK (310) 24
+T_CONTINUE (311) 25
+"then" (312)
+T_ELSE (313) 20
 
 
 Nonterminals, with rules where they appear
 
-$accept (55)
+$accept (59)
     on left: 0
-ROOT (56)
+ROOT (60)
     on left: 1, on right: 0
-PROGRAM (57)
+PROGRAM (61)
     on left: 2 3, on right: 1 3
-ALL_DECLEARARION (58)
+ALL_DECLEARARION (62)
     on left: 4 5, on right: 2 3
-FUNCTION (59)
+FUNCTION (63)
     on left: 6 7 8 9, on right: 5
-COMPOUND_STATEMENT (60)
-    on left: 10 11 12, on right: 6 7 8 9 15
-STATEMENT_LIST (61)
-    on left: 13 14, on right: 12 14
-STATEMENT (62)
-    on left: 15 16, on right: 13 14 17 18
-IF_STATEMENT (63)
-    on left: 17 18, on right: 16
-EXPRESSION (64)
-    on left: 19 20 21, on right: 17 18
-EXPRESSION_OPERATOR (65)
-    on left: 22 23 24 25 26 27, on right: 21
-DECLARATION_LIST (66)
-    on left: 28 29, on right: 11 18 29
-PARAM_DECLARATION_LIST (67)
-    on left: 30 31, on right: 6 8 31
-DECLARATION (68)
-    on left: 32 33 34, on right: 4 28 29
-RE_DECLARATION (69)
-    on left: 35, on right: 34
-DECLARATION_SPECIFIERS (70)
-    on left: 36, on right: 6 7 30 31 32 33
-INIT_DECLARATOR_LIST (71)
-    on left: 37, on right: 33 35
-INIT_DECLARATOR (72)
-    on left: 38 39, on right: 37
-DECLARATOR (73)
-    on left: 40 41, on right: 6 7 8 9 30 31 38 39
-DIRECT_DECLARATOR (74)
-    on left: 42, on right: 40 41
-TYPE_SPECIFIER (75)
-    on left: 43, on right: 36
-INITIALIZER (76)
-    on left: 44, on right: 19 21 39
-ASSIGNMENT_EXPRESSION (77)
-    on left: 45, on right: 20 44
-UNARY_EXPRESSION (78)
-    on left: 46 47, on right: 45 47
-OPERATOR (79)
-    on left: 48 49 50 51 52 53, on right: 47
-POSTFIX_EXPRESSION (80)
-    on left: 54, on right: 46
-PRIMARY_EXPRESSION (81)
-    on left: 55 56, on right: 21 47 54
+COMPOUND_STATEMENT (64)
+    on left: 10 11 12 13, on right: 6 7 8 9 16
+STATEMENT_LIST (65)
+    on left: 14 15, on right: 12 13 15
+STATEMENT (66)
+    on left: 16 17 18, on right: 14 15 19 20
+IF_STATEMENT (67)
+    on left: 19 20, on right: 17
+JUMP_STATEMENT (68)
+    on left: 21 22 23 24 25, on right: 18
+EXPRESSION (69)
+    on left: 26 27 28, on right: 19 20 22
+EXPRESSION_OPERATOR (70)
+    on left: 29 30 31 32 33 34, on right: 28
+DECLARATION_LIST (71)
+    on left: 35 36, on right: 11 13 36
+PARAM_DECLARATION_LIST (72)
+    on left: 37 38, on right: 6 8 38
+DECLARATION (73)
+    on left: 39 40 41, on right: 4 35 36
+RE_DECLARATION (74)
+    on left: 42, on right: 41
+DECLARATION_SPECIFIERS (75)
+    on left: 43, on right: 6 7 37 38 39 40
+INIT_DECLARATOR_LIST (76)
+    on left: 44, on right: 40 42
+INIT_DECLARATOR (77)
+    on left: 45 46, on right: 44
+DECLARATOR (78)
+    on left: 47 48, on right: 6 7 8 9 37 38 45 46
+DIRECT_DECLARATOR (79)
+    on left: 49, on right: 47 48
+TYPE_SPECIFIER (80)
+    on left: 50, on right: 43
+INITIALIZER (81)
+    on left: 51, on right: 26 28 46
+ASSIGNMENT_EXPRESSION (82)
+    on left: 52, on right: 27 51
+UNARY_EXPRESSION (83)
+    on left: 53 54, on right: 52 54
+OPERATOR (84)
+    on left: 55 56 57 58 59 60, on right: 54
+POSTFIX_EXPRESSION (85)
+    on left: 61, on right: 53
+PRIMARY_EXPRESSION (86)
+    on left: 62 63, on right: 28 54 61
 
 
 State 0
@@ -258,21 +271,21 @@ State 0
 
 State 1
 
-   43 TYPE_SPECIFIER: T_INT .
+   50 TYPE_SPECIFIER: T_INT .
 
-    $default  reduce using rule 43 (TYPE_SPECIFIER)
+    $default  reduce using rule 50 (TYPE_SPECIFIER)
 
 
 State 2
 
-   42 DIRECT_DECLARATOR: T_VARIABLE .
+   49 DIRECT_DECLARATOR: T_VARIABLE .
 
-    $default  reduce using rule 42 (DIRECT_DECLARATOR)
+    $default  reduce using rule 49 (DIRECT_DECLARATOR)
 
 
 State 3
 
-   40 DECLARATOR: T_STAR . DIRECT_DECLARATOR
+   47 DECLARATOR: T_STAR . DIRECT_DECLARATOR
 
     T_VARIABLE  shift, and go to state 2
 
@@ -332,17 +345,17 @@ State 8
 
 State 9
 
-   34 DECLARATION: RE_DECLARATION .
+   41 DECLARATION: RE_DECLARATION .
 
-    $default  reduce using rule 34 (DECLARATION)
+    $default  reduce using rule 41 (DECLARATION)
 
 
 State 10
 
     6 FUNCTION: DECLARATION_SPECIFIERS . DECLARATOR T_LBRACKET PARAM_DECLARATION_LIST T_RBRACKET COMPOUND_STATEMENT
     7         | DECLARATION_SPECIFIERS . DECLARATOR T_LBRACKET T_RBRACKET COMPOUND_STATEMENT
-   32 DECLARATION: DECLARATION_SPECIFIERS . T_SIMICOLOUMN
-   33            | DECLARATION_SPECIFIERS . INIT_DECLARATOR_LIST T_SIMICOLOUMN
+   39 DECLARATION: DECLARATION_SPECIFIERS . T_SIMICOLOUMN
+   40            | DECLARATION_SPECIFIERS . INIT_DECLARATOR_LIST T_SIMICOLOUMN
 
     T_VARIABLE     shift, and go to state 2
     T_SIMICOLOUMN  shift, and go to state 19
@@ -356,50 +369,50 @@ State 10
 
 State 11
 
-   35 RE_DECLARATION: INIT_DECLARATOR_LIST . T_SIMICOLOUMN
+   42 RE_DECLARATION: INIT_DECLARATOR_LIST . T_SIMICOLOUMN
 
     T_SIMICOLOUMN  shift, and go to state 22
 
 
 State 12
 
-   37 INIT_DECLARATOR_LIST: INIT_DECLARATOR .
+   44 INIT_DECLARATOR_LIST: INIT_DECLARATOR .
 
-    $default  reduce using rule 37 (INIT_DECLARATOR_LIST)
+    $default  reduce using rule 44 (INIT_DECLARATOR_LIST)
 
 
 State 13
 
     8 FUNCTION: DECLARATOR . T_LBRACKET PARAM_DECLARATION_LIST T_RBRACKET COMPOUND_STATEMENT
     9         | DECLARATOR . T_LBRACKET T_RBRACKET COMPOUND_STATEMENT
-   38 INIT_DECLARATOR: DECLARATOR .
-   39                | DECLARATOR . T_EQUAL INITIALIZER
+   45 INIT_DECLARATOR: DECLARATOR .
+   46                | DECLARATOR . T_EQUAL INITIALIZER
 
     T_EQUAL     shift, and go to state 23
     T_LBRACKET  shift, and go to state 24
 
-    $default  reduce using rule 38 (INIT_DECLARATOR)
+    $default  reduce using rule 45 (INIT_DECLARATOR)
 
 
 State 14
 
-   41 DECLARATOR: DIRECT_DECLARATOR .
+   48 DECLARATOR: DIRECT_DECLARATOR .
 
-    $default  reduce using rule 41 (DECLARATOR)
+    $default  reduce using rule 48 (DECLARATOR)
 
 
 State 15
 
-   36 DECLARATION_SPECIFIERS: TYPE_SPECIFIER .
+   43 DECLARATION_SPECIFIERS: TYPE_SPECIFIER .
 
-    $default  reduce using rule 36 (DECLARATION_SPECIFIERS)
+    $default  reduce using rule 43 (DECLARATION_SPECIFIERS)
 
 
 State 16
 
-   40 DECLARATOR: T_STAR DIRECT_DECLARATOR .
+   47 DECLARATOR: T_STAR DIRECT_DECLARATOR .
 
-    $default  reduce using rule 40 (DECLARATOR)
+    $default  reduce using rule 47 (DECLARATOR)
 
 
 State 17
@@ -418,14 +431,14 @@ State 18
 
 State 19
 
-   32 DECLARATION: DECLARATION_SPECIFIERS T_SIMICOLOUMN .
+   39 DECLARATION: DECLARATION_SPECIFIERS T_SIMICOLOUMN .
 
-    $default  reduce using rule 32 (DECLARATION)
+    $default  reduce using rule 39 (DECLARATION)
 
 
 State 20
 
-   33 DECLARATION: DECLARATION_SPECIFIERS INIT_DECLARATOR_LIST . T_SIMICOLOUMN
+   40 DECLARATION: DECLARATION_SPECIFIERS INIT_DECLARATOR_LIST . T_SIMICOLOUMN
 
     T_SIMICOLOUMN  shift, and go to state 25
 
@@ -434,25 +447,25 @@ State 21
 
     6 FUNCTION: DECLARATION_SPECIFIERS DECLARATOR . T_LBRACKET PARAM_DECLARATION_LIST T_RBRACKET COMPOUND_STATEMENT
     7         | DECLARATION_SPECIFIERS DECLARATOR . T_LBRACKET T_RBRACKET COMPOUND_STATEMENT
-   38 INIT_DECLARATOR: DECLARATOR .
-   39                | DECLARATOR . T_EQUAL INITIALIZER
+   45 INIT_DECLARATOR: DECLARATOR .
+   46                | DECLARATOR . T_EQUAL INITIALIZER
 
     T_EQUAL     shift, and go to state 23
     T_LBRACKET  shift, and go to state 26
 
-    $default  reduce using rule 38 (INIT_DECLARATOR)
+    $default  reduce using rule 45 (INIT_DECLARATOR)
 
 
 State 22
 
-   35 RE_DECLARATION: INIT_DECLARATOR_LIST T_SIMICOLOUMN .
+   42 RE_DECLARATION: INIT_DECLARATOR_LIST T_SIMICOLOUMN .
 
-    $default  reduce using rule 35 (RE_DECLARATION)
+    $default  reduce using rule 42 (RE_DECLARATION)
 
 
 State 23
 
-   39 INIT_DECLARATOR: DECLARATOR T_EQUAL . INITIALIZER
+   46 INIT_DECLARATOR: DECLARATOR T_EQUAL . INITIALIZER
 
     T_NUMBER    shift, and go to state 27
     T_VARIABLE  shift, and go to state 28
@@ -479,9 +492,9 @@ State 24
 
 State 25
 
-   33 DECLARATION: DECLARATION_SPECIFIERS INIT_DECLARATOR_LIST T_SIMICOLOUMN .
+   40 DECLARATION: DECLARATION_SPECIFIERS INIT_DECLARATOR_LIST T_SIMICOLOUMN .
 
-    $default  reduce using rule 33 (DECLARATION)
+    $default  reduce using rule 40 (DECLARATION)
 
 
 State 26
@@ -499,50 +512,50 @@ State 26
 
 State 27
 
-   56 PRIMARY_EXPRESSION: T_NUMBER .
+   63 PRIMARY_EXPRESSION: T_NUMBER .
 
-    $default  reduce using rule 56 (PRIMARY_EXPRESSION)
+    $default  reduce using rule 63 (PRIMARY_EXPRESSION)
 
 
 State 28
 
-   55 PRIMARY_EXPRESSION: T_VARIABLE .
+   62 PRIMARY_EXPRESSION: T_VARIABLE .
 
-    $default  reduce using rule 55 (PRIMARY_EXPRESSION)
+    $default  reduce using rule 62 (PRIMARY_EXPRESSION)
 
 
 State 29
 
-   39 INIT_DECLARATOR: DECLARATOR T_EQUAL INITIALIZER .
+   46 INIT_DECLARATOR: DECLARATOR T_EQUAL INITIALIZER .
 
-    $default  reduce using rule 39 (INIT_DECLARATOR)
+    $default  reduce using rule 46 (INIT_DECLARATOR)
 
 
 State 30
 
-   44 INITIALIZER: ASSIGNMENT_EXPRESSION .
+   51 INITIALIZER: ASSIGNMENT_EXPRESSION .
 
-    $default  reduce using rule 44 (INITIALIZER)
+    $default  reduce using rule 51 (INITIALIZER)
 
 
 State 31
 
-   45 ASSIGNMENT_EXPRESSION: UNARY_EXPRESSION .
+   52 ASSIGNMENT_EXPRESSION: UNARY_EXPRESSION .
 
-    $default  reduce using rule 45 (ASSIGNMENT_EXPRESSION)
+    $default  reduce using rule 52 (ASSIGNMENT_EXPRESSION)
 
 
 State 32
 
-   46 UNARY_EXPRESSION: POSTFIX_EXPRESSION .
+   53 UNARY_EXPRESSION: POSTFIX_EXPRESSION .
 
-    $default  reduce using rule 46 (UNARY_EXPRESSION)
+    $default  reduce using rule 53 (UNARY_EXPRESSION)
 
 
 State 33
 
-   47 UNARY_EXPRESSION: PRIMARY_EXPRESSION . OPERATOR UNARY_EXPRESSION
-   54 POSTFIX_EXPRESSION: PRIMARY_EXPRESSION .
+   54 UNARY_EXPRESSION: PRIMARY_EXPRESSION . OPERATOR UNARY_EXPRESSION
+   61 POSTFIX_EXPRESSION: PRIMARY_EXPRESSION .
 
     T_EQUAL   shift, and go to state 39
     T_MINUS   shift, and go to state 40
@@ -551,7 +564,7 @@ State 33
     T_DIVIDE  shift, and go to state 43
     T_MOD     shift, and go to state 44
 
-    $default  reduce using rule 54 (POSTFIX_EXPRESSION)
+    $default  reduce using rule 61 (POSTFIX_EXPRESSION)
 
     OPERATOR  go to state 45
 
@@ -574,8 +587,8 @@ State 35
 
 State 36
 
-   30 PARAM_DECLARATION_LIST: DECLARATION_SPECIFIERS . DECLARATOR
-   31                       | DECLARATION_SPECIFIERS . DECLARATOR T_COMMA PARAM_DECLARATION_LIST
+   37 PARAM_DECLARATION_LIST: DECLARATION_SPECIFIERS . DECLARATOR
+   38                       | DECLARATION_SPECIFIERS . DECLARATOR T_COMMA PARAM_DECLARATION_LIST
 
     T_VARIABLE  shift, and go to state 2
     T_STAR      shift, and go to state 3
@@ -602,49 +615,49 @@ State 38
 
 State 39
 
-   53 OPERATOR: T_EQUAL .
+   60 OPERATOR: T_EQUAL .
 
-    $default  reduce using rule 53 (OPERATOR)
+    $default  reduce using rule 60 (OPERATOR)
 
 
 State 40
 
-   48 OPERATOR: T_MINUS .
+   55 OPERATOR: T_MINUS .
 
-    $default  reduce using rule 48 (OPERATOR)
+    $default  reduce using rule 55 (OPERATOR)
 
 
 State 41
 
-   49 OPERATOR: T_PLUS .
+   56 OPERATOR: T_PLUS .
 
-    $default  reduce using rule 49 (OPERATOR)
+    $default  reduce using rule 56 (OPERATOR)
 
 
 State 42
 
-   50 OPERATOR: T_STAR .
+   57 OPERATOR: T_STAR .
 
-    $default  reduce using rule 50 (OPERATOR)
+    $default  reduce using rule 57 (OPERATOR)
 
 
 State 43
 
-   51 OPERATOR: T_DIVIDE .
+   58 OPERATOR: T_DIVIDE .
 
-    $default  reduce using rule 51 (OPERATOR)
+    $default  reduce using rule 58 (OPERATOR)
 
 
 State 44
 
-   52 OPERATOR: T_MOD .
+   59 OPERATOR: T_MOD .
 
-    $default  reduce using rule 52 (OPERATOR)
+    $default  reduce using rule 59 (OPERATOR)
 
 
 State 45
 
-   47 UNARY_EXPRESSION: PRIMARY_EXPRESSION OPERATOR . UNARY_EXPRESSION
+   54 UNARY_EXPRESSION: PRIMARY_EXPRESSION OPERATOR . UNARY_EXPRESSION
 
     T_NUMBER    shift, and go to state 27
     T_VARIABLE  shift, and go to state 28
@@ -659,25 +672,31 @@ State 46
    10 COMPOUND_STATEMENT: T_LCURLYBRACKET . T_RCURLYBRACKET
    11                   | T_LCURLYBRACKET . DECLARATION_LIST T_RCURLYBRACKET
    12                   | T_LCURLYBRACKET . STATEMENT_LIST T_RCURLYBRACKET
+   13                   | T_LCURLYBRACKET . DECLARATION_LIST STATEMENT_LIST T_RCURLYBRACKET
 
     T_IF             shift, and go to state 53
     T_INT            shift, and go to state 1
+    T_RETURN         shift, and go to state 54
     T_VARIABLE       shift, and go to state 2
     T_LCURLYBRACKET  shift, and go to state 46
-    T_RCURLYBRACKET  shift, and go to state 54
+    T_RCURLYBRACKET  shift, and go to state 55
     T_STAR           shift, and go to state 3
+    T_GOTO           shift, and go to state 56
+    T_BREAK          shift, and go to state 57
+    T_CONTINUE       shift, and go to state 58
 
-    COMPOUND_STATEMENT      go to state 55
-    STATEMENT_LIST          go to state 56
-    STATEMENT               go to state 57
-    IF_STATEMENT            go to state 58
-    DECLARATION_LIST        go to state 59
-    DECLARATION             go to state 60
+    COMPOUND_STATEMENT      go to state 59
+    STATEMENT_LIST          go to state 60
+    STATEMENT               go to state 61
+    IF_STATEMENT            go to state 62
+    JUMP_STATEMENT          go to state 63
+    DECLARATION_LIST        go to state 64
+    DECLARATION             go to state 65
     RE_DECLARATION          go to state 9
-    DECLARATION_SPECIFIERS  go to state 61
+    DECLARATION_SPECIFIERS  go to state 66
     INIT_DECLARATOR_LIST    go to state 11
     INIT_DECLARATOR         go to state 12
-    DECLARATOR              go to state 62
+    DECLARATOR              go to state 67
     DIRECT_DECLARATOR       go to state 14
     TYPE_SPECIFIER          go to state 15
 
@@ -695,17 +714,17 @@ State 48
 
     T_LCURLYBRACKET  shift, and go to state 46
 
-    COMPOUND_STATEMENT  go to state 63
+    COMPOUND_STATEMENT  go to state 68
 
 
 State 49
 
-   30 PARAM_DECLARATION_LIST: DECLARATION_SPECIFIERS DECLARATOR .
-   31                       | DECLARATION_SPECIFIERS DECLARATOR . T_COMMA PARAM_DECLARATION_LIST
+   37 PARAM_DECLARATION_LIST: DECLARATION_SPECIFIERS DECLARATOR .
+   38                       | DECLARATION_SPECIFIERS DECLARATOR . T_COMMA PARAM_DECLARATION_LIST
 
-    T_COMMA  shift, and go to state 64
+    T_COMMA  shift, and go to state 69
 
-    $default  reduce using rule 30 (PARAM_DECLARATION_LIST)
+    $default  reduce using rule 37 (PARAM_DECLARATION_LIST)
 
 
 State 50
@@ -721,97 +740,160 @@ State 51
 
     T_LCURLYBRACKET  shift, and go to state 46
 
-    COMPOUND_STATEMENT  go to state 65
+    COMPOUND_STATEMENT  go to state 70
 
 
 State 52
 
-   47 UNARY_EXPRESSION: PRIMARY_EXPRESSION OPERATOR UNARY_EXPRESSION .
+   54 UNARY_EXPRESSION: PRIMARY_EXPRESSION OPERATOR UNARY_EXPRESSION .
 
-    $default  reduce using rule 47 (UNARY_EXPRESSION)
+    $default  reduce using rule 54 (UNARY_EXPRESSION)
 
 
 State 53
 
-   17 IF_STATEMENT: T_IF . T_LBRACKET EXPRESSION T_RBRACKET STATEMENT
-   18             | T_IF . T_LBRACKET EXPRESSION T_RBRACKET T_LCURLYBRACKET DECLARATION_LIST T_RCURLYBRACKET T_ELSE STATEMENT
+   19 IF_STATEMENT: T_IF . T_LBRACKET EXPRESSION T_RBRACKET STATEMENT
+   20             | T_IF . T_LBRACKET EXPRESSION T_RBRACKET STATEMENT T_ELSE STATEMENT
 
-    T_LBRACKET  shift, and go to state 66
+    T_LBRACKET  shift, and go to state 71
 
 
 State 54
+
+   21 JUMP_STATEMENT: T_RETURN . T_SIMICOLOUMN
+   22               | T_RETURN . EXPRESSION T_SIMICOLOUMN
+
+    T_NUMBER       shift, and go to state 27
+    T_VARIABLE     shift, and go to state 28
+    T_SIMICOLOUMN  shift, and go to state 72
+    T_LBRACKET     shift, and go to state 73
+
+    EXPRESSION             go to state 74
+    INITIALIZER            go to state 75
+    ASSIGNMENT_EXPRESSION  go to state 30
+    UNARY_EXPRESSION       go to state 31
+    POSTFIX_EXPRESSION     go to state 32
+    PRIMARY_EXPRESSION     go to state 76
+
+
+State 55
 
    10 COMPOUND_STATEMENT: T_LCURLYBRACKET T_RCURLYBRACKET .
 
     $default  reduce using rule 10 (COMPOUND_STATEMENT)
 
 
-State 55
-
-   15 STATEMENT: COMPOUND_STATEMENT .
-
-    $default  reduce using rule 15 (STATEMENT)
-
-
 State 56
 
-   12 COMPOUND_STATEMENT: T_LCURLYBRACKET STATEMENT_LIST . T_RCURLYBRACKET
-   14 STATEMENT_LIST: STATEMENT_LIST . STATEMENT
+   23 JUMP_STATEMENT: T_GOTO . T_VARIABLE T_SIMICOLOUMN
 
-    T_IF             shift, and go to state 53
-    T_LCURLYBRACKET  shift, and go to state 46
-    T_RCURLYBRACKET  shift, and go to state 67
-
-    COMPOUND_STATEMENT  go to state 55
-    STATEMENT           go to state 68
-    IF_STATEMENT        go to state 58
+    T_VARIABLE  shift, and go to state 77
 
 
 State 57
 
-   13 STATEMENT_LIST: STATEMENT .
+   24 JUMP_STATEMENT: T_BREAK . T_SIMICOLOUMN
 
-    $default  reduce using rule 13 (STATEMENT_LIST)
+    T_SIMICOLOUMN  shift, and go to state 78
 
 
 State 58
 
-   16 STATEMENT: IF_STATEMENT .
+   25 JUMP_STATEMENT: T_CONTINUE . T_SIMICOLOUMN
 
-    $default  reduce using rule 16 (STATEMENT)
+    T_SIMICOLOUMN  shift, and go to state 79
 
 
 State 59
 
-   11 COMPOUND_STATEMENT: T_LCURLYBRACKET DECLARATION_LIST . T_RCURLYBRACKET
-   29 DECLARATION_LIST: DECLARATION_LIST . DECLARATION
+   16 STATEMENT: COMPOUND_STATEMENT .
 
-    T_INT            shift, and go to state 1
-    T_VARIABLE       shift, and go to state 2
-    T_RCURLYBRACKET  shift, and go to state 69
-    T_STAR           shift, and go to state 3
-
-    DECLARATION             go to state 70
-    RE_DECLARATION          go to state 9
-    DECLARATION_SPECIFIERS  go to state 61
-    INIT_DECLARATOR_LIST    go to state 11
-    INIT_DECLARATOR         go to state 12
-    DECLARATOR              go to state 62
-    DIRECT_DECLARATOR       go to state 14
-    TYPE_SPECIFIER          go to state 15
+    $default  reduce using rule 16 (STATEMENT)
 
 
 State 60
 
-   28 DECLARATION_LIST: DECLARATION .
+   12 COMPOUND_STATEMENT: T_LCURLYBRACKET STATEMENT_LIST . T_RCURLYBRACKET
+   15 STATEMENT_LIST: STATEMENT_LIST . STATEMENT
 
-    $default  reduce using rule 28 (DECLARATION_LIST)
+    T_IF             shift, and go to state 53
+    T_RETURN         shift, and go to state 54
+    T_LCURLYBRACKET  shift, and go to state 46
+    T_RCURLYBRACKET  shift, and go to state 80
+    T_GOTO           shift, and go to state 56
+    T_BREAK          shift, and go to state 57
+    T_CONTINUE       shift, and go to state 58
+
+    COMPOUND_STATEMENT  go to state 59
+    STATEMENT           go to state 81
+    IF_STATEMENT        go to state 62
+    JUMP_STATEMENT      go to state 63
 
 
 State 61
 
-   32 DECLARATION: DECLARATION_SPECIFIERS . T_SIMICOLOUMN
-   33            | DECLARATION_SPECIFIERS . INIT_DECLARATOR_LIST T_SIMICOLOUMN
+   14 STATEMENT_LIST: STATEMENT .
+
+    $default  reduce using rule 14 (STATEMENT_LIST)
+
+
+State 62
+
+   17 STATEMENT: IF_STATEMENT .
+
+    $default  reduce using rule 17 (STATEMENT)
+
+
+State 63
+
+   18 STATEMENT: JUMP_STATEMENT .
+
+    $default  reduce using rule 18 (STATEMENT)
+
+
+State 64
+
+   11 COMPOUND_STATEMENT: T_LCURLYBRACKET DECLARATION_LIST . T_RCURLYBRACKET
+   13                   | T_LCURLYBRACKET DECLARATION_LIST . STATEMENT_LIST T_RCURLYBRACKET
+   36 DECLARATION_LIST: DECLARATION_LIST . DECLARATION
+
+    T_IF             shift, and go to state 53
+    T_INT            shift, and go to state 1
+    T_RETURN         shift, and go to state 54
+    T_VARIABLE       shift, and go to state 2
+    T_LCURLYBRACKET  shift, and go to state 46
+    T_RCURLYBRACKET  shift, and go to state 82
+    T_STAR           shift, and go to state 3
+    T_GOTO           shift, and go to state 56
+    T_BREAK          shift, and go to state 57
+    T_CONTINUE       shift, and go to state 58
+
+    COMPOUND_STATEMENT      go to state 59
+    STATEMENT_LIST          go to state 83
+    STATEMENT               go to state 61
+    IF_STATEMENT            go to state 62
+    JUMP_STATEMENT          go to state 63
+    DECLARATION             go to state 84
+    RE_DECLARATION          go to state 9
+    DECLARATION_SPECIFIERS  go to state 66
+    INIT_DECLARATOR_LIST    go to state 11
+    INIT_DECLARATOR         go to state 12
+    DECLARATOR              go to state 67
+    DIRECT_DECLARATOR       go to state 14
+    TYPE_SPECIFIER          go to state 15
+
+
+State 65
+
+   35 DECLARATION_LIST: DECLARATION .
+
+    $default  reduce using rule 35 (DECLARATION_LIST)
+
+
+State 66
+
+   39 DECLARATION: DECLARATION_SPECIFIERS . T_SIMICOLOUMN
+   40            | DECLARATION_SPECIFIERS . INIT_DECLARATOR_LIST T_SIMICOLOUMN
 
     T_VARIABLE     shift, and go to state 2
     T_SIMICOLOUMN  shift, and go to state 19
@@ -819,137 +901,108 @@ State 61
 
     INIT_DECLARATOR_LIST  go to state 20
     INIT_DECLARATOR       go to state 12
-    DECLARATOR            go to state 62
+    DECLARATOR            go to state 67
     DIRECT_DECLARATOR     go to state 14
 
 
-State 62
+State 67
 
-   38 INIT_DECLARATOR: DECLARATOR .
-   39                | DECLARATOR . T_EQUAL INITIALIZER
+   45 INIT_DECLARATOR: DECLARATOR .
+   46                | DECLARATOR . T_EQUAL INITIALIZER
 
     T_EQUAL  shift, and go to state 23
 
-    $default  reduce using rule 38 (INIT_DECLARATOR)
+    $default  reduce using rule 45 (INIT_DECLARATOR)
 
 
-State 63
+State 68
 
     8 FUNCTION: DECLARATOR T_LBRACKET PARAM_DECLARATION_LIST T_RBRACKET COMPOUND_STATEMENT .
 
     $default  reduce using rule 8 (FUNCTION)
 
 
-State 64
+State 69
 
-   31 PARAM_DECLARATION_LIST: DECLARATION_SPECIFIERS DECLARATOR T_COMMA . PARAM_DECLARATION_LIST
+   38 PARAM_DECLARATION_LIST: DECLARATION_SPECIFIERS DECLARATOR T_COMMA . PARAM_DECLARATION_LIST
 
     T_INT  shift, and go to state 1
 
-    PARAM_DECLARATION_LIST  go to state 71
+    PARAM_DECLARATION_LIST  go to state 85
     DECLARATION_SPECIFIERS  go to state 36
     TYPE_SPECIFIER          go to state 15
 
 
-State 65
+State 70
 
     6 FUNCTION: DECLARATION_SPECIFIERS DECLARATOR T_LBRACKET PARAM_DECLARATION_LIST T_RBRACKET COMPOUND_STATEMENT .
 
     $default  reduce using rule 6 (FUNCTION)
 
 
-State 66
+State 71
 
-   17 IF_STATEMENT: T_IF T_LBRACKET . EXPRESSION T_RBRACKET STATEMENT
-   18             | T_IF T_LBRACKET . EXPRESSION T_RBRACKET T_LCURLYBRACKET DECLARATION_LIST T_RCURLYBRACKET T_ELSE STATEMENT
+   19 IF_STATEMENT: T_IF T_LBRACKET . EXPRESSION T_RBRACKET STATEMENT
+   20             | T_IF T_LBRACKET . EXPRESSION T_RBRACKET STATEMENT T_ELSE STATEMENT
 
     T_NUMBER    shift, and go to state 27
     T_VARIABLE  shift, and go to state 28
-    T_LBRACKET  shift, and go to state 72
+    T_LBRACKET  shift, and go to state 73
 
-    EXPRESSION             go to state 73
-    INITIALIZER            go to state 74
+    EXPRESSION             go to state 86
+    INITIALIZER            go to state 75
     ASSIGNMENT_EXPRESSION  go to state 30
     UNARY_EXPRESSION       go to state 31
     POSTFIX_EXPRESSION     go to state 32
-    PRIMARY_EXPRESSION     go to state 75
-
-
-State 67
-
-   12 COMPOUND_STATEMENT: T_LCURLYBRACKET STATEMENT_LIST T_RCURLYBRACKET .
-
-    $default  reduce using rule 12 (COMPOUND_STATEMENT)
-
-
-State 68
-
-   14 STATEMENT_LIST: STATEMENT_LIST STATEMENT .
-
-    $default  reduce using rule 14 (STATEMENT_LIST)
-
-
-State 69
-
-   11 COMPOUND_STATEMENT: T_LCURLYBRACKET DECLARATION_LIST T_RCURLYBRACKET .
-
-    $default  reduce using rule 11 (COMPOUND_STATEMENT)
-
-
-State 70
-
-   29 DECLARATION_LIST: DECLARATION_LIST DECLARATION .
-
-    $default  reduce using rule 29 (DECLARATION_LIST)
-
-
-State 71
-
-   31 PARAM_DECLARATION_LIST: DECLARATION_SPECIFIERS DECLARATOR T_COMMA PARAM_DECLARATION_LIST .
-
-    $default  reduce using rule 31 (PARAM_DECLARATION_LIST)
+    PRIMARY_EXPRESSION     go to state 76
 
 
 State 72
 
-   20 EXPRESSION: T_LBRACKET . ASSIGNMENT_EXPRESSION T_RBRACKET
+   21 JUMP_STATEMENT: T_RETURN T_SIMICOLOUMN .
+
+    $default  reduce using rule 21 (JUMP_STATEMENT)
+
+
+State 73
+
+   27 EXPRESSION: T_LBRACKET . ASSIGNMENT_EXPRESSION T_RBRACKET
 
     T_NUMBER    shift, and go to state 27
     T_VARIABLE  shift, and go to state 28
 
-    ASSIGNMENT_EXPRESSION  go to state 76
+    ASSIGNMENT_EXPRESSION  go to state 87
     UNARY_EXPRESSION       go to state 31
     POSTFIX_EXPRESSION     go to state 32
     PRIMARY_EXPRESSION     go to state 33
 
 
-State 73
-
-   17 IF_STATEMENT: T_IF T_LBRACKET EXPRESSION . T_RBRACKET STATEMENT
-   18             | T_IF T_LBRACKET EXPRESSION . T_RBRACKET T_LCURLYBRACKET DECLARATION_LIST T_RCURLYBRACKET T_ELSE STATEMENT
-
-    T_RBRACKET  shift, and go to state 77
-
-
 State 74
 
-   19 EXPRESSION: INITIALIZER .
+   22 JUMP_STATEMENT: T_RETURN EXPRESSION . T_SIMICOLOUMN
 
-    $default  reduce using rule 19 (EXPRESSION)
+    T_SIMICOLOUMN  shift, and go to state 88
 
 
 State 75
 
-   21 EXPRESSION: PRIMARY_EXPRESSION . EXPRESSION_OPERATOR INITIALIZER
-   47 UNARY_EXPRESSION: PRIMARY_EXPRESSION . OPERATOR UNARY_EXPRESSION
-   54 POSTFIX_EXPRESSION: PRIMARY_EXPRESSION .
+   26 EXPRESSION: INITIALIZER .
 
-    T_AND_OP  shift, and go to state 78
-    T_OR_OP   shift, and go to state 79
-    T_LE_OP   shift, and go to state 80
-    T_GE_OP   shift, and go to state 81
-    T_EQ_OP   shift, and go to state 82
-    T_NE_OP   shift, and go to state 83
+    $default  reduce using rule 26 (EXPRESSION)
+
+
+State 76
+
+   28 EXPRESSION: PRIMARY_EXPRESSION . EXPRESSION_OPERATOR INITIALIZER
+   54 UNARY_EXPRESSION: PRIMARY_EXPRESSION . OPERATOR UNARY_EXPRESSION
+   61 POSTFIX_EXPRESSION: PRIMARY_EXPRESSION .
+
+    T_AND_OP  shift, and go to state 89
+    T_OR_OP   shift, and go to state 90
+    T_LE_OP   shift, and go to state 91
+    T_GE_OP   shift, and go to state 92
+    T_EQ_OP   shift, and go to state 93
+    T_NE_OP   shift, and go to state 94
     T_EQUAL   shift, and go to state 39
     T_MINUS   shift, and go to state 40
     T_PLUS    shift, and go to state 41
@@ -957,183 +1010,240 @@ State 75
     T_DIVIDE  shift, and go to state 43
     T_MOD     shift, and go to state 44
 
-    $default  reduce using rule 54 (POSTFIX_EXPRESSION)
+    $default  reduce using rule 61 (POSTFIX_EXPRESSION)
 
-    EXPRESSION_OPERATOR  go to state 84
+    EXPRESSION_OPERATOR  go to state 95
     OPERATOR             go to state 45
-
-
-State 76
-
-   20 EXPRESSION: T_LBRACKET ASSIGNMENT_EXPRESSION . T_RBRACKET
-
-    T_RBRACKET  shift, and go to state 85
 
 
 State 77
 
-   17 IF_STATEMENT: T_IF T_LBRACKET EXPRESSION T_RBRACKET . STATEMENT
-   18             | T_IF T_LBRACKET EXPRESSION T_RBRACKET . T_LCURLYBRACKET DECLARATION_LIST T_RCURLYBRACKET T_ELSE STATEMENT
+   23 JUMP_STATEMENT: T_GOTO T_VARIABLE . T_SIMICOLOUMN
 
-    T_IF             shift, and go to state 53
-    T_LCURLYBRACKET  shift, and go to state 86
-
-    COMPOUND_STATEMENT  go to state 55
-    STATEMENT           go to state 87
-    IF_STATEMENT        go to state 58
+    T_SIMICOLOUMN  shift, and go to state 96
 
 
 State 78
 
-   27 EXPRESSION_OPERATOR: T_AND_OP .
+   24 JUMP_STATEMENT: T_BREAK T_SIMICOLOUMN .
 
-    $default  reduce using rule 27 (EXPRESSION_OPERATOR)
+    $default  reduce using rule 24 (JUMP_STATEMENT)
 
 
 State 79
 
-   26 EXPRESSION_OPERATOR: T_OR_OP .
+   25 JUMP_STATEMENT: T_CONTINUE T_SIMICOLOUMN .
 
-    $default  reduce using rule 26 (EXPRESSION_OPERATOR)
+    $default  reduce using rule 25 (JUMP_STATEMENT)
 
 
 State 80
 
-   25 EXPRESSION_OPERATOR: T_LE_OP .
+   12 COMPOUND_STATEMENT: T_LCURLYBRACKET STATEMENT_LIST T_RCURLYBRACKET .
 
-    $default  reduce using rule 25 (EXPRESSION_OPERATOR)
+    $default  reduce using rule 12 (COMPOUND_STATEMENT)
 
 
 State 81
 
-   24 EXPRESSION_OPERATOR: T_GE_OP .
+   15 STATEMENT_LIST: STATEMENT_LIST STATEMENT .
 
-    $default  reduce using rule 24 (EXPRESSION_OPERATOR)
+    $default  reduce using rule 15 (STATEMENT_LIST)
 
 
 State 82
 
-   22 EXPRESSION_OPERATOR: T_EQ_OP .
+   11 COMPOUND_STATEMENT: T_LCURLYBRACKET DECLARATION_LIST T_RCURLYBRACKET .
 
-    $default  reduce using rule 22 (EXPRESSION_OPERATOR)
+    $default  reduce using rule 11 (COMPOUND_STATEMENT)
 
 
 State 83
 
-   23 EXPRESSION_OPERATOR: T_NE_OP .
+   13 COMPOUND_STATEMENT: T_LCURLYBRACKET DECLARATION_LIST STATEMENT_LIST . T_RCURLYBRACKET
+   15 STATEMENT_LIST: STATEMENT_LIST . STATEMENT
 
-    $default  reduce using rule 23 (EXPRESSION_OPERATOR)
+    T_IF             shift, and go to state 53
+    T_RETURN         shift, and go to state 54
+    T_LCURLYBRACKET  shift, and go to state 46
+    T_RCURLYBRACKET  shift, and go to state 97
+    T_GOTO           shift, and go to state 56
+    T_BREAK          shift, and go to state 57
+    T_CONTINUE       shift, and go to state 58
+
+    COMPOUND_STATEMENT  go to state 59
+    STATEMENT           go to state 81
+    IF_STATEMENT        go to state 62
+    JUMP_STATEMENT      go to state 63
 
 
 State 84
 
-   21 EXPRESSION: PRIMARY_EXPRESSION EXPRESSION_OPERATOR . INITIALIZER
+   36 DECLARATION_LIST: DECLARATION_LIST DECLARATION .
+
+    $default  reduce using rule 36 (DECLARATION_LIST)
+
+
+State 85
+
+   38 PARAM_DECLARATION_LIST: DECLARATION_SPECIFIERS DECLARATOR T_COMMA PARAM_DECLARATION_LIST .
+
+    $default  reduce using rule 38 (PARAM_DECLARATION_LIST)
+
+
+State 86
+
+   19 IF_STATEMENT: T_IF T_LBRACKET EXPRESSION . T_RBRACKET STATEMENT
+   20             | T_IF T_LBRACKET EXPRESSION . T_RBRACKET STATEMENT T_ELSE STATEMENT
+
+    T_RBRACKET  shift, and go to state 98
+
+
+State 87
+
+   27 EXPRESSION: T_LBRACKET ASSIGNMENT_EXPRESSION . T_RBRACKET
+
+    T_RBRACKET  shift, and go to state 99
+
+
+State 88
+
+   22 JUMP_STATEMENT: T_RETURN EXPRESSION T_SIMICOLOUMN .
+
+    $default  reduce using rule 22 (JUMP_STATEMENT)
+
+
+State 89
+
+   34 EXPRESSION_OPERATOR: T_AND_OP .
+
+    $default  reduce using rule 34 (EXPRESSION_OPERATOR)
+
+
+State 90
+
+   33 EXPRESSION_OPERATOR: T_OR_OP .
+
+    $default  reduce using rule 33 (EXPRESSION_OPERATOR)
+
+
+State 91
+
+   32 EXPRESSION_OPERATOR: T_LE_OP .
+
+    $default  reduce using rule 32 (EXPRESSION_OPERATOR)
+
+
+State 92
+
+   31 EXPRESSION_OPERATOR: T_GE_OP .
+
+    $default  reduce using rule 31 (EXPRESSION_OPERATOR)
+
+
+State 93
+
+   29 EXPRESSION_OPERATOR: T_EQ_OP .
+
+    $default  reduce using rule 29 (EXPRESSION_OPERATOR)
+
+
+State 94
+
+   30 EXPRESSION_OPERATOR: T_NE_OP .
+
+    $default  reduce using rule 30 (EXPRESSION_OPERATOR)
+
+
+State 95
+
+   28 EXPRESSION: PRIMARY_EXPRESSION EXPRESSION_OPERATOR . INITIALIZER
 
     T_NUMBER    shift, and go to state 27
     T_VARIABLE  shift, and go to state 28
 
-    INITIALIZER            go to state 88
+    INITIALIZER            go to state 100
     ASSIGNMENT_EXPRESSION  go to state 30
     UNARY_EXPRESSION       go to state 31
     POSTFIX_EXPRESSION     go to state 32
     PRIMARY_EXPRESSION     go to state 33
 
 
-State 85
+State 96
 
-   20 EXPRESSION: T_LBRACKET ASSIGNMENT_EXPRESSION T_RBRACKET .
+   23 JUMP_STATEMENT: T_GOTO T_VARIABLE T_SIMICOLOUMN .
 
-    $default  reduce using rule 20 (EXPRESSION)
-
-
-State 86
-
-   10 COMPOUND_STATEMENT: T_LCURLYBRACKET . T_RCURLYBRACKET
-   11                   | T_LCURLYBRACKET . DECLARATION_LIST T_RCURLYBRACKET
-   12                   | T_LCURLYBRACKET . STATEMENT_LIST T_RCURLYBRACKET
-   18 IF_STATEMENT: T_IF T_LBRACKET EXPRESSION T_RBRACKET T_LCURLYBRACKET . DECLARATION_LIST T_RCURLYBRACKET T_ELSE STATEMENT
-
-    T_IF             shift, and go to state 53
-    T_INT            shift, and go to state 1
-    T_VARIABLE       shift, and go to state 2
-    T_LCURLYBRACKET  shift, and go to state 46
-    T_RCURLYBRACKET  shift, and go to state 54
-    T_STAR           shift, and go to state 3
-
-    COMPOUND_STATEMENT      go to state 55
-    STATEMENT_LIST          go to state 56
-    STATEMENT               go to state 57
-    IF_STATEMENT            go to state 58
-    DECLARATION_LIST        go to state 89
-    DECLARATION             go to state 60
-    RE_DECLARATION          go to state 9
-    DECLARATION_SPECIFIERS  go to state 61
-    INIT_DECLARATOR_LIST    go to state 11
-    INIT_DECLARATOR         go to state 12
-    DECLARATOR              go to state 62
-    DIRECT_DECLARATOR       go to state 14
-    TYPE_SPECIFIER          go to state 15
+    $default  reduce using rule 23 (JUMP_STATEMENT)
 
 
-State 87
+State 97
 
-   17 IF_STATEMENT: T_IF T_LBRACKET EXPRESSION T_RBRACKET STATEMENT .
+   13 COMPOUND_STATEMENT: T_LCURLYBRACKET DECLARATION_LIST STATEMENT_LIST T_RCURLYBRACKET .
 
-    $default  reduce using rule 17 (IF_STATEMENT)
-
-
-State 88
-
-   21 EXPRESSION: PRIMARY_EXPRESSION EXPRESSION_OPERATOR INITIALIZER .
-
-    $default  reduce using rule 21 (EXPRESSION)
+    $default  reduce using rule 13 (COMPOUND_STATEMENT)
 
 
-State 89
+State 98
 
-   11 COMPOUND_STATEMENT: T_LCURLYBRACKET DECLARATION_LIST . T_RCURLYBRACKET
-   18 IF_STATEMENT: T_IF T_LBRACKET EXPRESSION T_RBRACKET T_LCURLYBRACKET DECLARATION_LIST . T_RCURLYBRACKET T_ELSE STATEMENT
-   29 DECLARATION_LIST: DECLARATION_LIST . DECLARATION
-
-    T_INT            shift, and go to state 1
-    T_VARIABLE       shift, and go to state 2
-    T_RCURLYBRACKET  shift, and go to state 90
-    T_STAR           shift, and go to state 3
-
-    DECLARATION             go to state 70
-    RE_DECLARATION          go to state 9
-    DECLARATION_SPECIFIERS  go to state 61
-    INIT_DECLARATOR_LIST    go to state 11
-    INIT_DECLARATOR         go to state 12
-    DECLARATOR              go to state 62
-    DIRECT_DECLARATOR       go to state 14
-    TYPE_SPECIFIER          go to state 15
-
-
-State 90
-
-   11 COMPOUND_STATEMENT: T_LCURLYBRACKET DECLARATION_LIST T_RCURLYBRACKET .
-   18 IF_STATEMENT: T_IF T_LBRACKET EXPRESSION T_RBRACKET T_LCURLYBRACKET DECLARATION_LIST T_RCURLYBRACKET . T_ELSE STATEMENT
-
-    T_ELSE  shift, and go to state 91
-
-    $default  reduce using rule 11 (COMPOUND_STATEMENT)
-
-
-State 91
-
-   18 IF_STATEMENT: T_IF T_LBRACKET EXPRESSION T_RBRACKET T_LCURLYBRACKET DECLARATION_LIST T_RCURLYBRACKET T_ELSE . STATEMENT
+   19 IF_STATEMENT: T_IF T_LBRACKET EXPRESSION T_RBRACKET . STATEMENT
+   20             | T_IF T_LBRACKET EXPRESSION T_RBRACKET . STATEMENT T_ELSE STATEMENT
 
     T_IF             shift, and go to state 53
+    T_RETURN         shift, and go to state 54
     T_LCURLYBRACKET  shift, and go to state 46
+    T_GOTO           shift, and go to state 56
+    T_BREAK          shift, and go to state 57
+    T_CONTINUE       shift, and go to state 58
 
-    COMPOUND_STATEMENT  go to state 55
-    STATEMENT           go to state 92
-    IF_STATEMENT        go to state 58
+    COMPOUND_STATEMENT  go to state 59
+    STATEMENT           go to state 101
+    IF_STATEMENT        go to state 62
+    JUMP_STATEMENT      go to state 63
 
 
-State 92
+State 99
 
-   18 IF_STATEMENT: T_IF T_LBRACKET EXPRESSION T_RBRACKET T_LCURLYBRACKET DECLARATION_LIST T_RCURLYBRACKET T_ELSE STATEMENT .
+   27 EXPRESSION: T_LBRACKET ASSIGNMENT_EXPRESSION T_RBRACKET .
 
-    $default  reduce using rule 18 (IF_STATEMENT)
+    $default  reduce using rule 27 (EXPRESSION)
+
+
+State 100
+
+   28 EXPRESSION: PRIMARY_EXPRESSION EXPRESSION_OPERATOR INITIALIZER .
+
+    $default  reduce using rule 28 (EXPRESSION)
+
+
+State 101
+
+   19 IF_STATEMENT: T_IF T_LBRACKET EXPRESSION T_RBRACKET STATEMENT .
+   20             | T_IF T_LBRACKET EXPRESSION T_RBRACKET STATEMENT . T_ELSE STATEMENT
+
+    T_ELSE  shift, and go to state 102
+
+    $default  reduce using rule 19 (IF_STATEMENT)
+
+
+State 102
+
+   20 IF_STATEMENT: T_IF T_LBRACKET EXPRESSION T_RBRACKET STATEMENT T_ELSE . STATEMENT
+
+    T_IF             shift, and go to state 53
+    T_RETURN         shift, and go to state 54
+    T_LCURLYBRACKET  shift, and go to state 46
+    T_GOTO           shift, and go to state 56
+    T_BREAK          shift, and go to state 57
+    T_CONTINUE       shift, and go to state 58
+
+    COMPOUND_STATEMENT  go to state 59
+    STATEMENT           go to state 103
+    IF_STATEMENT        go to state 62
+    JUMP_STATEMENT      go to state 63
+
+
+State 103
+
+   20 IF_STATEMENT: T_IF T_LBRACKET EXPRESSION T_RBRACKET STATEMENT T_ELSE STATEMENT .
+
+    $default  reduce using rule 20 (IF_STATEMENT)

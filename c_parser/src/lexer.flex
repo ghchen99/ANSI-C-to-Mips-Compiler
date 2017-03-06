@@ -13,6 +13,9 @@ HEX 0[xX][A-Fa-f0-9]+([u|U|l|L]*)?
 OCT [0-7]+([u|U|l|L]*)?
 
 %%
+continue        { return(T_CONTINUE); }
+break           { return(T_BREAK); }
+goto            { return(T_GOTO); }
 else			{ return(T_ELSE); }
 for			    { return(T_FOR); }
 if		    	{ return(T_IF); }
