@@ -70,8 +70,8 @@ sizeof          { return(T_SIZEOF);}
 (\*)		       	{ return(T_STAR); }
 (\%)			    { return(T_MOD); }
 (\?)             { return(T_QUESTIONMARK); }
-(\<)			    { return('<'); }
-(\>)		    { return('>'); }
+("<")			    { return('<'); }
+(">")		    { return('>'); }
 (\^)			    { return(T_EXCLUS_OR); }
 (\|)			    { return(T_INEXCLUS_OR); }
 

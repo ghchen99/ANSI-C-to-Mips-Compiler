@@ -1,11 +1,22 @@
-CPPFLAGS += -W -Wall -g -std=gnu++11
-CPPFLAGS1 += -std=c++11 -W -Wall -g -Wno-unused-parameter
-CPPFLAGS1 += -I ast
+CPPFLAGS += -std=c++11 -W -Wall -g -Wno-unused-parameter
+CPPFLAGS += -I ast
 
-c_lexer.yy.cpp : lexer/c_lexer.flex
-	flex -o lexer/c_lexer.yy.cpp lexer/c_lexer.flex
+src/parser.tab.cpp src/parser.tab.hpp : src/parser.y
+	bison -v -d src/parser.y -o src/parser.tab.cpp
 
-main : lexer/c_lexer.yy.cpp lexer/c_lexer_main.cpp
-	g++ $(CPPFLAGS) -o bin/c_lexer lexer/c_lexer.yy.cpp lexer/c_lexer_main.cpp
+src/lexer.yy.cpp : src/lexer.flex src/parser.tab.hpp
+	flex -o src/lexer.yy.cpp  src/lexer.flex
 
-bin/c_lexer: c_lexer.yy.cpp main
+bin/c_parser : src/c_parser.o src/parser.tab.o src/lexer.yy.o src/parser.tab.o
+	mkdir -p bin
+	g++ $(CPPFLAGS) -o bin/c_parser $^
+
+
+clean :
+	rm src/*.o
+	rm src/*.output
+	rm bin/*
+	rm src/*.tab.cpp
+	rm src/*.yy.cpp
+	rm src/*.tab.hpp
+	rm src/*.tab.cpp

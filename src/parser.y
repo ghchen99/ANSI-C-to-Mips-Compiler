@@ -83,19 +83,21 @@ STATEMENT : COMPOUND_STATEMENT { $$ = $1;}
           | IF_STATEMENT { $$ = $1;}
           | JUMP_STATEMENT { $$ = $1;}
           | ITERATION_STATEMENT { $$ = $1;}
-          | EXPRESSION_STATEMENT { $$ = $1; }
+          //| EXPRESSION_STATEMENT { $$ = $1; }
          /* | JUMP_STATEMENT { $$ = $1;}
           | LABELED_STATEMENT { $$ = $1;}
           | EXPRESSION_STATEMENT { $$ = $1;}*/
-          
-EXPRESSION_STATEMENT : T_SIMICOLOUMN { $$ = new Empty();}
-                     | EXPRESSION T_SIMICOLOUMN { $$ = $1;}
+
+//EXPRESSION_STATEMENT : EXPRESSION T_SIMICOLOUMN { $$ = $1;}*/
 
 ITERATION_STATEMENT : T_WHILE T_LBRACKET EXPRESSION T_RBRACKET STATEMENT {$$ = new Scope($5);}
+                    //| T_WHILE T_LBRACKET EXPRESSION T_RBRACKET T_LCURLYBRACKET EXPRESSION T_SIMICOLOUMN T_RCURLYBRACKET {$$ = new Scope($6);}
                     | T_DO STATEMENT T_WHILE T_LBRACKET EXPRESSION T_RBRACKET T_SIMICOLOUMN {$$ = new Scope($2);}
                     | T_FOR T_LBRACKET EXPRESSION_STATEMENT EXPRESSION_STATEMENT T_RBRACKET STATEMENT {$$ = new Scope($6);}
                     | T_FOR T_LBRACKET EXPRESSION_STATEMENT EXPRESSION_STATEMENT EXPRESSION T_RBRACKET STATEMENT {$$ = new Scope($7);}
 
+EXPRESSION_STATEMENT : T_SIMICOLOUMN { $$ = new Empty();}
+                     | EXPRESSION T_SIMICOLOUMN { $$ = $1;}
 
 IF_STATEMENT : T_IF T_LBRACKET EXPRESSION T_RBRACKET STATEMENT { $$ = new If($3,$5);}   %prec "then" //https://www.gnu.org/software/bison/manual/html_node/Precedence-Decl.html
              | T_IF T_LBRACKET EXPRESSION T_RBRACKET STATEMENT T_ELSE STATEMENT
@@ -109,11 +111,11 @@ JUMP_STATEMENT : T_RETURN T_SIMICOLOUMN { $$ = new Empty();}
                | T_BREAK T_SIMICOLOUMN { $$ = new Empty();}
                | T_CONTINUE T_SIMICOLOUMN { $$ = new Empty();}
 
-EXPRESSION : ASSIGNMENT_EXPRESSION { $$ = $1;}
-           | EXPRESSION T_COMMA SSIGNMENT_EXPRESSION { $$ = new Program_call($1,$3);}
-           /*| PRIMARY_EXPRESSION EXPRESSION_OPERATOR INITIALIZER { $$ = $3;}
+EXPRESSION : INITIALIZER { $$ = $1;}
+           | T_LBRACKET ASSIGNMENT_EXPRESSION T_RBRACKET { $$ = $2;}
+          // | PRIMARY_EXPRESSION EXPRESSION_OPERATOR INITIALIZER { $$ = $3;}
 
-EXPRESSION_OPERATOR : T_EQ_OP {$$ = new std::string("==");}
+/*EXPRESSION_OPERATOR : T_EQ_OP {$$ = new std::string("==");}
                     | T_NE_OP {$$ = new std::string("!=");}
                     | T_GE_OP {$$ = new std::string(">=");}
                     | T_LE_OP {$$ = new std::string("<=");}
@@ -144,7 +146,7 @@ INIT_DECLARATOR_LIST : INIT_DECLARATOR { $$ = $1;}
                      //| INIT_DECLARATOR T_COMMA INIT_DECLARATOR_LIST
 
 INIT_DECLARATOR : DECLARATOR { $$ = $1; }
-                | DECLARATOR T_EQUAL INITIALIZER { $$ = new init_declartor($1,$3); }
+                | DECLARATOR ASSIGNMENT_OPERATOR INITIALIZER { $$ = new init_declartor($1,$3); }
                 //| INITIALIZER { $$ = new Empty();}
 
 DECLARATOR : T_STAR DIRECT_DECLARATOR { $$ = $2;}
@@ -184,6 +186,8 @@ EQUALITY_EXPRESSION : RELATIONAL_EXPRESSION { $$ = $1;}
                     | EQUALITY_EXPRESSION T_NE_OP RELATIONAL_EXPRESSION { new Program_call($1,$3);}
 
 RELATIONAL_EXPRESSION : SHIFT_EXPRESSION { $$ = $1;}
+                      | RELATIONAL_EXPRESSION '>' SHIFT_EXPRESSION { new Program_call($1,$3);}
+                      | RELATIONAL_EXPRESSION '<' SHIFT_EXPRESSION { new Program_call($1,$3);}
                       | RELATIONAL_EXPRESSION T_LE_OP SHIFT_EXPRESSION { new Program_call($1,$3);}
                       | RELATIONAL_EXPRESSION T_GE_OP SHIFT_EXPRESSION { new Program_call($1,$3);}
 
@@ -206,18 +210,14 @@ UNARY_EXPRESSION : POSTFIX_EXPRESSION { $$ = $1; }
                  | T_DEC_OP UNARY_EXPRESSION { $$ = new unary_expression($2);}
                  | T_SIZEOF UNARY_EXPRESSION { $$ = $2; }
                  /*| T_SIZEOF T_LBRACKET TYPE_NAME T_RBRACKET
-
 type_name
 	: specifier_qualifier_list
 	| specifier_qualifier_list abstract_declarator
-
-
 specifier_qualifier_list
     	: type_specifier specifier_qualifier_list
     	| type_specifier
     	| type_qualifier specifier_qualifier_list
     	| type_qualifier
-
 type_qualifier
         : CONST
         | VOLATILE*/

@@ -1,4 +1,3 @@
-#include <stdio.h>
 int main()
 {
     int n;
@@ -6,7 +5,8 @@ int main()
 
     while(n != 0)
     {
-        n /= 10;
-        ++count;
+        x;
+        int x;
+        n = x;
     }
 }
