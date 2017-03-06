@@ -13,6 +13,7 @@ HEX 0[xX][A-Fa-f0-9]+([u|U|l|L]*)?
 OCT [0-7]+([u|U|l|L]*)?
 
 %%
+do              { return(T_DO); }
 continue        { return(T_CONTINUE); }
 break           { return(T_BREAK); }
 goto            { return(T_GOTO); }
@@ -22,6 +23,7 @@ if		    	{ return(T_IF); }
 int		       	{ return(T_INT); }
 return   		{ return(T_RETURN); }
 while			{ return(T_WHILE); }
+sizeof          { return(T_SIZEOF);}
 {NUMBER}        { yylval.number=strtod(yytext, 0); return T_NUMBER; }
 {HEX}           { yylval.number=strtod(yytext, 0); return T_NUMBER; }
 {OCT}           { yylval.number=strtod(yytext, 0); return T_NUMBER; }

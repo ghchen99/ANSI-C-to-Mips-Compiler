@@ -14,6 +14,7 @@
 #include "ast_scope.hpp"
 #include "ast_direct_declarator.hpp"
 #include "ast_if.hpp"
+#include "ast_postfix.hpp"
 
 extern const Program *parseAST();
 

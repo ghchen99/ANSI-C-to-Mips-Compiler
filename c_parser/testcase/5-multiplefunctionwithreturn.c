@@ -1,3 +1,6 @@
+if(x == 0){
+    int x;
+}
 
 int zz(int a, int b, int c)
 {

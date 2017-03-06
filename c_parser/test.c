@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-main()
-{
-    void int x;
+main(){
+for(;;){
+    int x =1;
+}
 }

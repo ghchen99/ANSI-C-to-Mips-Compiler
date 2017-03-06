@@ -115,7 +115,9 @@ extern int yydebug;
     T_GOTO = 309,
     T_BREAK = 310,
     T_CONTINUE = 311,
-    T_ELSE = 313
+    T_DO = 312,
+    T_SIZEOF = 313,
+    T_ELSE = 315
   };
 #endif
 
@@ -130,7 +132,7 @@ union YYSTYPE
   std::string *string;
   double number;
 
-#line 134 "src/parser.tab.hpp" /* yacc.c:1909  */
+#line 136 "src/parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
