@@ -1,0 +1,85 @@
+zl6114 : Cloning repo
+Cloning into 'zl6114'...
+zl6114 : Fetching repo
+zl6114 : Checking out branch soft-2017-03-07 if it exists...
+error: pathspec 'soft-2017-03-07' did not match any file(s) known to git.
+zl6114 : Checking out specified hash and creating new branch soft-2017-03-07
+Switched to a new branch 'soft-2017-03-07'
+Already on 'soft-2017-03-07'
+zl6114 : Checking we're on the right hash a8c85421886e2840c41981daaf5bd121954ae77e...
+cd ${REPOS}/$U && git rev-parse $RUN
+zl6114 : Checking we're on branch soft-2017-03-07
+cd ${REPOS}/$U && git rev-parse --abbrev-ref HEAD
+
+log_msg "########################################################"
+zl6114 : ########################################################
+log_msg "## Building"
+zl6114 : ## Building
+
+log_msg "Cleaning"
+zl6114 : Cleaning
+(cd $REPO && rm bin/c_parser)
+(cd $REPO && make clean)
+make: Warning: File 'makefile' has modification time 498 s in the future
+rm src/*.o
+rm src/*.output
+rm bin/*
+rm: cannot remove 'bin/*': No such file or directory
+makefile:16: recipe for target 'clean' failed
+make: *** [clean] Error 1
+
+log_msg "Building"
+zl6114 : Building
+(cd $REPO && make bin/c_parser)
+make: Warning: File 'makefile' has modification time 498 s in the future
+g++  -std=c++11 -W -Wall -g -Wno-unused-parameter -I ast  -c -o src/c_parser.o src/c_parser.cpp
+bison -v -d src/parser.y -o src/parser.tab.cpp
+g++  -std=c++11 -W -Wall -g -Wno-unused-parameter -I ast  -c -o src/parser.tab.o src/parser.tab.cpp
+flex -o src/lexer.yy.cpp  src/lexer.flex
+g++  -std=c++11 -W -Wall -g -Wno-unused-parameter -I ast  -c -o src/lexer.yy.o src/lexer.yy.cpp
+src/lexer.yy.cpp: In function ‘int yy_get_next_buffer()’:
+src/lexer.yy.cpp:1414:44: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+  if ((int) ((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
+                                            ^
+src/lexer.yy.cpp: At global scope:
+src/lexer.yy.cpp:1490:17: warning: ‘void yyunput(int, char*)’ defined but not used [-Wunused-function]
+     static void yyunput (int c, char * yy_bp )
+                 ^
+mkdir -p bin
+g++ -std=c++11 -W -Wall -g -Wno-unused-parameter -I ast -o bin/c_parser src/c_parser.o src/parser.tab.o src/lexer.yy.o
+make: warning:  Clock skew detected.  Your build may be incomplete.
+
+if [[ ! -f $REPO/bin/c_parser ]]; then
+    log_msg "No executable build"
+    exit 0;
+fi
+
+log_msg "########################################################"
+zl6114 : ########################################################
+log_msg "## Executing"
+zl6114 : ## Executing
+
+log_msg "Generating input"
+zl6114 : Generating input
+echo -e 'int f(int x){ int y=x; return y; }' > $LOGDIR/in.c
+cat $LOGDIR/in.c
+int f(int x){ int y=x; return y; }
+
+log_msg "Running parser"
+zl6114 : Running parser
+cat $LOGDIR/in.c | (cd $REPO && bin/c_parser) > $LOGDIR/out.xml
+
+log_msg "Checking XML formatting"
+zl6114 : Checking XML formatting
+cp scripts/cw3-soft-xml.py $LOGDIR/cw3-soft-xml.py
+cat $LOGDIR/out.xml | python3 $LOGDIR/cw3-soft-xml.py | tee $LOGDIR/out-pretty.xml
+Traceback (most recent call last):
+  File "student-repos-cw3/zl6114/dt10/soft-2017-03-07/cw3-soft-xml.py", line 5, in <module>
+    globalScope=ET.parse(sys.stdin)
+  File "/usr/lib/python3.5/xml/etree/ElementTree.py", line 1184, in parse
+    tree.parse(source, parser)
+  File "/usr/lib/python3.5/xml/etree/ElementTree.py", line 596, in parse
+    self._root = parser._parse_whole(source)
+xml.etree.ElementTree.ParseError: mismatched tag: line 8, column 2
+
+zl6114 : Test Complete
