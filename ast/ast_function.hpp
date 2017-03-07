@@ -21,7 +21,7 @@ public:
     {
         std::cout << "<Function id=\"";
         FunctionId -> print();
-        std::cout << "\" />" << "\n";
+        std::cout << "\">" << "\n";
         Parameter -> print();
         Scope -> print();
         std::cout << "</Function>" << '\n';
@@ -49,7 +49,7 @@ public:
     {
         std::cout << "<Function id=\"";
         FunctionId -> print();
-        std::cout << "\" />" << "\n";
+        std::cout << "\">" << "\n";
         Scope -> print();
         std::cout << "</Function>" << '\n';
     }

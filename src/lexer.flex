@@ -13,6 +13,22 @@ HEX 0[xX][A-Fa-f0-9]+([u|U|l|L]*)?
 OCT [0-7]+([u|U|l|L]*)?
 
 %%
+typedef         { return(T_TYPEDEF);}
+auto            { return(T_AUTO);}
+static          { return(T_STATIC);}
+register        { return(T_REGISTER);}
+extern          { return(T_EXTERN);}
+unsigned        { return(T_UNSIGNED);}
+signed          { return(T_SIGNED);}
+double          { return(T_DOUBLE);}
+float           { return(T_FLOAT);}
+long            { return(T_LONG);}
+char            { return(T_CHAR);}
+struct          { return(T_STRUCT);}
+union           { return(T_UNION);}
+const           { return(T_CONST); }
+void            { return(T_VOID); }
+volatile        { return(T_VOLATILE); }
 do              { return(T_DO); }
 continue        { return(T_CONTINUE); }
 break           { return(T_BREAK); }

@@ -73,4 +73,24 @@ public:
 	}
 };
 
+class EmptyString
+	: public Program
+{
+private:
+    const std::string id1;
+    const std::string id2;
+public:
+	EmptyString (std::string &_id1, const std::string &_id2)
+        : id1(_id1)
+        , id2(_id2)
+	{
+	}
+
+    virtual void print() const override
+    {
+    }
+
+	~EmptyString(){
+	}
+};
 #endif

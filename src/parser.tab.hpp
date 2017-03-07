@@ -117,7 +117,23 @@ extern int yydebug;
     T_CONTINUE = 311,
     T_DO = 312,
     T_SIZEOF = 313,
-    T_ELSE = 315
+    T_CONST = 314,
+    T_VOLATILE = 315,
+    T_VOID = 316,
+    T_CHAR = 317,
+    T_LONG = 318,
+    T_SIGNED = 319,
+    T_UNSIGNED = 320,
+    T_FLOAT = 321,
+    T_DOUBLE = 322,
+    T_STRUCT = 323,
+    T_UNION = 324,
+    T_TYPEDEF = 325,
+    T_AUTO = 326,
+    T_REGISTER = 327,
+    T_EXTERN = 328,
+    T_STATIC = 329,
+    T_ELSE = 331
   };
 #endif
 
@@ -132,7 +148,7 @@ union YYSTYPE
   std::string *string;
   double number;
 
-#line 136 "src/parser.tab.hpp" /* yacc.c:1909  */
+#line 152 "src/parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
