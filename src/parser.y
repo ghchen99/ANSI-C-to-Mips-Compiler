@@ -85,13 +85,6 @@ STATEMENT : COMPOUND_STATEMENT { $$ = $1;}
           | IF_STATEMENT { $$ = $1;}
           | JUMP_STATEMENT { $$ = $1;}
           | ITERATION_STATEMENT { $$ = $1;}
-        //  | EXPRESSION T_SIMICOLOUMN { $$ = $1;}
-        //  | EXPRESSION_STATEMENT { $$ = $1; }
-         /* | JUMP_STATEMENT { $$ = $1;}
-          | LABELED_STATEMENT { $$ = $1;}
-          | EXPRESSION_STATEMENT { $$ = $1;}*/
-
-//EXPRESSION_STATEMENT : EXPRESSION T_SIMICOLOUMN { $$ = $1;}*/
 
 ITERATION_STATEMENT : T_WHILE T_LBRACKET EXPRESSION T_RBRACKET STATEMENT {$$ = new Scope($5);}
                     //| T_WHILE T_LBRACKET EXPRESSION T_RBRACKET T_LCURLYBRACKET EXPRESSION T_SIMICOLOUMN T_RCURLYBRACKET {$$ = new Scope($6);}
