@@ -57,7 +57,9 @@ Your output should consist of the following types of XML element:
     variable that is being introduced.
     
 The output should not contain any other elements except for these
-five. Each element can contain arbitrary amounts of white-space.
+five. Each element can contain arbitrary amounts of white-space, and
+you are allowed to include attributes beyond those explicitly required
+here.
 
 Examples
 --------
@@ -107,10 +109,10 @@ This code:
 
     int zz(int a, int b, int c)
     {
-      if(a==b)
+      if(a==b){
         int a;
         return a;
-      else{
+      }else{
         int fsdfsdfs;
         return c;
       }
