@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 
 // ########  #######  ########     ##       ######## ##     ## ######## ##
@@ -28,6 +29,8 @@ public:
 
 
     virtual void print() const =0;
+
+    virtual void globalvariable() const {};
 
 };
 
@@ -92,5 +95,50 @@ public:
 
 	~EmptyString(){
 	}
+};
+
+class Variable
+    : public Program
+{
+private:
+    const std::string id;
+public:
+    Variable(const std::string &_id)
+        : id(_id)
+    {}
+
+    const std::string getId() const
+    { return id; }
+
+    virtual void print() const override
+    {
+        //std::cout << "int vari" << '\n';
+        std::cout<<id;
+    }
+
+    ~Variable(){
+    }
+
+};
+
+class Number
+    : public Program
+{
+private:
+    double value;
+public:
+    Number(double _value)
+        : value(_value)
+    {}
+
+    virtual void print() const override
+    {
+        std::cout << value;
+    }
+
+    virtual void globalvariable() const {
+        std::cout << value;
+    }
+
 };
 #endif

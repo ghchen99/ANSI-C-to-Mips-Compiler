@@ -1,61 +1,43 @@
 #ifndef ast_function_hpp
 #define ast_function_hpp
 
-class Function
-	: public Program
+
+class FunctionDeclare
+    : public Program
 {
 private:
-    const Program *FunctionId;
-    const Program *Parameter;
-    const Program *Scope;
+    const Program *Program_call1;
+    const Program *Program_call2;
 public:
-    Function(const Program *_FunctionId,
-             const Program *_Parameter,
-             const Program *_Scope)
-        : FunctionId(_FunctionId),
-          Parameter(_Parameter),
-          Scope(_Scope)
+    FunctionDeclare(const Program *_Program_call1, const Program *_Program_call2)
+        : Program_call1(_Program_call1)
+        , Program_call2(_Program_call2)
     {}
+
 
     virtual void print() const override
     {
-        std::cout << "<Function id=\"";
-        FunctionId -> print();
-        std::cout << "\">" << "\n";
-        Parameter -> print();
-        Scope -> print();
-        std::cout << "</Function>" << '\n';
+        std::cout << ".global\t";
+        Program_call1 -> print();
+        std::cout << '\n';
+
+        std::cout << ".ent\t";
+        Program_call1 -> print();
+        std::cout << '\n';
+
+        std::cout << ".type\t";
+        Program_call1 -> print();
+        std::cout << ",  @function" << '\n';
+
+        Program_call1 -> print();
+        std::cout << ":" << '\n';
+        Program_call2 -> print();
     }
 
-	~Function(){
-	}
-
-};
-
-class FunctionNoParam
-	: public Program
-{
-private:
-    const Program *FunctionId;
-    const Program *Scope;
-public:
-    FunctionNoParam(const Program *_FunctionId,
-             const Program *_Scope)
-        : FunctionId(_FunctionId),
-          Scope(_Scope)
-    {}
-
-    virtual void print() const override
-    {
-        std::cout << "<Function id=\"";
-        FunctionId -> print();
-        std::cout << "\">" << "\n";
-        Scope -> print();
-        std::cout << "</Function>" << '\n';
+    ~FunctionDeclare(){
+        delete Program_call1;
+        delete Program_call2;
     }
-
-	~FunctionNoParam(){
-	}
 
 };
 
