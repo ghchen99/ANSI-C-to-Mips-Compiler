@@ -1,7 +1,6 @@
 #ifndef ast_function_hpp
 #define ast_function_hpp
 
-
 class FunctionDeclare
     : public Program
 {
@@ -17,6 +16,11 @@ public:
 
     virtual void print() const override
     {
+        index  =  index + 4;
+
+        std::cout << "\n\n";
+        std::cout << "#start declaring a function" << '\n';
+
         std::cout << ".global\t";
         Program_call1 -> print();
         std::cout << '\n';
@@ -29,9 +33,26 @@ public:
         Program_call1 -> print();
         std::cout << ",  @function" << '\n';
 
+        std::cout << "#finishing declaring a function" << '\n';
+        std::cout << "\n";
+        std::cout << "#start a function" << '\n';
+
         Program_call1 -> print();
         std::cout << ":" << '\n';
+
+        std::cout << "addiu\t$sp,\t$sp,\t-8";
+        std::cout << '\n';
+        std::cout << "move\t$2,\t$0";
+        std::cout << '\n';
+        // stack = 0;
         Program_call2 -> print();
+
+        std::cout << "addiu\t$sp,\t$sp,\t+8";
+        std::cout << '\n';
+        std::cout << "j\t$ra" << '\n';
+        std::cout << "nop" << '\n';
+        std::cout << "#finishing a function" << '\n';
+        std::cout << "\n\n";
     }
 
     ~FunctionDeclare(){

@@ -5,7 +5,8 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-
+#include <sstream>
+#include <map>
 
 // ########  #######  ########     ##       ######## ##     ## ######## ##
 //    ##    ##     ## ##     ##    ##       ##       ##     ## ##       ##
@@ -16,9 +17,18 @@
 //    ##     #######  ##           ######## ########    ###    ######## ########
 
 
+
 class Program
 {
+    using bindingsMap = std::map<std::string,double>;
+protected:
+    mutable bindingsMap map;
+    mutable int index;
 public:
+    Program(bindingsMap _map, int _index = 0)
+        : map(_map)
+        , index(_index)
+    {}
     virtual ~Program()
     {
     }
@@ -27,10 +37,17 @@ public:
     }
 
 
-
     virtual void print() const =0;
 
-    virtual void globalvariable() const {};
+    virtual void globalvariable() const {}
+
+    virtual const std::string getId() const{
+        return 0;
+    }
+
+
+
+
 
 };
 
@@ -57,6 +74,7 @@ public:
         delete Program_call1;
         delete Program_call2;
     }
+
 
 };
 

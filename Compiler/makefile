@@ -15,8 +15,7 @@ bin/c_parser : src/c_parser.o src/parser.tab.o src/lexer.yy.o src/parser.tab.o
 clean :
 	rm src/*.o
 	rm src/*.output
-	rm bin/*
 	rm src/*.tab.cpp
 	rm src/*.yy.cpp
 	rm src/*.tab.hpp
-	rm src/*.tab.cpp
+	rm bin/*

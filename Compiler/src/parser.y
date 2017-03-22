@@ -41,7 +41,7 @@
 
 %type <prog> PROGRAM ALL_DECLEARARION DECLARATION FUNCTION
 %type <prog> INIT_DECLARATOR_LIST DECLARATOR
-%type <prog> DIRECT_DECLARATOR
+%type <prog> DIRECT_DECLARATOR INIT_DECLARATOR
 %type <prog> INITIALIZER ADDITIVE_EXPRESSION
 %type <prog> MULTIPLICATIVE_EXPRESSION UNARY_EXPRESSION
 %type <prog> POSTFIX_EXPRESSION PRIMARY_EXPRESSION
@@ -72,8 +72,11 @@ DECLARATION_SPECIFIERS : TYPE_SPECIFIER { $$ = $1; }
 
 TYPE_SPECIFIER : T_INT { $$ = new std::string("int"); }
 
-INIT_DECLARATOR_LIST : DECLARATOR { $$ = new Init_deco_list1($1);}
-                     | DECLARATOR T_EQUAL INITIALIZER { $$ = new Init_deco_list2($1,$3); }
+INIT_DECLARATOR_LIST : INIT_DECLARATOR { $$ = $1;}
+                     | INIT_DECLARATOR_LIST T_COMMA INIT_DECLARATOR { $$ = new Init_deco_list($1,$3); }
+
+INIT_DECLARATOR :  DECLARATOR { $$ = new Init_deco_list1($1);}
+                | DECLARATOR T_EQUAL INITIALIZER { $$ = new Init_deco_list2($1,$3); }
 
 DECLARATOR : DIRECT_DECLARATOR { $$ = $1; }
 
