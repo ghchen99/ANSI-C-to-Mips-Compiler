@@ -31,18 +31,18 @@ public:
     const Program *getRight() const
     { return right; }
 
-    virtual void globalvariable() const
+    virtual void globalvariable(ALL *ptr) const
     {
         std::cout<<"( ";
-        left->globalvariable();
+        left->globalvariable(ptr);
         std::cout<<" ";
         std::cout<<getOpcode();
         std::cout<<" ";
-        right->globalvariable();
+        right->globalvariable(ptr);
         std::cout<<" )";
     }
 
-    virtual void print() const override{};
+    virtual void print(ALL *ptr) const override{};
 };
 
 class AddOperator
@@ -56,7 +56,7 @@ public:
         : Operator(_left, _right)
     {}
 
-    virtual void print() const override{};
+    virtual void print(ALL *ptr) const override{};
 };
 
 class SubOperator
@@ -70,7 +70,7 @@ public:
         : Operator(_left, _right)
     {}
 
-    virtual void print() const override{};
+    virtual void print(ALL *ptr) const override{};
 };
 
 class MulOperator
@@ -84,7 +84,7 @@ public:
         : Operator(_left, _right)
     {}
 
-    virtual void print() const override{};
+    virtual void print(ALL *ptr) const override{};
 };
 
 class DivOperator
@@ -98,7 +98,7 @@ public:
         : Operator(_left, _right)
     {}
 
-    virtual void print() const override{};
+    virtual void print(ALL *ptr) const override{};
 
 };
 
@@ -113,7 +113,7 @@ public:
         : Operator(_left, _right)
     {}
 
-    virtual void print() const override{};
+    virtual void print(ALL *ptr) const override{};
 
 };
 

@@ -8,6 +8,8 @@
 #include <sstream>
 #include <map>
 
+//Register t0 is the register used to put the return value in.
+
 // ########  #######  ########     ##       ######## ##     ## ######## ##
 //    ##    ##     ## ##     ##    ##       ##       ##     ## ##       ##
 //    ##    ##     ## ##     ##    ##       ##       ##     ## ##       ##
@@ -16,38 +18,48 @@
 //    ##    ##     ## ##           ##       ##         ## ##   ##       ##
 //    ##     #######  ##           ######## ########    ###    ######## ########
 
-
-
-class Program
+//mutable int index;
+class ALL
 {
     using bindingsMap = std::map<std::string,double>;
 protected:
     mutable bindingsMap map;
     mutable int index;
 public:
-    Program(bindingsMap _map, int _index = 0)
-        : map(_map)
-        , index(_index)
+    ALL(int _index = 0)
+        :index(_index)
     {}
+
+    int getIndex() const{
+        return index;
+    }
+
+    void increIndex() const{
+        index  = index + 4;
+    }
+
+};
+
+
+class Program
+    :public ALL
+{
+public:
     virtual ~Program()
     {
     }
 
-    Program(){
-    }
+    Program(){ }
 
+    virtual void print(ALL *ptr) const =0;
 
-    virtual void print() const =0;
+    virtual void globalvariable(ALL *ptr) const {}
 
-    virtual void globalvariable() const {}
+    virtual void returnprint() const{}
 
     virtual const std::string getId() const{
         return 0;
     }
-
-
-
-
 
 };
 
@@ -64,10 +76,10 @@ public:
     {}
 
 
-    virtual void print() const override
+    virtual void print(ALL *ptr) const override
     {
-        Program_call1 -> print();
-        Program_call2 -> print();
+        Program_call1 -> print(ptr);
+        Program_call2 -> print(ptr);
     }
 
     ~Program_call(){
@@ -86,7 +98,7 @@ public:
 	{
 	}
 
-    virtual void print() const override
+    virtual void print(ALL *ptr) const override
     {
     }
 
@@ -107,7 +119,7 @@ public:
 	{
 	}
 
-    virtual void print() const override
+    virtual void print(ALL *ptr) const override
     {
     }
 
@@ -128,10 +140,15 @@ public:
     const std::string getId() const
     { return id; }
 
-    virtual void print() const override
+    virtual void print(ALL *ptr) const override
     {
         //std::cout << "int vari" << '\n';
         std::cout<<id;
+    }
+
+    virtual void returnprint() const override{
+        //std::cout << map[id] << '\n';
+        std::cout << "lw\t$t0,\t" << map[id] << "(sp)" << '\n';
     }
 
     ~Variable(){
@@ -149,12 +166,12 @@ public:
         : value(_value)
     {}
 
-    virtual void print() const override
+    virtual void print(ALL *ptr) const override
     {
         std::cout << value;
     }
 
-    virtual void globalvariable() const {
+    virtual void globalvariable(ALL *ptr) const {
         std::cout << value;
     }
 

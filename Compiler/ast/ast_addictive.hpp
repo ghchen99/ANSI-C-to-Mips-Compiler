@@ -14,13 +14,13 @@ public:
         , right(_right)
     {}
 
-    virtual void globalvariable(){
-        left -> globalvariable();
+    virtual void globalvariable(ALL *ptr){
+        left -> globalvariable(ptr);
         std::cout << "+";
-        right -> globalvariable();
+        right -> globalvariable(ptr);
     }
 
-    virtual void print() const override
+    virtual void print(ALL *ptr) const override
     {
         std::cout << "in add" << '\n';
     }
@@ -46,13 +46,13 @@ public:
         , right(_right)
     {}
 
-    virtual void globalvariable(){
-        left -> print();
+    virtual void globalvariable(ALL *ptr){
+        left -> print(ptr);
         std::cout << "-";
-        right -> print();
+        right -> print(ptr);
     }
 
-    virtual void print() const override
+    virtual void print(ALL *ptr) const override
     {
         std::cout << "in sub" << '\n';
     }

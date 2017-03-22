@@ -122,8 +122,8 @@ STATEMENT : COMPOUND_STATEMENT { $$ = $1;}
           | JUMP_STATEMENT { $$ = $1;}
           | EXPRESSION_STATEMENT { $$ = $1; }
 
-JUMP_STATEMENT : T_RETURN T_SIMICOLOUMN { $$ = new Empty();}
-               | T_RETURN EXPRESSION T_SIMICOLOUMN { $$ = new Empty();}
+JUMP_STATEMENT : T_RETURN T_SIMICOLOUMN { $$ = new ReturnZero();}
+               | T_RETURN EXPRESSION T_SIMICOLOUMN { $$ = new Return($2);}
 
 EXPRESSION_STATEMENT : T_SIMICOLOUMN { $$ = new Empty();}
                      | EXPRESSION T_SIMICOLOUMN { $$ = $1; }

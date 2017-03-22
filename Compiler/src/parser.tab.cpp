@@ -1614,13 +1614,13 @@ yyreduce:
 
   case 42:
 #line 125 "src/parser.y" /* yacc.c:1646  */
-    { (yyval.prog) = new Empty();}
+    { (yyval.prog) = new ReturnZero();}
 #line 1619 "src/parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 43:
 #line 126 "src/parser.y" /* yacc.c:1646  */
-    { (yyval.prog) = new Empty();}
+    { (yyval.prog) = new Return((yyvsp[-1].prog));}
 #line 1625 "src/parser.tab.cpp" /* yacc.c:1646  */
     break;
 

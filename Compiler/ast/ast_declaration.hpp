@@ -16,14 +16,14 @@ public:
     {}
 
 
-    virtual void print() const override
+    virtual void print(ALL *ptr) const override
     {
-        Deco1 -> print();
+        Deco1 -> print(ptr);
     }
 
-    virtual void globalvariable() const {
+    virtual void globalvariable(ALL *ptr) const {
         //std::cout << "in decalration" << '\n';
-        Deco1 -> globalvariable();
+        Deco1 -> globalvariable(ptr);
     }
 
     ~declaration(){
@@ -45,13 +45,13 @@ public:
     {}
 
 
-    virtual void print() const override
+    virtual void print(ALL *ptr) const override
     {
     }
 
-    virtual void globalvariable() const {
-        Deco1 -> globalvariable();
-        Deco2 -> globalvariable();
+    virtual void globalvariable(ALL *ptr) const {
+        Deco1 -> globalvariable(ptr);
+        Deco2 -> globalvariable(ptr);
     }
 
     ~Init_deco_list(){
@@ -74,28 +74,28 @@ public:
     {}
 
 
-    virtual void print() const override
+    virtual void print(ALL *ptr) const override
     {
     }
 
-    virtual void globalvariable() const {
+    virtual void globalvariable(ALL *ptr) const {
        std::cout << ".global\t";
-       Deco1 -> print();
+       Deco1 -> print(ptr);
        std::cout << '\n';
 
        std::cout << ".type\t";
-       Deco1 -> print();
+       Deco1 -> print(ptr);
        std::cout << ",  @object" << '\n';
 
        std::cout << ".size\t";
-       Deco1 -> print();
+       Deco1 -> print(ptr);
        std::cout << ",  4" << '\n';
 
-       Deco1 -> print();
+       Deco1 -> print(ptr);
        std::cout << ":" << '\n';
 
        std::cout << ".word\t";
-       Deco2 -> globalvariable();
+       Deco2 -> globalvariable(ptr);
        std::cout << '\n';
     }
 
@@ -116,31 +116,33 @@ public:
     {}
 
 
-    virtual void print() const override
+    virtual void print(ALL *ptr) const override
     {
+        int tmp = ptr->getIndex();
+        std::cout << "#index in declareation is " << tmp << '\n';
         std::cout << "#initialise a variable" << '\n';
-        std::cout << "sw\t$zero,\t" << index << "($sp)" << '\n';
+        std::cout << "sw\t$zero,\t" << tmp << "($sp)" << '\n';
         std::string s = Deco1 -> getId();
         std::cout << "#add the stack index variable " << s << " to the map" << '\n';
-        map.insert ( std::pair<std::string,int>(s,index));
-        std::cout << "#increment index, now is " << index <<" and increment by 4" << '\n';
-        index  =  index + 4;
+        map.insert ( std::pair<std::string,int>(s,tmp));
+        std::cout << "#increment index, now is " << tmp <<" and increment by 4" << '\n';
+        increIndex();
     }
 
-    virtual void globalvariable() const {
+    virtual void globalvariable(ALL *ptr) const {
        std::cout << ".global\t";
-       Deco1 -> print();
+       Deco1 -> print(ptr);
        std::cout << '\n';
 
        std::cout << ".type\t";
-       Deco1 -> print();
+       Deco1 -> print(ptr);
        std::cout << ",  @object" << '\n';
 
        std::cout << ".size\t";
-       Deco1 -> print();
+       Deco1 -> print(ptr);
        std::cout << ",  4" << '\n';
 
-       Deco1 -> print();
+       Deco1 -> print(ptr);
        std::cout << ":" << '\n';
 
        std::cout << ".space\t4" << std::endl;

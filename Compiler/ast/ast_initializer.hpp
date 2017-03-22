@@ -12,15 +12,15 @@ public:
     {}
 
 
-    virtual void print() const override
+    virtual void print(ALL *ptr) const override
     {
         //std::cout << "in Initializer" << '\n';
-        Program_call1 -> print();
+        Program_call1 -> print(ptr);
     }
 
-    virtual void globalvariable() const{
+    virtual void globalvariable(ALL *ptr) const{
         //std::cout << "in Initializer" << '\n';
-        Program_call1 -> globalvariable();
+        Program_call1 -> globalvariable(ptr);
     }
 
 

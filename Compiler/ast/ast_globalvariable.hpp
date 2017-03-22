@@ -12,12 +12,12 @@ public:
     {}
 
 
-    virtual void print() const override
+    virtual void print(ALL *ptr) const override
     {
         std::cout << "\n\n";
         std::cout << "#start declaring a globalvariable" << '\n';
         //std::cout << "in globalvariable" << '\n';
-        Program_call1 -> globalvariable();
+        Program_call1 -> globalvariable(ptr);
         std::cout << "#finished declaring a globalvariable" << '\n';
         std::cout << "\n\n";
     }
