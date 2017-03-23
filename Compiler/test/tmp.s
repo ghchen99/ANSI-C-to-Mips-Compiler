@@ -1,5 +1,3 @@
-
-
 #start declaring a function
 .global	main
 .ent	main
@@ -10,12 +8,15 @@
 main:
 addiu	$sp,	$sp,	-40
 sw	$zero,	4($sp)
-lw	$t0,	4($sp)
-move	$2,	$t0
+move	$2,	$zero
 addiu	$sp,	$sp,	+40
 j	$ra
 nop
 #finishing a function
+
+
+#finishing
+
 
 
 #finishing

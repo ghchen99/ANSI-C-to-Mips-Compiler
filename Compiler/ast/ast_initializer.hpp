@@ -18,9 +18,14 @@ public:
         Program_call1 -> print(ptr);
     }
 
-    virtual void globalvariable(ALL *ptr) const{
+    virtual void globalvariable(ALL *ptr) const override{
         //std::cout << "in Initializer" << '\n';
         Program_call1 -> globalvariable(ptr);
+    }
+
+    virtual void declarationPrint(ALL *ptr) const override{
+        //std::cout << "int Initializer declarationPrint" << '\n';
+        Program_call1 -> declarationPrint(ptr);
     }
 
 

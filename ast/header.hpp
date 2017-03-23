@@ -1,20 +1,17 @@
 #ifndef header_hpp
 #define header_hpp
 
+//static const Program *parseAST();
+
+
 #include "ast_toplevel.hpp"
-#include "ast_variable.hpp"
 #include "ast_declaration.hpp"
-#include "ast_declaration_specifiers.hpp"
-#include "ast_all_declaration.hpp"
-#include "ast_number.hpp"
-#include "ast_init_declarator.hpp"
-#include "ast_unary_expression.hpp"
+#include "ast_globalvariable.hpp"
+#include "ast_addictive.hpp"
+#include "ast_initializer.hpp"
+#include "ast_operator.hpp"
 #include "ast_function.hpp"
-#include "ast_parameter.hpp"
-#include "ast_scope.hpp"
-#include "ast_direct_declarator.hpp"
-#include "ast_if.hpp"
-#include "ast_postfix.hpp"
+#include "ast_return.hpp"
 
 extern const Program *parseAST();
 

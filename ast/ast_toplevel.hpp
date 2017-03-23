@@ -4,7 +4,12 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <cmath>
+#include <sstream>
+#include <map>
 
+//Register t0 is the register used to put the return value in.
+//Register t1 is the register used to put the calculated value after int x = ? or x  = ?
 
 // ########  #######  ########     ##       ######## ##     ## ######## ##
 //    ##    ##     ## ##     ##    ##       ##       ##     ## ##       ##
@@ -14,20 +19,51 @@
 //    ##    ##     ## ##           ##       ##         ## ##   ##       ##
 //    ##     #######  ##           ######## ########    ###    ######## ########
 
+//mutable int index;
+class ALL
+{
+    using bindingsMap = std::map<std::string,double>;
+protected:
+    mutable int index;
+public:
+    mutable bindingsMap map;
+    ALL(int _index = 0)
+        :index(_index)
+    {}
+
+    int getIndex() const{
+        return index;
+    }
+
+    void increIndex() const{
+        index  = index + 4;
+    }
+
+};
+
 
 class Program
+    :public ALL
 {
 public:
     virtual ~Program()
     {
     }
 
-    Program(){
+    Program(){ }
+
+    virtual void print(ALL *ptr) const =0;
+
+    virtual void globalvariable(ALL *ptr) const {}
+
+    virtual void returnprint(ALL *ptr) const{}
+
+    virtual const std::string getId() const{
+        return 0;
     }
 
+    virtual void declarationPrint(ALL *ptr) const {}
 
-
-    virtual void print() const =0;
 
 };
 
@@ -44,16 +80,17 @@ public:
     {}
 
 
-    virtual void print() const override
+    virtual void print(ALL *ptr) const override
     {
-        Program_call1 -> print();
-        Program_call2 -> print();
+        Program_call1 -> print(ptr);
+        Program_call2 -> print(ptr);
     }
 
     ~Program_call(){
         delete Program_call1;
         delete Program_call2;
     }
+
 
 };
 
@@ -65,7 +102,7 @@ public:
 	{
 	}
 
-    virtual void print() const override
+    virtual void print(ALL *ptr) const override
     {
     }
 
@@ -86,11 +123,72 @@ public:
 	{
 	}
 
-    virtual void print() const override
+    virtual void print(ALL *ptr) const override
     {
     }
 
 	~EmptyString(){
 	}
+};
+
+class Variable
+    : public Program
+{
+private:
+    const std::string id;
+public:
+    Variable(const std::string &_id)
+        : id(_id)
+    {}
+
+    const std::string getId() const
+    { return id; }
+
+    virtual void print(ALL *ptr) const override
+    {
+        //std::cout << "int vari" << '\n';
+        std::cout<<id;
+    }
+
+    virtual void returnprint(ALL *ptr) const override{
+        //std::cout << ptr->map[id] << '\n';
+        std::cout << "lw\t$t0,\t" << ptr->map[id] << "($sp)" << '\n';
+    }
+
+
+
+    ~Variable(){
+    }
+
+};
+
+class Number
+    : public Program
+{
+private:
+    int value;
+public:
+    Number(int _value)
+        : value(_value)
+    {}
+
+    virtual void print(ALL *ptr) const override
+    {
+        std::cout << value;
+    }
+
+    virtual void globalvariable(ALL *ptr) const {
+        std::cout << value;
+    }
+
+    virtual void returnprint(ALL *ptr) const override{
+        //std::cout << ptr->map[id] << '\n';
+        std::cout << "addi\t$t0,\t$zero,\t" << value << '\n';
+    }
+
+    virtual void declarationPrint(ALL *ptr) const override{
+        std::cout << "addi\t$t1,\t$zero,\t" << value << '\n';
+    }
+
 };
 #endif

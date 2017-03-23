@@ -1,55 +1,173 @@
 #ifndef ast_declaration_hpp
 #define ast_declaration_hpp
 
+#include <cmath>
+
 class declaration
     : public Program
 {
 private:
-    const Program *declaration1;
+    const std::string id;
+    const Program *Deco1;
 public:
-    declaration(const Program *_declaration1)
-        :declaration1(_declaration1)
+    declaration(const std::string &_id, const Program *_Deco1)
+        : id(_id)
+        , Deco1(_Deco1)
     {}
 
 
-    virtual void print() const override
+    virtual void print(ALL *ptr) const override
     {
-        //std::cout << "in declaration path" << '\n';
-        std::cout << "<Variable id=\"" ;
-        declaration1 -> print();
-        std::cout << "\" />" << std::endl;
+        Deco1 -> print(ptr);
+    }
+
+    virtual void globalvariable(ALL *ptr) const {
+        //std::cout << "in decalration" << '\n';
+        Deco1 -> globalvariable(ptr);
     }
 
     ~declaration(){
-        delete declaration1;
+
     }
 
 };
 
-class deco_list
+class Init_deco_list
     : public Program
 {
 private:
-    const Program *declaration1;
-    const Program *declaration2;
+    const Program *Deco1;
+    const Program *Deco2;
 public:
-    deco_list(const Program *_declaration1,const Program *_declaration2)
-        :declaration1(_declaration1),
-         declaration2(_declaration2)
+    Init_deco_list(const Program *_Deco1, const Program *_Deco2)
+        :Deco1(_Deco1)
+        ,Deco2(_Deco2)
     {}
 
 
-    virtual void print() const override
+    virtual void print(ALL *ptr) const override
     {
-        //std::cout << "in declaration path" << '\n';
-        declaration1 -> print();
-        declaration2 -> print();
     }
 
-    ~deco_list(){
-        delete declaration1;
-        delete declaration2;
+    virtual void globalvariable(ALL *ptr) const {
+        Deco1 -> globalvariable(ptr);
+        Deco2 -> globalvariable(ptr);
+    }
+
+    ~Init_deco_list(){
+
     }
 
 };
+
+
+class Init_deco_list2
+    : public Program
+{
+private:
+    const Program *Deco1;
+    const Program *Deco2;
+public:
+    Init_deco_list2(const Program *_Deco1, const Program *_Deco2)
+        :Deco1(_Deco1)
+        ,Deco2(_Deco2)
+    {}
+
+
+    virtual void print(ALL *ptr) const override
+    {
+        int tmp = ptr->getIndex();
+        //std::cout << "#index in declareation is " << tmp << '\n';
+        //std::cout << "#initialise a variable" << '\n';
+        std::cout << "sw\t$zero,\t" << tmp << "($sp)" << '\n';
+        std::string s = Deco1 -> getId();
+        //std::cout << "#add the stack index variable " << s << " to the map" << '\n';
+        ptr->map.insert ( std::pair<std::string,int>(s,tmp));
+        //std::cout << "#increment index, now is " << tmp <<" and increment by 4" << '\n';
+        ptr->increIndex();
+
+        Deco2 -> declarationPrint(ptr);
+
+        std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+
+
+
+    }
+
+    virtual void globalvariable(ALL *ptr) const {
+       std::cout << ".global\t";
+       Deco1 -> print(ptr);
+       std::cout << '\n';
+
+       std::cout << ".type\t";
+       Deco1 -> print(ptr);
+       std::cout << ",  @object" << '\n';
+
+       std::cout << ".size\t";
+       Deco1 -> print(ptr);
+       std::cout << ",  4" << '\n';
+
+       Deco1 -> print(ptr);
+       std::cout << ":" << '\n';
+
+       std::cout << ".word\t";
+       Deco2 -> globalvariable(ptr);
+       std::cout << '\n';
+    }
+
+    ~Init_deco_list2(){
+
+    }
+
+};
+
+class Init_deco_list1
+    : public Program
+{
+private:
+    const Program *Deco1;
+public:
+    Init_deco_list1(const Program *_Deco1)
+        :Deco1(_Deco1)
+    {}
+
+
+    virtual void print(ALL *ptr) const override
+    {
+        int tmp = ptr->getIndex();
+        //std::cout << "#index in declareation is " << tmp << '\n';
+        //std::cout << "#initialise a variable" << '\n';
+        std::cout << "sw\t$zero,\t" << tmp << "($sp)" << '\n';
+        std::string s = Deco1 -> getId();
+        //std::cout << "#add the stack index variable " << s << " to the map" << '\n';
+        ptr->map.insert ( std::pair<std::string,int>(s,tmp));
+        //std::cout << "#increment index, now is " << tmp <<" and increment by 4" << '\n';
+        ptr->increIndex();
+    }
+
+    virtual void globalvariable(ALL *ptr) const {
+       std::cout << ".global\t";
+       Deco1 -> print(ptr);
+       std::cout << '\n';
+
+       std::cout << ".type\t";
+       Deco1 -> print(ptr);
+       std::cout << ",  @object" << '\n';
+
+       std::cout << ".size\t";
+       Deco1 -> print(ptr);
+       std::cout << ",  4" << '\n';
+
+       Deco1 -> print(ptr);
+       std::cout << ":" << '\n';
+
+       std::cout << ".space\t4" << std::endl;
+    }
+
+    ~Init_deco_list1(){
+
+    }
+
+};
+
 #endif

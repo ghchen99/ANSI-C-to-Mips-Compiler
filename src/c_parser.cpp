@@ -2,13 +2,16 @@
 
 int main()
 {
-
+    //std::map<std::string,double> map;
+    //int x = 0;
+    //stack = 0;
     //std::vector<std::string> v;
+    ALL *ptr = new ALL();
+
     const Program *ast=parseAST();
-    std::cout << "<?xml version=\"1.0\"?>" << '\n';
-    std::cout << "<Program>" << "\n";
-    ast->print();
-    std::cout << "</Program>" << "\n";
+
+    ast -> print(ptr);
+    std::cout << "#finishing" << '\n';
     std::cout<<std::endl;
 
     return 0;

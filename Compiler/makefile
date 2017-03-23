@@ -7,7 +7,7 @@ src/parser.tab.cpp src/parser.tab.hpp : src/parser.y
 src/lexer.yy.cpp : src/lexer.flex src/parser.tab.hpp
 	flex -o src/lexer.yy.cpp  src/lexer.flex
 
-bin/c_parser : src/c_parser.o src/parser.tab.o src/lexer.yy.o src/parser.tab.o
+bin/c_compiler : src/c_parser.o src/parser.tab.o src/lexer.yy.o src/parser.tab.o
 	mkdir -p bin
 	g++ $(CPPFLAGS) -o bin/c_parser $^
 
