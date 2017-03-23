@@ -42,13 +42,13 @@ public:
         Program_call1 -> print(ptr);
         std::cout << ":" << '\n';
 
-        std::cout << "addiu\t$sp,\t$sp,\t-40";
+        std::cout << "addiu\t$sp,\t$sp,\t-10000";
         std::cout << '\n';
 
         // stack = 0;
         Program_call2 -> print(ptr);
 
-        std::cout << "addiu\t$sp,\t$sp,\t+40";
+        std::cout << "addiu\t$sp,\t$sp,\t+10000";
         std::cout << '\n';
         std::cout << "j\t$ra" << '\n';
         std::cout << "nop" << '\n';
