@@ -16,9 +16,9 @@ public:
 
     virtual void print(ALL *ptr) const override
     {
-        std::cout << "index in the function is  " << ptr->getIndex() << '\n';
+        //std::cout << "index in the function is  " << ptr->getIndex() << '\n';
         ptr->increIndex();
-        std::cout << "index in the function is  " << ptr->getIndex() << '\n';
+        //std::cout << "index in the function is  " << ptr->getIndex() << '\n';
 
         std::cout << "\n\n";
         std::cout << "#start declaring a function" << '\n';

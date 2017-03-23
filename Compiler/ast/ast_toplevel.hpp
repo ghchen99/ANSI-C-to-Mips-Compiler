@@ -23,9 +23,9 @@ class ALL
 {
     using bindingsMap = std::map<std::string,double>;
 protected:
-    mutable bindingsMap map;
     mutable int index;
 public:
+    mutable bindingsMap map;
     ALL(int _index = 0)
         :index(_index)
     {}
@@ -55,7 +55,7 @@ public:
 
     virtual void globalvariable(ALL *ptr) const {}
 
-    virtual void returnprint() const{}
+    virtual void returnprint(ALL *ptr) const{}
 
     virtual const std::string getId() const{
         return 0;
@@ -146,9 +146,9 @@ public:
         std::cout<<id;
     }
 
-    virtual void returnprint() const override{
-        //std::cout << map[id] << '\n';
-        std::cout << "lw\t$t0,\t" << map[id] << "(sp)" << '\n';
+    virtual void returnprint(ALL *ptr) const override{
+        //std::cout << ptr->map[id] << '\n';
+        std::cout << "lw\t$t0,\t" << ptr->map[id] << "($sp)" << '\n';
     }
 
     ~Variable(){

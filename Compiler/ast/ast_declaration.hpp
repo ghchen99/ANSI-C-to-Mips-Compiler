@@ -119,14 +119,14 @@ public:
     virtual void print(ALL *ptr) const override
     {
         int tmp = ptr->getIndex();
-        std::cout << "#index in declareation is " << tmp << '\n';
-        std::cout << "#initialise a variable" << '\n';
+        //std::cout << "#index in declareation is " << tmp << '\n';
+        //std::cout << "#initialise a variable" << '\n';
         std::cout << "sw\t$zero,\t" << tmp << "($sp)" << '\n';
         std::string s = Deco1 -> getId();
-        std::cout << "#add the stack index variable " << s << " to the map" << '\n';
-        map.insert ( std::pair<std::string,int>(s,tmp));
-        std::cout << "#increment index, now is " << tmp <<" and increment by 4" << '\n';
-        increIndex();
+        //std::cout << "#add the stack index variable " << s << " to the map" << '\n';
+        ptr->map.insert ( std::pair<std::string,int>(s,tmp));
+        //std::cout << "#increment index, now is " << tmp <<" and increment by 4" << '\n';
+        ptr->increIndex();
     }
 
     virtual void globalvariable(ALL *ptr) const {

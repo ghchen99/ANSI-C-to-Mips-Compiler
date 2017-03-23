@@ -35,8 +35,8 @@ public:
 
     virtual void print(ALL *ptr) const override
     {
-        Program_call1 ->  returnprint();
-        std::cout << "return the calculation into register t0" << '\n';
+        Program_call1 ->  returnprint(ptr);
+        //std::cout << "return the calculation into register t0" << '\n';
         std::cout << "move\t$2,\t$t0";
         std::cout << '\n';
     }
