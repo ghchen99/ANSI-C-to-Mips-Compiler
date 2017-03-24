@@ -50,6 +50,8 @@
 %type <prog> STATEMENT_LIST STATEMENT EXPRESSION_STATEMENT EXPRESSION
 %type <prog> ASSIGNMENT_EXPRESSION PARAM_DECLARATION_LIST
 
+%type <prog> IF_STATEMENT
+
 %type <string> T_VARIABLE TYPE_SPECIFIER DECLARATION_SPECIFIERS ASSIGNMENT_OPERATOR
 %type <number> T_NUMBER
 
@@ -107,6 +109,7 @@ PRIMARY_EXPRESSION : T_VARIABLE { $$ = new Variable(*$1); }
 FUNCTION : DECLARATION_SPECIFIERS DECLARATOR T_LBRACKET T_RBRACKET COMPOUND_STATEMENT { $$ = new FunctionDeclare($2,$5);}
          | DECLARATOR T_LBRACKET T_RBRACKET COMPOUND_STATEMENT {$$ = new FunctionDeclare($1,$4);}
          | DECLARATION_SPECIFIERS DECLARATOR T_LBRACKET PARAM_DECLARATION_LIST T_RBRACKET COMPOUND_STATEMENT {$$ = new FunctionDeclareParam($2,$4,$6);}
+         | DECLARATOR T_LBRACKET PARAM_DECLARATION_LIST T_RBRACKET COMPOUND_STATEMENT {$$ = new FunctionDeclareParam($1,$3,$5);}
 
 PARAM_DECLARATION_LIST : DECLARATION_SPECIFIERS DECLARATOR { $$ = new ParameterDeclare(*$1,$2);}
                        | DECLARATION_SPECIFIERS DECLARATOR T_COMMA PARAM_DECLARATION_LIST { $$ = new ParameterDeclareMore($2,$4);}
@@ -125,14 +128,18 @@ STATEMENT_LIST : STATEMENT { $$ = $1; }
 
 STATEMENT : COMPOUND_STATEMENT { $$ = $1;}
           | JUMP_STATEMENT { $$ = $1;}
-          | 
           | EXPRESSION_STATEMENT { $$ = $1; }
+          | IF_STATEMENT { $$ = $1; }
+
+IF_STATEMENT : T_IF T_LBRACKET EXPRESSION T_RBRACKET STATEMENT { $$ = new If($3,$5);}   %prec "then" //https://www.gnu.org/software/bison/manual/html_node/Precedence-Decl.html
+             | T_IF T_LBRACKET EXPRESSION T_RBRACKET STATEMENT T_ELSE STATEMENT {$$ = new IfElse($3,$5,$7);}
+
 
 JUMP_STATEMENT : T_RETURN T_SIMICOLOUMN { $$ = new ReturnZero();}
                | T_RETURN EXPRESSION T_SIMICOLOUMN { $$ = new Return($2);}
 
 EXPRESSION_STATEMENT : T_SIMICOLOUMN { $$ = new Empty();}
-                     | EXPRESSION T_SIMICOLOUMN { $$ = $1; }
+                     | EXPRESSION T_SIMICOLOUMN { $$ = new declaration_call($1); }
 
 EXPRESSION : ASSIGNMENT_EXPRESSION { $$ = $1; }
            | EXPRESSION T_COMMA ASSIGNMENT_EXPRESSION { $$ = new Program_call($1,$3);}

@@ -194,12 +194,20 @@ public:
 
     virtual void returnprint(ALL *ptr) const override{
         //std::cout << ptr->map[id] << '\n';
-        std::cout << "addi\t$t0,\t$zero,\t" << value << '\n';
+        if (value > 65535){
+            std::cout << "li\t$t0,\t" << value << '\n';
+        }else{
+            std::cout << "addi\t$t0,\t$zero,\t" << value << '\n';
+        }
     }
 
 
     virtual void declarationPrint(ALL *ptr) const override{
-        std::cout << "addi\t$t1,\t$zero,\t" << value << '\n';
+        if (value > 65535){
+            std::cout << "li\t$t0,\t" << value << '\n';
+        }else{
+            std::cout << "addi\t$t1,\t$zero,\t" << value << '\n';
+        }
     }
 
 };

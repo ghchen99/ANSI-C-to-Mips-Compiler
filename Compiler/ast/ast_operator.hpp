@@ -80,7 +80,7 @@ public:
             std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
             std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
             std::cout << "div\t$t1,\t$t0" << '\n';
-            std::cout << "mfhi\t$t1" << '\n';
+            std::cout << "mflo\t$t1" << '\n';
         }
     }
 
@@ -122,7 +122,7 @@ public:
             std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
             std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
             std::cout << "div\t$t1,\t$t0" << '\n';
-            std::cout << "mfhi\t$t1" << '\n';
+            std::cout << "mflo\t$t1" << '\n';
         }
 
         std::cout << "move\t$t0,\t$t1" << '\n';

@@ -1,3 +1,5 @@
+
+
 #start declaring a function
 .global	f
 .ent	f
@@ -11,7 +13,7 @@ addiu	$sp,	$sp,	-10000
 sw	$4,	4($sp)
 lw	$t1,	4($sp)
 sw	$t1,	8($sp)
-addi	$t0,	$zero,	10
+addi	$t1,	$zero,	10
 sw	$t1,	12($sp)
 lw	$t0,	8($sp)
 lw	$t1,	12($sp)
@@ -22,4 +24,7 @@ addiu	$sp,	$sp,	+10000
 j	$ra
 nop
 #finishing a function
+
+
+#finishing
 

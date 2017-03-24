@@ -13,10 +13,10 @@ bin/c_compiler : src/c_parser.o src/parser.tab.o src/lexer.yy.o src/parser.tab.o
 
 
 clean :
-	rm working/*
 	rm src/*.o
 	rm src/*.output
 	rm src/*.tab.cpp
 	rm src/*.yy.cpp
 	rm src/*.tab.hpp
 	rm bin/*
+	rm working/*
