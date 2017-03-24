@@ -26,6 +26,7 @@ class ALL
 protected:
     mutable int index;
 public:
+    mutable int parameterId = 4;
     mutable bindingsMap map;
     mutable bindingsMap numberMap;
     ALL(int _index = 0)

@@ -40,7 +40,7 @@ for DRIVER in test_deliverable/testcases/*_driver.c ; do
     qemu-mips working/${NAME}.elf
     if [[ $? -ne 0 ]]; then
         >&2 echo "ERROR : Testcase returned $?, but expected 0."
+    else
+	echo "pass"
     fi
-
-    echo "pass"
 done

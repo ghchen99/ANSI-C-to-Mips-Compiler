@@ -12,6 +12,8 @@
 #include "ast_operator.hpp"
 #include "ast_function.hpp"
 #include "ast_return.hpp"
+#include "ast_redeclare.hpp"
+#include "ast_parameter.hpp"
 
 extern const Program *parseAST();
 

@@ -89,9 +89,6 @@ public:
         Deco2 -> declarationPrint(ptr);
 
         std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
-
-
-
     }
 
     virtual void globalvariable(ALL *ptr) const {

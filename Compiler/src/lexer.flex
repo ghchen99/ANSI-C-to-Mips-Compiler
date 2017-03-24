@@ -91,7 +91,7 @@ sizeof          { return(T_SIZEOF);}
 (\^)			    { return(T_EXCLUS_OR); }
 (\|)			    { return(T_INEXCLUS_OR); }
 
-[ \t\v\n\f]		{ ; }
+[ \r\t\v\n\f]		{ ; }
 .			    { exit(1); }
 
 %%
