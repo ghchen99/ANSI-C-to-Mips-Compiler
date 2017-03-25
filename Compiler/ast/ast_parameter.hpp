@@ -39,6 +39,11 @@ public:
 
     }
 
+    virtual void countstack(ALL *ptr) const override{
+        Program_call1 -> countstack(ptr);
+        ptr->stacksize = ptr->stacksize + 4;
+    }
+
     ~ParameterDeclare(){
     }
 
@@ -83,6 +88,12 @@ public:
         }
 
         Program_call2 ->  print(ptr);
+    }
+
+    virtual void countstack(ALL *ptr) const override{
+        Program_call1 -> countstack(ptr);
+        Program_call2 -> countstack(ptr);
+        ptr->stacksize = ptr->stacksize + 8;
     }
 
     ~ParameterDeclareMore(){

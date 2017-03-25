@@ -13,6 +13,12 @@ public:
         , Program_call2(_Program_call2)
     {}
 
+    virtual void countstack(ALL *ptr) const override{
+        Program_call1 -> countstack(ptr);
+        Program_call2 -> countstack(ptr);
+        ptr->stacksize = ptr->stacksize + 64;
+    }
+
 
     virtual void print(ALL *ptr) const override
     {
@@ -42,13 +48,14 @@ public:
         Program_call1 -> print(ptr);
         std::cout << ":" << '\n';
 
-        std::cout << "addiu\t$sp,\t$sp,\t-10000";
+        std::cout << "addiu\t$sp,\t$sp,\t-" << ptr->stacksize;
         std::cout << '\n';
 
         // stack = 0;
         Program_call2 -> print(ptr);
 
-        std::cout << "addiu\t$sp,\t$sp,\t+10000";
+        std::cout << "\n\n#stacksize is" << ptr->stacksize << '\n';
+        std::cout << "addiu\t$sp,\t$sp,\t" << ptr->stacksize;
         std::cout << '\n';
         std::cout << "j\t$ra" << '\n';
         std::cout << "nop" << '\n';
@@ -80,6 +87,13 @@ public:
         , Program_call3(_Program_call3)
     {}
 
+        virtual void countstack(ALL *ptr) const override{
+            Program_call1 -> countstack(ptr);
+            Program_call2 -> countstack(ptr);
+            Program_call3 -> countstack(ptr);
+            ptr->stacksize = ptr->stacksize + 128;
+        }
+
 
         virtual void print(ALL *ptr) const override
         {
@@ -109,7 +123,7 @@ public:
             Program_call1 -> print(ptr);
             std::cout << ":" << '\n';
 
-            std::cout << "addiu\t$sp,\t$sp,\t-10000";
+            std::cout << "addiu\t$sp,\t$sp,\t-" << ptr->stacksize;
             std::cout << '\n';
 
             // stack = 0;
@@ -118,7 +132,8 @@ public:
 
             Program_call3 -> print(ptr);
 
-            std::cout << "addiu\t$sp,\t$sp,\t+10000";
+            std::cout << "\n\n#stacksize is" << ptr->stacksize << '\n';
+            std::cout << "addiu\t$sp,\t$sp,\t" << ptr->stacksize;
             std::cout << '\n';
             std::cout << "j\t$ra" << '\n';
             std::cout << "nop" << '\n';

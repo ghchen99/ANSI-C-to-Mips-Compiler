@@ -21,6 +21,10 @@ public:
     ~declaration_call(){
         delete Program_call1;
     }
+    virtual void countstack(ALL *ptr) const override{
+        Program_call1 -> countstack(ptr);
+        ptr->stacksize = ptr->stacksize + 4;
+    }
 
 
 };
@@ -53,6 +57,12 @@ public:
         std::string s = Program_call1 -> getId();
         std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
         //store back to $t0
+    }
+
+    virtual void countstack(ALL *ptr) const override{
+        Program_call1 -> countstack(ptr);
+        Program_call2 -> countstack(ptr);
+        ptr->stacksize = ptr->stacksize + 8;
     }
 
     ~ReDeclare(){

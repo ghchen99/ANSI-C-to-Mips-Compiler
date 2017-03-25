@@ -13,13 +13,28 @@ public:
         ,scope1(_scope1)
     {}
 
+    virtual void countstack(ALL *ptr) const override{
+        scope0 -> countstack(ptr);
+        scope1 -> countstack(ptr);
+        ptr->stacksize = ptr->stacksize + 12;
+    }
+
 
     virtual void print(ALL *ptr) const override
     {
-        //std::cout << "in declaration path" << '\n';
-        std::cout << "<Scope>" << std::endl;
+        std::string labelbase = "L" ;
+        std::string s1 = ptr->makeName(labelbase);
+        std::string s2 = ptr->makeName(labelbase);
+        scope0 -> print(ptr);
+        std::cout << "addiu\t$t2,\t$zero,\t1" << '\n';
+        std::cout << "beq\t$t1,\t$t2,\t" << s1 << '\n';
+        std::cout << "nop" << '\n';
+        std::cout << "b\t" << s2 << '\n';
+        std::cout << "nop" << '\n';
+        std::cout << s1 << ":" << '\n';
         scope1 -> print(ptr);
-        std::cout << "</Scope>" << std::endl;
+        std::cout << s2 << ":" << '\n';
+        //std::cout << "in declaration path" << '\n';
     }
 
     ~If(){
@@ -42,16 +57,29 @@ public:
         ,scope2(_scope2)
     {}
 
+    virtual void countstack(ALL *ptr) const override{
+        scope0 -> countstack(ptr);
+        scope1 -> countstack(ptr);
+        scope2 -> countstack(ptr);
+        ptr->stacksize = ptr->stacksize + 12;
+    }
+
 
     virtual void print(ALL *ptr) const override
     {
-        //std::cout << "in declaration path" << '\n';
-        std::cout << "<Scope>" << std::endl;
-        scope1 -> print(ptr);
-        std::cout << "</Scope>" << std::endl;
-        std::cout << "<Scope>" << std::endl;
+        std::string labelbase = "L" ;
+        std::string s1 = ptr->makeName(labelbase);
+        std::string s2 = ptr->makeName(labelbase);
+        scope0 -> print(ptr);
+        std::cout << "addiu\t$t2,\t$zero,\t1" << '\n';
+        std::cout << "beq\t$t1,\t$t2,\t" << s1 << '\n';
+        std::cout << "nop" << '\n';
         scope2 -> print(ptr);
-        std::cout << "</Scope>" << std::endl;
+        std::cout << "b\t" << s2 << '\n';
+        std::cout << "nop" << '\n';
+        std::cout << s1 << ":" << '\n';
+        scope1 -> print(ptr);
+        std::cout << s2 << ":" << '\n';
     }
 
     ~IfElse(){

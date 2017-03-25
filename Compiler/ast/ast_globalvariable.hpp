@@ -22,6 +22,9 @@ public:
         std::cout << "\n\n";
     }
 
+    virtual void countstack(ALL *ptr) const override{
+    }
+
 
     ~GlobalVariable(){
         delete Program_call1;

@@ -28,6 +28,11 @@ public:
         Program_call1 -> declarationPrint(ptr);
     }
 
+    virtual void countstack(ALL *ptr) const override{
+        Program_call1 -> countstack(ptr);
+        ptr->stacksize = ptr->stacksize + 4;
+    }
+
 
     ~Initializer(){
         delete Program_call1;

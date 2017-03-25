@@ -15,6 +15,8 @@ public:
         std::cout << '\n';
     }
 
+    virtual void countstack(ALL *ptr) const override{
+    }
 
     ~ReturnZero(){
     }
@@ -39,6 +41,11 @@ public:
         //std::cout << "return the calculation into register t0" << '\n';
         std::cout << "move\t$2,\t$t0";
         std::cout << '\n';
+    }
+
+    virtual void countstack(ALL *ptr) const override{
+        Program_call1 -> countstack(ptr);
+        ptr->stacksize = ptr->stacksize + 4;
     }
 
 

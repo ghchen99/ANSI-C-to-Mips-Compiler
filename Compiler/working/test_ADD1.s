@@ -8,7 +8,7 @@
 
 #start a function
 f:
-addiu	$sp,	$sp,	-10000
+addiu	$sp,	$sp,	-168
 #printing out ParameterDeclare
 sw	$4,	4($sp)
 lw	$t1,	4($sp)
@@ -20,7 +20,10 @@ lw	$t1,	12($sp)
 add	$t1,	$t0,	$t1
 move	$t0,	$t1
 move	$2,	$t0
-addiu	$sp,	$sp,	+10000
+
+
+#stacksize is168
+addiu	$sp,	$sp,	168
 j	$ra
 nop
 #finishing a function

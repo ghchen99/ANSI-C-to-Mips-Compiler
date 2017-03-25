@@ -26,6 +26,7 @@ class ALL
 protected:
     mutable int index;
 public:
+    mutable int stacksize = 0;
     mutable int parameterId = 4;
     mutable bindingsMap map;
     mutable bindingsMap numberMap;
@@ -73,6 +74,8 @@ public:
 
     virtual void declarationPrint(ALL *ptr) const {}
 
+    virtual void countstack(ALL *ptr) const =0;
+
 
 };
 
@@ -93,6 +96,12 @@ public:
     {
         Program_call1 -> print(ptr);
         Program_call2 -> print(ptr);
+    }
+
+    virtual void countstack(ALL *ptr) const override{
+        Program_call1 -> countstack(ptr);
+        Program_call2 -> countstack(ptr);
+        ptr->stacksize = ptr->stacksize + 4;
     }
 
     ~Program_call(){
@@ -117,6 +126,9 @@ public:
 
 	~Empty(){
 	}
+
+    virtual void countstack(ALL *ptr) const override{
+    }
 };
 
 class EmptyString
@@ -138,6 +150,9 @@ public:
 
 	~EmptyString(){
 	}
+
+    virtual void countstack(ALL *ptr) const override{
+    }
 };
 
 class Variable
@@ -171,6 +186,10 @@ public:
     ~Variable(){
     }
 
+    virtual void countstack(ALL *ptr) const override{
+        ptr->stacksize = ptr->stacksize + 4;
+    }
+
 };
 
 class Number
@@ -196,7 +215,9 @@ public:
         //std::cout << ptr->map[id] << '\n';
         if (value > 65535){
             std::cout << "li\t$t0,\t" << value << '\n';
-        }else{
+        }else if((value < 65535) && (value > 0)){
+            std::cout << "addiu\t$t0,\t$zero,\t" << value << '\n';
+        }else if(value < 0){
             std::cout << "addi\t$t0,\t$zero,\t" << value << '\n';
         }
     }
@@ -208,6 +229,10 @@ public:
         }else{
             std::cout << "addi\t$t1,\t$zero,\t" << value << '\n';
         }
+    }
+
+    virtual void countstack(ALL *ptr) const override{
+        ptr->stacksize = ptr->stacksize + 4;
     }
 
 };

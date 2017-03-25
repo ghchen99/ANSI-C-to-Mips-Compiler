@@ -8,7 +8,7 @@
 
 #start a function
 f:
-addiu	$sp,	$sp,	-10000
+addiu	$sp,	$sp,	-836
 sw	$zero,	4($sp)
 addi	$t1,	$zero,	100
 sw	$t1,	4($sp)
@@ -143,7 +143,10 @@ lw	$t1,	152($sp)
 add	$t1,	$t0,	$t1
 move	$t0,	$t1
 move	$2,	$t0
-addiu	$sp,	$sp,	+10000
+
+
+#stacksize is836
+addiu	$sp,	$sp,	836
 j	$ra
 nop
 #finishing a function
