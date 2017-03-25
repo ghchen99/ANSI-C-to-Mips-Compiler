@@ -10,6 +10,8 @@ int main()
 
     const Program *ast=parseAST();
 
+    ast -> countstack(ptr);
+
     ast -> print(ptr);
     std::cout << "#finishing" << '\n';
     std::cout<<std::endl;

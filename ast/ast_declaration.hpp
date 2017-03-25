@@ -26,6 +26,11 @@ public:
         Deco1 -> globalvariable(ptr);
     }
 
+    virtual void countstack(ALL *ptr) const override{
+        Deco1 -> countstack(ptr);
+        ptr->stacksize = ptr->stacksize + 8;
+    }
+
     ~declaration(){
 
     }
@@ -54,6 +59,12 @@ public:
         Deco2 -> globalvariable(ptr);
     }
 
+    virtual void countstack(ALL *ptr) const override{
+        Deco1 -> countstack(ptr);
+        Deco1 -> countstack(ptr);
+        ptr->stacksize = ptr->stacksize + 8;
+    }
+
     ~Init_deco_list(){
 
     }
@@ -73,6 +84,12 @@ public:
         ,Deco2(_Deco2)
     {}
 
+    virtual void countstack(ALL *ptr) const override{
+        Deco1 -> countstack(ptr);
+        Deco2 -> countstack(ptr);
+        ptr->stacksize = ptr->stacksize + 8;
+    }
+
 
     virtual void print(ALL *ptr) const override
     {
@@ -89,9 +106,6 @@ public:
         Deco2 -> declarationPrint(ptr);
 
         std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
-
-
-
     }
 
     virtual void globalvariable(ALL *ptr) const {
@@ -131,6 +145,10 @@ public:
         :Deco1(_Deco1)
     {}
 
+    virtual void countstack(ALL *ptr) const override{
+        Deco1 -> countstack(ptr);
+        ptr->stacksize = ptr->stacksize + 8;
+    }
 
     virtual void print(ALL *ptr) const override
     {
