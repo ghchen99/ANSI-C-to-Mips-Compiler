@@ -1,5 +1,10 @@
+int main(){
+int x = 10;
+int y = 10;
 
-int s()
-{ int x = 10;
-  return x;
- }
+if (x == y){
+return x;}
+
+    return 11;
+
+}

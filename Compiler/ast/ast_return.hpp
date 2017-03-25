@@ -13,6 +13,14 @@ public:
     {
         std::cout << "move\t$2,\t$0";
         std::cout << '\n';
+        //std::cout << "$yyEnDlaBel:\t";
+        std::cout << "\n\n#stacksize is" << ptr->stacksize << '\n';
+        std::cout << "addiu\t$sp,\t$sp,\t" << ptr->stacksize;
+        std::cout << '\n';
+        std::cout << "j\t$ra" << '\n';
+        std::cout << "nop" << '\n';
+        std::cout << "#finishing a function" << '\n';
+        std::cout << "\n\n";
     }
 
     virtual void countstack(ALL *ptr) const override{
@@ -41,6 +49,14 @@ public:
         //std::cout << "return the calculation into register t0" << '\n';
         std::cout << "move\t$2,\t$t0";
         std::cout << '\n';
+        //std::cout << "$yyEnDlaBel:\t";
+        std::cout << "\n\n#stacksize is" << ptr->stacksize << '\n';
+        std::cout << "addiu\t$sp,\t$sp,\t" << ptr->stacksize;
+        std::cout << '\n';
+        std::cout << "j\t$ra" << '\n';
+        std::cout << "nop" << '\n';
+        std::cout << "#finishing a function" << '\n';
+        std::cout << "\n\n";
     }
 
     virtual void countstack(ALL *ptr) const override{

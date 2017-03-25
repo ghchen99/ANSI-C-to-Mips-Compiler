@@ -25,7 +25,7 @@ public:
         std::string labelbase = "L" ;
         std::string s1 = ptr->makeName(labelbase);
         std::string s2 = ptr->makeName(labelbase);
-        scope0 -> print(ptr);
+        scope0 -> declarationPrint(ptr);
         std::cout << "addiu\t$t2,\t$zero,\t1" << '\n';
         std::cout << "beq\t$t1,\t$t2,\t" << s1 << '\n';
         std::cout << "nop" << '\n';
@@ -33,6 +33,8 @@ public:
         std::cout << "nop" << '\n';
         std::cout << s1 << ":" << '\n';
         scope1 -> print(ptr);
+        // std::cout << "b\t" << "$yyEnDlaBel" << '\n';
+        // std::cout << "nop" << '\n';
         std::cout << s2 << ":" << '\n';
         //std::cout << "in declaration path" << '\n';
     }
@@ -70,11 +72,13 @@ public:
         std::string labelbase = "L" ;
         std::string s1 = ptr->makeName(labelbase);
         std::string s2 = ptr->makeName(labelbase);
-        scope0 -> print(ptr);
+        scope0 -> declarationPrint(ptr);
         std::cout << "addiu\t$t2,\t$zero,\t1" << '\n';
         std::cout << "beq\t$t1,\t$t2,\t" << s1 << '\n';
         std::cout << "nop" << '\n';
         scope2 -> print(ptr);
+        // std::cout << "b\t" << "$yyEnDlaBel" << '\n';
+        // std::cout << "nop" << '\n';
         std::cout << "b\t" << s2 << '\n';
         std::cout << "nop" << '\n';
         std::cout << s1 << ":" << '\n';

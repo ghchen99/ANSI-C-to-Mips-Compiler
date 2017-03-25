@@ -215,7 +215,7 @@ public:
         //std::cout << ptr->map[id] << '\n';
         if (value > 65535){
             std::cout << "li\t$t0,\t" << value << '\n';
-        }else if((value < 65535) && (value > 0)){
+        }else if((value < 65535) && (value >= 0)){
             std::cout << "addiu\t$t0,\t$zero,\t" << value << '\n';
         }else if(value < 0){
             std::cout << "addi\t$t0,\t$zero,\t" << value << '\n';

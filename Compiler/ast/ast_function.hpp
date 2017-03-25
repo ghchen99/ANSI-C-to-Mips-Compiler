@@ -54,13 +54,9 @@ public:
         // stack = 0;
         Program_call2 -> print(ptr);
 
-        std::cout << "\n\n#stacksize is" << ptr->stacksize << '\n';
-        std::cout << "addiu\t$sp,\t$sp,\t" << ptr->stacksize;
+        std::cout << ".end\t" ;
+        Program_call1 -> print(ptr);
         std::cout << '\n';
-        std::cout << "j\t$ra" << '\n';
-        std::cout << "nop" << '\n';
-        std::cout << "#finishing a function" << '\n';
-        std::cout << "\n\n";
     }
 
     ~FunctionDeclare(){
