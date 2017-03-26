@@ -115,7 +115,7 @@ public:
         }else if (opcode == ">="){
             std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
             std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
-            std::cout << "slt\t$t1,\t$t1,\t$t0" << '\n';
+            std::cout << "slt\t$t1,\t$t0,\t$t1" << '\n';
             std::cout << "xori\t$t1,\t$t1,\t1" << '\n';
         }else if (opcode == "<"){
             std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
@@ -124,7 +124,7 @@ public:
         }else if (opcode == "<="){
             std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
             std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
-            std::cout << "slt\t$t1,\t$t0,\t$t1" << '\n';
+            std::cout << "slt\t$t1,\t$t1,\t$t0" << '\n';
             std::cout << "xori\t$t1,\t$t1,\t1" << '\n';
         }else if (opcode == "&"){
             std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';

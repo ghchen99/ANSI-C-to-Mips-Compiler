@@ -1,10 +1,13 @@
 int main(){
-int x = 10;
-int y = 10;
+int x;
+int y;
 
-if (x == y){
-return x;}
+for(x = 0; x < 5;){
+    y = y + 1;
+    x = x + 1;
 
-    return 11;
+}
+
+return y;
 
 }
