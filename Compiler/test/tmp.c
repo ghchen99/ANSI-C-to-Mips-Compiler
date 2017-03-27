@@ -1,13 +1,7 @@
+int x = 10 * 10 - 1;
+
 int main(){
-int x;
-int y;
-
-for(x = 0; x < 5;){
-    y = y + 1;
-    x = x + 1;
-
-}
-
-return y;
-
+    int y = 20;
+    y = 1;
+    return x + y;
 }

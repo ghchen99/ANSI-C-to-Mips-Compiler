@@ -109,9 +109,16 @@ public:
     }
 
     virtual void globalvariable(ALL *ptr) const {
+
+       int tmp = -1;
+       std::string s = Deco1 -> getId();
+       ptr->map.insert ( std::pair<std::string,int>(s,tmp));
+
        std::cout << ".global\t";
        Deco1 -> print(ptr);
        std::cout << '\n';
+
+       std::cout << ".data" << '\n';
 
        std::cout << ".type\t";
        Deco1 -> print(ptr);
@@ -127,6 +134,7 @@ public:
        std::cout << ".word\t";
        Deco2 -> globalvariable(ptr);
        std::cout << '\n';
+
     }
 
     ~Init_deco_list2(){
@@ -164,6 +172,10 @@ public:
     }
 
     virtual void globalvariable(ALL *ptr) const {
+        int tmp = -1;
+        std::string s = Deco1 -> getId();
+        ptr->map.insert ( std::pair<std::string,int>(s,tmp));
+
        std::cout << ".global\t";
        Deco1 -> print(ptr);
        std::cout << '\n';
