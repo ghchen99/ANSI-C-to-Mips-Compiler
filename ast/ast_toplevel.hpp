@@ -68,6 +68,8 @@ public:
 
     virtual void returnprint(ALL *ptr) const{}
 
+    virtual void parameterPrint(ALL *ptr) const{}
+
     virtual const std::string getId() const{
         return 0;
     }
@@ -175,12 +177,27 @@ public:
     }
 
     virtual void returnprint(ALL *ptr) const override{
-        //std::cout << ptr->map[id] << '\n';
-        std::cout << "lw\t$t0,\t" << ptr->map[id] << "($sp)" << '\n';
+        int tmp = ptr->map[id];
+//         lui	$2,%hi(x)
+// lw	$2,%lo(x)($2)
+
+        if(tmp == -1){
+            std::cout << "lui\t$t0,\t%hi("<< id <<")" << '\n';
+            std::cout << "lw\t$t0,\t%lo("<< id <<")($t0)" << '\n';
+        }else{
+            //std::cout << ptr->map[id] << '\n';
+            std::cout << "lw\t$t0,\t" << ptr->map[id] << "($sp)" << '\n';
+        }
     }
 
     virtual void declarationPrint(ALL *ptr) const override{
-        std::cout << "lw\t$t1,\t" << ptr->map[id] << "($sp)" << '\n';
+        int tmp = ptr->map[id];
+        if(tmp == -1){
+            std::cout << "lui\t$t1,\t%hi("<< id <<")" << '\n';
+            std::cout << "lw\t$t1,\t%lo("<< id <<")($t1)" << '\n';
+        }else{
+            std::cout << "lw\t$t1,\t" << ptr->map[id] << "($sp)" << '\n';
+        }
     }
 
     ~Variable(){
@@ -218,17 +235,13 @@ public:
         }else if((value < 65535) && (value >= 0)){
             std::cout << "addiu\t$t0,\t$zero,\t" << value << '\n';
         }else if(value < 0){
-            std::cout << "addi\t$t0,\t$zero,\t" << value << '\n';
+            std::cout << "li\t$t0,\t" << value << '\n';
         }
     }
 
 
     virtual void declarationPrint(ALL *ptr) const override{
-        if (value > 65535){
-            std::cout << "li\t$t0,\t" << value << '\n';
-        }else{
-            std::cout << "addi\t$t1,\t$zero,\t" << value << '\n';
-        }
+            std::cout << "li\t$t1,\t" << value << '\n';
     }
 
     virtual void countstack(ALL *ptr) const override{

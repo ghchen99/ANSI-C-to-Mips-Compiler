@@ -52,11 +52,18 @@ public:
 
     virtual void print(ALL *ptr) const override
     {
+        Deco1 -> print(ptr);
+        Deco2 -> print(ptr);
     }
 
     virtual void globalvariable(ALL *ptr) const {
         Deco1 -> globalvariable(ptr);
         Deco2 -> globalvariable(ptr);
+    }
+
+    virtual void parameterPrint(ALL *ptr) const {
+        Deco1 -> parameterPrint(ptr);
+        Deco2 -> parameterPrint(ptr);
     }
 
     virtual void countstack(ALL *ptr) const override{
@@ -105,6 +112,19 @@ public:
 
         Deco2 -> declarationPrint(ptr);
 
+        std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+    }
+
+    virtual void parameterPrint(ALL *ptr) const override{
+        std::string s = Deco1 -> getId();
+        if(ptr->parameterId < 8){
+            int p = ptr->parameterId;
+            int tmp = ptr->map[s];
+            std::cout << "lw\t$"<< p <<",\t" << tmp << "($sp)" << '\n';
+            ptr->parameterId++;
+        }else{
+        }
+        Deco2 -> parameterPrint(ptr);
         std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
     }
 
@@ -169,6 +189,17 @@ public:
         ptr->map.insert ( std::pair<std::string,int>(s,tmp));
         //std::cout << "#increment index, now is " << tmp <<" and increment by 4" << '\n';
         ptr->increIndex();
+    }
+
+    virtual void parameterPrint(ALL *ptr) const override{
+        if(ptr->parameterId < 8){
+            int p = ptr->parameterId;
+            std::string s = Deco1 -> getId();
+            int tmp = ptr->map[s];
+            std::cout << "lw\t$"<< p <<",\t" << tmp << "($sp)" << '\n';
+            ptr->parameterId++;
+        }else{
+        }
     }
 
     virtual void globalvariable(ALL *ptr) const {

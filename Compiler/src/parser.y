@@ -105,18 +105,24 @@ MULTIPLICATIVE_EXPRESSION : UNARY_EXPRESSION { $$ = $1;}
 UNARY_EXPRESSION : POSTFIX_EXPRESSION { $$ = $1; }
 
 POSTFIX_EXPRESSION : PRIMARY_EXPRESSION { $$ = $1; }
+                   | POSTFIX_EXPRESSION T_LBRACKET T_RBRACKET  { $$ = new PostFixFunction($1); }
+                   | POSTFIX_EXPRESSION T_LBRACKET INIT_DECLARATOR_LIST T_RBRACKET { $$ = new PostFixFunctionParam($1,$3);}
+                //   | POSTFIX_EXPRESSION T_INC_OP  { $$ = new PostFixIncrement($1); }
+                 //  | POSTFIX_EXPRESSION T_DEC_OP { $$ = new PostFixDecrement($1); }
 
 PRIMARY_EXPRESSION : T_VARIABLE { $$ = new Variable(*$1); }
                    | T_NUMBER { $$ = new Number($1);}
+                   | T_LBRACKET EXPRESSION T_RBRACKET { $$ = $2;}
 
 FUNCTION : DECLARATION_SPECIFIERS DECLARATOR T_LBRACKET T_RBRACKET COMPOUND_STATEMENT { $$ = new FunctionDeclare($2,$5);}
          | DECLARATOR T_LBRACKET T_RBRACKET COMPOUND_STATEMENT {$$ = new FunctionDeclare($1,$4);}
          | DECLARATION_SPECIFIERS DECLARATOR T_LBRACKET PARAM_DECLARATION_LIST T_RBRACKET COMPOUND_STATEMENT {$$ = new FunctionDeclareParam($2,$4,$6);}
          | DECLARATOR T_LBRACKET PARAM_DECLARATION_LIST T_RBRACKET COMPOUND_STATEMENT {$$ = new FunctionDeclareParam($1,$3,$5);}
+         | DECLARATION_SPECIFIERS DECLARATOR T_LBRACKET T_RBRACKET T_SIMICOLOUMN  {$$ = new FunctionDeclareNoCompound($2);}
+         | DECLARATION_SPECIFIERS DECLARATOR T_LBRACKET PARAM_DECLARATION_LIST T_RBRACKET T_SIMICOLOUMN { $$ = new FunctionDeclareNoCompound($2);}
 
 PARAM_DECLARATION_LIST : DECLARATION_SPECIFIERS DECLARATOR { $$ = new ParameterDeclare(*$1,$2);}
                        | DECLARATION_SPECIFIERS DECLARATOR T_COMMA PARAM_DECLARATION_LIST { $$ = new ParameterDeclareMore($2,$4);}
-
 
 COMPOUND_STATEMENT : T_LCURLYBRACKET T_RCURLYBRACKET {$$ = new Empty();}
                    | T_LCURLYBRACKET DECLARATION_LIST T_RCURLYBRACKET {$$ = $2;}
@@ -188,6 +194,16 @@ SHIFT_EXPRESSION : ADDITIVE_EXPRESSION { $$ = $1;}
                  | SHIFT_EXPRESSION T_RIGHT_OP ADDITIVE_EXPRESSION { $$ = new right_shift_opearator($1,$3);}
 
 ASSIGNMENT_OPERATOR :  T_EQUAL {$$ = new std::string("=");}
+                    | T_MUL_ASSIGN {$$ = new std::string("*=");}
+                    | T_DIV_ASSIGN {$$ = new std::string("/=");}
+                    | T_MOD_ASSIGN {$$ = new std::string("%=");}
+                    | T_ADD_ASSIGN {$$ = new std::string("+=");}
+                    | T_SUB_ASSIGN {$$ = new std::string("-=");}
+                    | T_LEFT_ASSIGN {$$ = new std::string("<<=");}
+                    | T_RIGHT_ASSIGN {$$ = new std::string(">>=");}
+                    | T_AND_ASSIGN {$$ = new std::string("&=");}
+                    | T_XOR_ASSIGN {$$ = new std::string("^=");}
+                    | T_OR_ASSIGN {$$ = new std::string("|=");}
 
 %%
 const Program *g_root; // Definition of variable (to match declaration earlier)

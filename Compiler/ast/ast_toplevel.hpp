@@ -68,6 +68,8 @@ public:
 
     virtual void returnprint(ALL *ptr) const{}
 
+    virtual void parameterPrint(ALL *ptr) const{}
+
     virtual const std::string getId() const{
         return 0;
     }
@@ -233,17 +235,13 @@ public:
         }else if((value < 65535) && (value >= 0)){
             std::cout << "addiu\t$t0,\t$zero,\t" << value << '\n';
         }else if(value < 0){
-            std::cout << "addi\t$t0,\t$zero,\t" << value << '\n';
+            std::cout << "li\t$t0,\t" << value << '\n';
         }
     }
 
 
     virtual void declarationPrint(ALL *ptr) const override{
-        if (value > 65535){
             std::cout << "li\t$t1,\t" << value << '\n';
-        }else{
-            std::cout << "addi\t$t1,\t$zero,\t" << value << '\n';
-        }
     }
 
     virtual void countstack(ALL *ptr) const override{

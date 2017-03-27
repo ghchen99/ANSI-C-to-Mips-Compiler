@@ -52,11 +52,18 @@ public:
 
     virtual void print(ALL *ptr) const override
     {
+        Deco1 -> print(ptr);
+        Deco2 -> print(ptr);
     }
 
     virtual void globalvariable(ALL *ptr) const {
         Deco1 -> globalvariable(ptr);
         Deco2 -> globalvariable(ptr);
+    }
+
+    virtual void parameterPrint(ALL *ptr) const {
+        Deco1 -> parameterPrint(ptr);
+        Deco2 -> parameterPrint(ptr);
     }
 
     virtual void countstack(ALL *ptr) const override{
@@ -108,10 +115,30 @@ public:
         std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
     }
 
+    virtual void parameterPrint(ALL *ptr) const override{
+        std::string s = Deco1 -> getId();
+        if(ptr->parameterId < 8){
+            int p = ptr->parameterId;
+            int tmp = ptr->map[s];
+            std::cout << "lw\t$"<< p <<",\t" << tmp << "($sp)" << '\n';
+            ptr->parameterId++;
+        }else{
+        }
+        Deco2 -> parameterPrint(ptr);
+        std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+    }
+
     virtual void globalvariable(ALL *ptr) const {
+
+       int tmp = -1;
+       std::string s = Deco1 -> getId();
+       ptr->map.insert ( std::pair<std::string,int>(s,tmp));
+
        std::cout << ".global\t";
        Deco1 -> print(ptr);
        std::cout << '\n';
+
+       std::cout << ".data" << '\n';
 
        std::cout << ".type\t";
        Deco1 -> print(ptr);
@@ -127,6 +154,7 @@ public:
        std::cout << ".word\t";
        Deco2 -> globalvariable(ptr);
        std::cout << '\n';
+
     }
 
     ~Init_deco_list2(){
@@ -163,7 +191,22 @@ public:
         ptr->increIndex();
     }
 
+    virtual void parameterPrint(ALL *ptr) const override{
+        if(ptr->parameterId < 8){
+            int p = ptr->parameterId;
+            std::string s = Deco1 -> getId();
+            int tmp = ptr->map[s];
+            std::cout << "lw\t$"<< p <<",\t" << tmp << "($sp)" << '\n';
+            ptr->parameterId++;
+        }else{
+        }
+    }
+
     virtual void globalvariable(ALL *ptr) const {
+        int tmp = -1;
+        std::string s = Deco1 -> getId();
+        ptr->map.insert ( std::pair<std::string,int>(s,tmp));
+
        std::cout << ".global\t";
        Deco1 -> print(ptr);
        std::cout << '\n';

@@ -15,6 +15,7 @@ public:
         std::cout << '\n';
         //std::cout << "$yyEnDlaBel:\t";
         std::cout << "\n\n#stacksize is" << ptr->stacksize << '\n';
+        std::cout << "lw\t$31,\t" << (ptr->stacksize - 4) << "($sp)" << '\n';
         std::cout << "addiu\t$sp,\t$sp,\t" << ptr->stacksize;
         std::cout << '\n';
         std::cout << "j\t$ra" << '\n';
@@ -46,11 +47,13 @@ public:
     virtual void print(ALL *ptr) const override
     {
         Program_call1 ->  returnprint(ptr);
+
         //std::cout << "return the calculation into register t0" << '\n';
         std::cout << "move\t$2,\t$t0";
         std::cout << '\n';
         //std::cout << "$yyEnDlaBel:\t";
         std::cout << "\n\n#stacksize is" << ptr->stacksize << '\n';
+        std::cout << "lw\t$31,\t" << (ptr->stacksize - 4) << "($sp)" << '\n';
         std::cout << "addiu\t$sp,\t$sp,\t" << ptr->stacksize;
         std::cout << '\n';
         std::cout << "j\t$ra" << '\n';

@@ -52,11 +52,251 @@ public:
     virtual void declarationPrint(ALL *ptr) const override
     {
         //std::cout << "in ReDeclare" << '\n';
-        Program_call1 -> declarationPrint(ptr);
-        Program_call2 -> declarationPrint(ptr);
-        std::string s = Program_call1 -> getId();
-        std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
-        //store back to $t0
+        if (id1 == "="){
+            std::string s = Program_call1 -> getId();
+            int tmp = ptr->map[s];
+            if(tmp == -1){
+                int index = ptr->getIndex();
+                std::cout << "lui\t$t1,\t%hi("<< s <<")" << '\n';
+                std::cout << "lw\t$t1,\t%lo("<< s <<")($t1)" << '\n';
+                Program_call1 -> declarationPrint(ptr);
+                Program_call2 -> declarationPrint(ptr);
+                ptr->map[s] = index;
+                //ptr->map.insert ( std::pair<std::string,int>(s,index));
+                ptr->increIndex();
+                std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+            }else{
+                Program_call1 -> declarationPrint(ptr);
+                Program_call2 -> declarationPrint(ptr);
+                std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+            }
+        }else if(id1 == "+="){
+            std::string s = Program_call1 -> getId();
+            int tmp = ptr->map[s];
+            if(tmp == -1){
+                int index = ptr->getIndex();
+                std::cout << "lui\t$t1,\t%hi("<< s <<")" << '\n';
+                std::cout << "lw\t$t1,\t%lo("<< s <<")($t1)" << '\n';
+                Program_call1 -> declarationPrint(ptr);
+                std::cout << "move\t$t3,\t$t1" << '\n';
+                Program_call2 -> declarationPrint(ptr);
+                std::cout << "add\t$t1,\t$t3,\t$t1" << '\n';
+                ptr->map[s] = index;
+                //ptr->map.insert ( std::pair<std::string,int>(s,index));
+                ptr->increIndex();
+                std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+            }else{
+                Program_call1 -> declarationPrint(ptr);
+                std::cout << "move\t$t3,\t$t1" << '\n';
+                Program_call2 -> declarationPrint(ptr);
+                std::cout << "add\t$t1,\t$t3,\t$t1" << '\n';
+                std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+            }
+        }else if(id1 == "-="){
+            std::string s = Program_call1 -> getId();
+            int tmp = ptr->map[s];
+            if(tmp == -1){
+                int index = ptr->getIndex();
+                std::cout << "lui\t$t1,\t%hi("<< s <<")" << '\n';
+                std::cout << "lw\t$t1,\t%lo("<< s <<")($t1)" << '\n';
+                Program_call1 -> declarationPrint(ptr);
+                std::cout << "move\t$t3,\t$t1" << '\n';
+                Program_call2 -> declarationPrint(ptr);
+                std::cout << "sub\t$t1,\t$t3,\t$t1" << '\n';
+                ptr->map[s] = index;
+                //ptr->map.insert ( std::pair<std::string,int>(s,index));
+                ptr->increIndex();
+                std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+            }else{
+                Program_call1 -> declarationPrint(ptr);
+                std::cout << "move\t$t3,\t$t1" << '\n';
+                Program_call2 -> declarationPrint(ptr);
+                std::cout << "sub\t$t1,\t$t3,\t$t1" << '\n';
+                std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+            }
+        }else if(id1 == "*="){
+            std::string s = Program_call1 -> getId();
+            int tmp = ptr->map[s];
+            if(tmp == -1){
+                int index = ptr->getIndex();
+                std::cout << "lui\t$t1,\t%hi("<< s <<")" << '\n';
+                std::cout << "lw\t$t1,\t%lo("<< s <<")($t1)" << '\n';
+                Program_call1 -> declarationPrint(ptr);
+                std::cout << "move\t$t3,\t$t1" << '\n';
+                Program_call2 -> declarationPrint(ptr);
+                std::cout << "mult\t$t1,\t$t3" << '\n';
+                std::cout << "mflo\t$t1" << '\n';
+                ptr->map[s] = index;
+                //ptr->map.insert ( std::pair<std::string,int>(s,index));
+                ptr->increIndex();
+                std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+            }else{
+                Program_call1 -> declarationPrint(ptr);
+                std::cout << "move\t$t3,\t$t1" << '\n';
+                Program_call2 -> declarationPrint(ptr);
+                std::cout << "mult\t$t1,\t$t3" << '\n';
+                std::cout << "mflo\t$t1" << '\n';
+                std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+            }
+        }else if(id1 == "/="){
+            std::string s = Program_call1 -> getId();
+            int tmp = ptr->map[s];
+            if(tmp == -1){
+                int index = ptr->getIndex();
+                std::cout << "lui\t$t1,\t%hi("<< s <<")" << '\n';
+                std::cout << "lw\t$t1,\t%lo("<< s <<")($t1)" << '\n';
+                Program_call1 -> declarationPrint(ptr);
+                std::cout << "move\t$t3,\t$t1" << '\n';
+                Program_call2 -> declarationPrint(ptr);
+                std::cout << "div\t$zero,\t$t3,\t$t1" << '\n';
+                std::cout << "mflo\t$t1" << '\n';
+                ptr->map[s] = index;
+                //ptr->map.insert ( std::pair<std::string,int>(s,index));
+                ptr->increIndex();
+                std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+            }else{
+                Program_call1 -> declarationPrint(ptr);
+                std::cout << "move\t$t3,\t$t1" << '\n';
+                Program_call2 -> declarationPrint(ptr);
+                std::cout << "div\t$zero,\t$t3,\t$t1" << '\n';
+                std::cout << "mflo\t$t1" << '\n';
+                std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+            }
+        }else if(id1 == "%="){
+            std::string s = Program_call1 -> getId();
+            int tmp = ptr->map[s];
+            if(tmp == -1){
+                int index = ptr->getIndex();
+                std::cout << "lui\t$t1,\t%hi("<< s <<")" << '\n';
+                std::cout << "lw\t$t1,\t%lo("<< s <<")($t1)" << '\n';
+                Program_call1 -> declarationPrint(ptr);
+                std::cout << "move\t$t3,\t$t1" << '\n';
+                Program_call2 -> declarationPrint(ptr);
+                std::cout << "div\t$zero,\t$t3,\t$t1" << '\n';
+                std::cout << "mfhi\t$t1" << '\n';
+                ptr->map[s] = index;
+                //ptr->map.insert ( std::pair<std::string,int>(s,index));
+                ptr->increIndex();
+                std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+            }else{
+                Program_call1 -> declarationPrint(ptr);
+                std::cout << "move\t$t3,\t$t1" << '\n';
+                Program_call2 -> declarationPrint(ptr);
+                std::cout << "div\t$zero,\t$t3,\t$t1" << '\n';
+                std::cout << "mfhi\t$t1" << '\n';
+                std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+            }
+        }else if(id1 == "<<="){
+            std::string s = Program_call1 -> getId();
+            int tmp = ptr->map[s];
+            if(tmp == -1){
+                int index = ptr->getIndex();
+                std::cout << "lui\t$t1,\t%hi("<< s <<")" << '\n';
+                std::cout << "lw\t$t1,\t%lo("<< s <<")($t1)" << '\n';
+                Program_call1 -> declarationPrint(ptr);
+                std::cout << "move\t$t3,\t$t1" << '\n';
+                Program_call2 -> declarationPrint(ptr);
+                std::cout << "sllv\t$t1,\t$t3,\t$t1" << '\n';
+                ptr->map[s] = index;
+                //ptr->map.insert ( std::pair<std::string,int>(s,index));
+                ptr->increIndex();
+                std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+            }else{
+                Program_call1 -> declarationPrint(ptr);
+                std::cout << "move\t$t3,\t$t1" << '\n';
+                Program_call2 -> declarationPrint(ptr);
+                std::cout << "sllv\t$t1,\t$t3,\t$t1" << '\n';
+                std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+            }
+        }else if(id1 == ">>="){
+            std::string s = Program_call1 -> getId();
+            int tmp = ptr->map[s];
+            if(tmp == -1){
+                int index = ptr->getIndex();
+                std::cout << "lui\t$t1,\t%hi("<< s <<")" << '\n';
+                std::cout << "lw\t$t1,\t%lo("<< s <<")($t1)" << '\n';
+                Program_call1 -> declarationPrint(ptr);
+                std::cout << "move\t$t3,\t$t1" << '\n';
+                Program_call2 -> declarationPrint(ptr);
+                std::cout << "slav\t$t1,\t$t3,\t$t1" << '\n';
+                ptr->map[s] = index;
+                //ptr->map.insert ( std::pair<std::string,int>(s,index));
+                ptr->increIndex();
+                std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+            }else{
+                Program_call1 -> declarationPrint(ptr);
+                std::cout << "move\t$t3,\t$t1" << '\n';
+                Program_call2 -> declarationPrint(ptr);
+                std::cout << "slav\t$t1,\t$t3,\t$t1" << '\n';
+                std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+            }
+        }else if(id1 == "&="){
+            std::string s = Program_call1 -> getId();
+            int tmp = ptr->map[s];
+            if(tmp == -1){
+                int index = ptr->getIndex();
+                std::cout << "lui\t$t1,\t%hi("<< s <<")" << '\n';
+                std::cout << "lw\t$t1,\t%lo("<< s <<")($t1)" << '\n';
+                Program_call1 -> declarationPrint(ptr);
+                std::cout << "move\t$t3,\t$t1" << '\n';
+                Program_call2 -> declarationPrint(ptr);
+                std::cout << "and\t$t1,\t$t3,\t$t1" << '\n';
+                ptr->map[s] = index;
+                //ptr->map.insert ( std::pair<std::string,int>(s,index));
+                ptr->increIndex();
+                std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+            }else{
+                Program_call1 -> declarationPrint(ptr);
+                std::cout << "move\t$t3,\t$t1" << '\n';
+                Program_call2 -> declarationPrint(ptr);
+                std::cout << "and\t$t1,\t$t3,\t$t1" << '\n';
+                std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+            }
+        }else if(id1 == "^="){
+            std::string s = Program_call1 -> getId();
+            int tmp = ptr->map[s];
+            if(tmp == -1){
+                int index = ptr->getIndex();
+                std::cout << "lui\t$t1,\t%hi("<< s <<")" << '\n';
+                std::cout << "lw\t$t1,\t%lo("<< s <<")($t1)" << '\n';
+                Program_call1 -> declarationPrint(ptr);
+                std::cout << "move\t$t3,\t$t1" << '\n';
+                Program_call2 -> declarationPrint(ptr);
+                std::cout << "xor\t$t1,\t$t3,\t$t1" << '\n';
+                ptr->map[s] = index;
+                //ptr->map.insert ( std::pair<std::string,int>(s,index));
+                ptr->increIndex();
+                std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+            }else{
+                Program_call1 -> declarationPrint(ptr);
+                std::cout << "move\t$t3,\t$t1" << '\n';
+                Program_call2 -> declarationPrint(ptr);
+                std::cout << "xor\t$t1,\t$t3,\t$t1" << '\n';
+                std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+            }
+        }else if(id1 == "|="){
+            std::string s = Program_call1 -> getId();
+            int tmp = ptr->map[s];
+            if(tmp == -1){
+                int index = ptr->getIndex();
+                std::cout << "lui\t$t1,\t%hi("<< s <<")" << '\n';
+                std::cout << "lw\t$t1,\t%lo("<< s <<")($t1)" << '\n';
+                Program_call1 -> declarationPrint(ptr);
+                std::cout << "move\t$t3,\t$t1" << '\n';
+                Program_call2 -> declarationPrint(ptr);
+                std::cout << "or\t$t1,\t$t3,\t$t1" << '\n';
+                ptr->map[s] = index;
+                //ptr->map.insert ( std::pair<std::string,int>(s,index));
+                ptr->increIndex();
+                std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+            }else{
+                Program_call1 -> declarationPrint(ptr);
+                std::cout << "move\t$t3,\t$t1" << '\n';
+                Program_call2 -> declarationPrint(ptr);
+                std::cout << "or\t$t1,\t$t3,\t$t1" << '\n';
+                std::cout << "sw\t$t1,\t" << ptr->map[s] << "($sp)" << '\n';
+            }
+        }
     }
 
     virtual void countstack(ALL *ptr) const override{

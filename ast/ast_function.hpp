@@ -48,8 +48,17 @@ public:
         Program_call1 -> print(ptr);
         std::cout << ":" << '\n';
 
+        //std::cout << ".cpload\t$25" << std::endl;
+        //std::cout << ".set\tnomacro" << '\n';
+
         std::cout << "addiu\t$sp,\t$sp,\t-" << ptr->stacksize;
         std::cout << '\n';
+
+        std::cout << "sw\t$31,\t" << (ptr->stacksize - 4) << "($sp)" << '\n';
+
+        std::string s = Program_call1 -> getId();
+        int tmp = -2;
+        ptr->map.insert ( std::pair<std::string,int>(s,tmp));
 
         // stack = 0;
         Program_call2 -> print(ptr);
@@ -122,9 +131,15 @@ public:
             std::cout << "addiu\t$sp,\t$sp,\t-" << ptr->stacksize;
             std::cout << '\n';
 
+            std::cout << "sw\t$31,\t" << (ptr->stacksize - 4) << "($sp)" << '\n';
+
             // stack = 0;
             std::cout << "#printing out ParameterDeclare" << '\n';
             Program_call2 -> print(ptr);
+
+            std::string s = Program_call1 -> getId();
+            int tmp = -2;
+            ptr->map.insert ( std::pair<std::string,int>(s,tmp));
 
             Program_call3 -> print(ptr);
 
@@ -133,12 +148,47 @@ public:
             std::cout << '\n';
             std::cout << "j\t$ra" << '\n';
             std::cout << "nop" << '\n';
+            std::cout << ".end\t" ;
+            Program_call1 -> print(ptr);
+            std::cout << '\n';
             std::cout << "#finishing a function" << '\n';
             std::cout << "\n\n";
+
+            ptr->parameterId = 4;
         }
 
 	~FunctionDeclareParam(){
 	}
+
+};
+
+
+class FunctionDeclareNoCompound
+    : public Program
+{
+private:
+    const Program *Program_call1;
+public:
+    FunctionDeclareNoCompound(const Program *_Program_call1)
+        : Program_call1(_Program_call1)
+    {}
+
+    virtual void countstack(ALL *ptr) const override{
+        Program_call1 -> countstack(ptr);
+        ptr->stacksize = ptr->stacksize + 64;
+    }
+
+
+    virtual void print(ALL *ptr) const override
+    {
+        std::string s = Program_call1 -> getId();
+        int tmp = -3;
+        ptr->map.insert ( std::pair<std::string,int>(s,tmp));
+    }
+
+    ~FunctionDeclareNoCompound(){
+        delete Program_call1;
+    }
 
 };
 

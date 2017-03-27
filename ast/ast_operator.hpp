@@ -79,14 +79,15 @@ public:
             std::cout << "mult\t$t1,\t$t0" << '\n';
             std::cout << "mflo\t$t1" << '\n';
         }else if (opcode == "%"){
+            //std::cout << "in moddd" << '\n';
             std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
             std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
-            std::cout << "div\t$t1,\t$t0" << '\n';
+            std::cout << "div\t$zero,\t$t0,\t$t1" << '\n';
             std::cout << "mfhi\t$t1" << '\n';
         }else if (opcode == "/"){
             std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
             std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
-            std::cout << "div\t$t1,\t$t0" << '\n';
+            std::cout << "div\t$zero,\t$t0,\t$t1" << '\n';
             std::cout << "mflo\t$t1" << '\n';
         }else if (opcode == "<<"){
             //when to use logical shift and when to use arithmatic
@@ -115,7 +116,7 @@ public:
         }else if (opcode == ">="){
             std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
             std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
-            std::cout << "slt\t$t1,\t$t1,\t$t0" << '\n';
+            std::cout << "slt\t$t1,\t$t0,\t$t1" << '\n';
             std::cout << "xori\t$t1,\t$t1,\t1" << '\n';
         }else if (opcode == "<"){
             std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
@@ -124,7 +125,7 @@ public:
         }else if (opcode == "<="){
             std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
             std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
-            std::cout << "slt\t$t1,\t$t0,\t$t1" << '\n';
+            std::cout << "slt\t$t1,\t$t1,\t$t0" << '\n';
             std::cout << "xori\t$t1,\t$t1,\t1" << '\n';
         }else if (opcode == "&"){
             std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
@@ -175,17 +176,67 @@ public:
             std::cout << "mult\t$t1,\t$t0" << '\n';
             std::cout << "mflo\t$t1" << '\n';
         }else if (opcode == "%"){
+        //    std::cout << "in moddd" << '\n';
             std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
             std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
-            std::cout << "div\t$t1,\t$t0" << '\n';
+            std::cout << "div\t$zero,\t$t0,\t$t1" << '\n';
             std::cout << "mfhi\t$t1" << '\n';
         }else if (opcode == "/"){
             std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
             std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
-            std::cout << "div\t$t1,\t$t0" << '\n';
+            std::cout << "div\t$zero,\t$t0,\t$t1" << '\n';
             std::cout << "mflo\t$t1" << '\n';
+        }else if (opcode == "<<"){
+            //when to use logical shift and when to use arithmatic
+            std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
+            std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
+            std::cout << "sllv\t$t1,\t$t0,\t$t1" << '\n';
+        }else if (opcode == ">>"){
+            std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
+            std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
+            std::cout << "srav\t$t1,\t$t0,\t$t1" << '\n';
+        }else if (opcode == "=="){
+            //when to use logical shift and when to use arithmatic
+            std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
+            std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
+            std::cout << "xor\t$t1,\t$t0,\t$t1" << '\n';
+            std::cout << "sltu\t$t1,\t$t1,\t1" << '\n';
+        }else if (opcode == "!="){
+            std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
+            std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
+            std::cout << "xor\t$t1,\t$t0,\t$t1" << '\n';
+            std::cout << "sltu\t$t1,\t$zero,\t$t1" << '\n';
+        }else if (opcode == ">"){
+            std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
+            std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
+            std::cout << "slt\t$t1,\t$t1,\t$t0" << '\n';
+        }else if (opcode == ">="){
+            std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
+            std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
+            std::cout << "slt\t$t1,\t$t0,\t$t1" << '\n';
+            std::cout << "xori\t$t1,\t$t1,\t1" << '\n';
+        }else if (opcode == "<"){
+            std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
+            std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
+            std::cout << "slt\t$t1,\t$t0,\t$t1" << '\n';
+        }else if (opcode == "<="){
+            std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
+            std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
+            std::cout << "slt\t$t1,\t$t1,\t$t0" << '\n';
+            std::cout << "xori\t$t1,\t$t1,\t1" << '\n';
+        }else if (opcode == "&"){
+            std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
+            std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
+            std::cout << "and\t$t1,\t$t0,\t$t1" << '\n';
+        }else if (opcode == "^"){
+            std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
+            std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
+            std::cout << "xor\t$t1,\t$t0,\t$t1" << '\n';
+        }else if (opcode == "|"){
+            std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
+            std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
+            std::cout << "or\t$t1,\t$t0,\t$t1" << '\n';
         }
-
         std::cout << "move\t$t0,\t$t1" << '\n';
     }
 
@@ -272,7 +323,7 @@ class left_shift_operator
 {
 protected:
     virtual const char *getOpcode() const override
-    { return ">>"; }
+    { return "<<"; }
 public:
     left_shift_operator(const Program *_left, const Program *_right)
         : Operator(_left, _right)
