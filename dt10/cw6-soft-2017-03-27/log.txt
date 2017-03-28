@@ -1,0 +1,154 @@
+zl6114 : Cloning repo
+Cloning into 'zl6114'...
+zl6114 : Fetching repo
+zl6114 : Checking out branch cw6-soft-2017-03-27 if it exists...
+error: pathspec 'cw6-soft-2017-03-27' did not match any file(s) known to git.
+zl6114 : Checking out specified hash and creating new branch cw6-soft-2017-03-27
+Switched to a new branch 'cw6-soft-2017-03-27'
+Already on 'cw6-soft-2017-03-27'
+zl6114 : Checking we're on the right hash 0d7ffeb56908dad083ae7e7729c6bfbd6c0955fb...
+cd ${REPOS}/$U && git rev-parse $RUN
+zl6114 : Checking we're on branch cw6-soft-2017-03-27
+cd ${REPOS}/$U && git rev-parse --abbrev-ref HEAD
+
+log_msg "########################################################"
+zl6114 : ########################################################
+log_msg "## Building"
+zl6114 : ## Building
+
+log_msg "Cleaning"
+zl6114 : Cleaning
+(cd $REPO && rm bin/c_compiler)
+(cd $REPO && make clean)
+rm src/*.o
+rm src/*.output
+rm src/*.tab.cpp
+rm src/*.yy.cpp
+rm src/*.tab.hpp
+rm bin/*
+rm: cannot remove 'bin/*': No such file or directory
+makefile:16: recipe for target 'clean' failed
+make: *** [clean] Error 1
+
+log_msg "Building"
+zl6114 : Building
+(cd $REPO && make bin/c_compiler)
+g++  -std=c++11 -W -Wall -g -Wno-unused-parameter -I ast  -c -o src/c_parser.o src/c_parser.cpp
+bison -v -d src/parser.y -o src/parser.tab.cpp
+g++  -std=c++11 -W -Wall -g -Wno-unused-parameter -I ast  -c -o src/parser.tab.o src/parser.tab.cpp
+flex -o src/lexer.yy.cpp  src/lexer.flex
+g++  -std=c++11 -W -Wall -g -Wno-unused-parameter -I ast  -c -o src/lexer.yy.o src/lexer.yy.cpp
+src/lexer.yy.cpp: In function ‘int yy_get_next_buffer()’:
+src/lexer.yy.cpp:1535:44: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+  if ((int) ((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
+                                            ^
+src/lexer.yy.cpp: At global scope:
+src/lexer.yy.cpp:1611:17: warning: ‘void yyunput(int, char*)’ defined but not used [-Wunused-function]
+     static void yyunput (int c, char * yy_bp )
+                 ^
+mkdir -p bin
+g++ -std=c++11 -W -Wall -g -Wno-unused-parameter -I ast -o bin/c_compiler src/c_parser.o src/parser.tab.o src/lexer.yy.o
+
+if [[ ! -f $REPO/bin/c_compiler ]]; then
+    log_msg "No executable built"
+    exit 0;
+fi
+
+log_msg "##################################################################"
+zl6114 : ##################################################################
+log_msg "## Executing compiler under test against reference test-cases"
+zl6114 : ## Executing compiler under test against reference test-cases
+
+log_msg "Copying reference test-cases in"
+zl6114 : Copying reference test-cases in
+(cd $REPO && mkdir -p $LOGDIR/reference_testcases)
+(cp $SCRATCH/spec/test_deliverable/testcases/*.c $LOGDIR/reference_testcases)
+(cd $LOGDIR/reference_testcases && dos2unix *.c)
+dos2unix: converting file test_ADD0.c to Unix format ...
+dos2unix: converting file test_ADD0_driver.c to Unix format ...
+dos2unix: converting file test_ADD1.c to Unix format ...
+dos2unix: converting file test_ADD1_driver.c to Unix format ...
+dos2unix: converting file test_CALL.c to Unix format ...
+dos2unix: converting file test_CALL_driver.c to Unix format ...
+dos2unix: converting file test_LOCAL.c to Unix format ...
+dos2unix: converting file test_LOCAL_driver.c to Unix format ...
+dos2unix: converting file test_RETURN.c to Unix format ...
+dos2unix: converting file test_RETURN_driver.c to Unix format ...
+(cp scripts/cw6/run_reference_testcases.sh $LOGDIR)
+
+log_msg "Running reference test-cases"
+zl6114 : Running reference test-cases
+log_msg ""
+zl6114 : 
+(cd $REPO && $LOGDIR/run_reference_testcases.sh $LOGDIR/reference_testcases)
+-----------------------------------------------------
+Test case test_ADD0
+pass
+
+-----------------------------------------------------
+Test case test_ADD1
+pass
+
+-----------------------------------------------------
+Test case test_CALL
+ERROR: Testcase returned 1, but expected 0.
+-----------------------------------------------------
+Test case test_LOCAL
+pass
+
+-----------------------------------------------------
+Test case test_RETURN
+pass
+
+log_msg ""
+zl6114 : 
+
+log_msg "##################################################################"
+zl6114 : ##################################################################
+log_msg "## Executing submitted test-cases agaist reference compiler"
+zl6114 : ## Executing submitted test-cases agaist reference compiler
+
+(cd $REPO && mkdir -p $LOGDIR/submitted_testcases)
+(cp scripts/cw6/run_submitted_testcases.sh $LOGDIR)
+(cd $REPO && $LOGDIR/run_submitted_testcases.sh $LOGDIR/submitted_testcases)
+-----------------------------------------------------
+Looking for user test case IFT
+ERROR: Missing test file test_deliverable/testcases/test_IFT.c
+-----------------------------------------------------
+Looking for user test case IFF
+ERROR: Missing test file test_deliverable/testcases/test_IFF.c
+-----------------------------------------------------
+Looking for user test case IFELSET
+ERROR: Missing test file test_deliverable/testcases/test_IFELSET.c
+-----------------------------------------------------
+Looking for user test case IFELSEF
+ERROR: Missing test file test_deliverable/testcases/test_IFELSEF.c
+-----------------------------------------------------
+Looking for user test case WHILE0
+ERROR: Missing test file test_deliverable/testcases/test_WHILE0.c
+-----------------------------------------------------
+Looking for user test case WHILEN
+ERROR: Missing test file test_deliverable/testcases/test_WHILEN.c
+-----------------------------------------------------
+Looking for user test case RECURSION
+ERROR: Missing test file test_deliverable/testcases/test_RECURSION.c
+-----------------------------------------------------
+Looking for user test case GLOBAL
+ERROR: Missing test file test_deliverable/testcases/test_GLOBAL.c
+-----------------------------------------------------
+Looking for user test case MAIN
+ERROR: Missing test file test_deliverable/testcases/test_MAIN.c
+-----------------------------------------------------
+Looking for user test case ATOI
+ERROR: Missing test file test_deliverable/testcases/test_ATOI.c
+
+
+log_msg "###################################################################"
+zl6114 : ###################################################################
+log_msg "## Tar'ing it up'"
+zl6114 : ## Tar'ing it up'
+(cd $LOGDIR && rm $LOGDIR/submitted_testcases/*.elf)
+rm: cannot remove '/tmp/student-repos-cw6/zl6114/dt10/cw6-soft-2017-03-27/submitted_testcases/*.elf': No such file or directory
+(cd $LOGDIR && rm $LOGDIR/reference_testcases/*.elf)
+(cd $LOGDIR && tar -czf outputs.tar.gz submitted_testcases reference_testcases)
+zl6114 : Test Complete
