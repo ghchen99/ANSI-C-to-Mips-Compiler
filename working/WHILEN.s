@@ -8,8 +8,8 @@
 
 #start a function
 f:
-addiu	$sp,	$sp,	-316
-sw	$31,	312($sp)
+addiu	$sp,	$sp,	-364
+sw	$31,	360($sp)
 #printing out ParameterDeclare
 sw	$4,	4($sp)
 sw	$5,	8($sp)
@@ -30,21 +30,47 @@ bne	$t1,	$t2,	_L_2
 nop
 _L_1:
 lw	$t1,	12($sp)
-lw	$t1,	12($sp)
 sw	$t1,	24($sp)
-li	$t1,	1
+li	$t1,	0
 sw	$t1,	28($sp)
 lw	$t0,	24($sp)
 lw	$t1,	28($sp)
-add	$t1,	$t0,	$t1
-sw	$t1,	12($sp)
-lw	$t1,	4($sp)
-lw	$t1,	4($sp)
+slt	$t1,	$t0,	$t1
+addiu	$t2,	$zero,	1
+beq	$t1,	$t2,	_L_5
+nop
+b	_L_6
+nop
+_L_5:
+addiu	$t0,	$zero,	0
+move	$2,	$t0
+
+
+#stacksize is364
+lw	$31,	360($sp)
+addiu	$sp,	$sp,	364
+j	$ra
+nop
+#finishing a function
+
+
+_L_6:
+lw	$t1,	12($sp)
+lw	$t1,	12($sp)
 sw	$t1,	32($sp)
 li	$t1,	1
 sw	$t1,	36($sp)
 lw	$t0,	32($sp)
 lw	$t1,	36($sp)
+add	$t1,	$t0,	$t1
+sw	$t1,	12($sp)
+lw	$t1,	4($sp)
+lw	$t1,	4($sp)
+sw	$t1,	40($sp)
+li	$t1,	1
+sw	$t1,	44($sp)
+lw	$t0,	40($sp)
+lw	$t1,	44($sp)
 add	$t1,	$t0,	$t1
 sw	$t1,	4($sp)
 b	_L_0
@@ -53,9 +79,9 @@ lw	$t0,	12($sp)
 move	$2,	$t0
 
 
-#stacksize is316
-lw	$31,	312($sp)
-addiu	$sp,	$sp,	316
+#stacksize is364
+lw	$31,	360($sp)
+addiu	$sp,	$sp,	364
 j	$ra
 nop
 #finishing a function
@@ -63,8 +89,8 @@ nop
 
 
 
-#stacksize is316
-addiu	$sp,	$sp,	316
+#stacksize is364
+addiu	$sp,	$sp,	364
 j	$ra
 nop
 .end	f
