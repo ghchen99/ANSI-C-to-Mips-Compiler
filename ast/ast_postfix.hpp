@@ -125,4 +125,83 @@ public:
 
 };
 
+
+class PostFixIncrement
+    : public Program
+{
+private:
+    const Program *scope0;
+public:
+    PostFixIncrement(const Program *_scope0)
+        :scope0(_scope0)
+    {}
+
+
+    virtual void print(ALL *ptr) const override
+    {
+    }
+
+    virtual void returnprint(ALL *ptr) const override{
+        std::string s = scope0 -> getId();
+        int tmp = ptr->map[s];
+        std::cout << "lw\t$t0,\t" << tmp << "($sp)" << '\n';
+        std::cout << "addiu\t$t0,$t0,1" << '\n';
+    }
+
+    virtual void declarationPrint(ALL *ptr) const override{
+        std::string s = scope0 -> getId();
+        int tmp = ptr->map[s];
+        std::cout << "lw\t$t1,\t" << tmp << "($sp)" << '\n';
+        std::cout << "addiu\t$t1,$t1,1" << '\n';
+    }
+
+    ~PostFixIncrement(){
+    }
+
+    virtual void countstack(ALL *ptr) const override{
+        scope0 ->  countstack(ptr);
+        ptr->stacksize = ptr->stacksize + 4;
+    }
+
+};
+
+class PostFixDecrement
+    : public Program
+{
+private:
+    const Program *scope0;
+public:
+    PostFixDecrement(const Program *_scope0)
+        :scope0(_scope0)
+    {}
+
+
+    virtual void print(ALL *ptr) const override
+    {
+    }
+
+    virtual void returnprint(ALL *ptr) const override{
+        std::string s = scope0 -> getId();
+        int tmp = ptr->map[s];
+        std::cout << "lw\t$t0,\t" << tmp << "($sp)" << '\n';
+        std::cout << "addi\t$t0,$t0,-1" << '\n';
+    }
+
+    virtual void declarationPrint(ALL *ptr) const override{
+        std::string s = scope0 -> getId();
+        int tmp = ptr->map[s];
+        std::cout << "lw\t$t1,\t" << tmp << "($sp)" << '\n';
+        std::cout << "addi\t$t1,$t1,-1" << '\n';
+    }
+
+    ~PostFixDecrement(){
+    }
+
+    virtual void countstack(ALL *ptr) const override{
+        scope0 ->  countstack(ptr);
+        ptr->stacksize = ptr->stacksize + 4;
+    }
+
+};
+
 #endif

@@ -36,7 +36,6 @@ public:
             //std::cout << "#increment index, now is " << tmp <<" and increment by 4" << '\n';
             ptr->increIndex();
         }
-
     }
 
     virtual void countstack(ALL *ptr) const override{

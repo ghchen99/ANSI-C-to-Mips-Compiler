@@ -1,0 +1,3 @@
+working/GLOBAL.s: Assembler messages:
+working/GLOBAL.s:17: Warning: .ent or .aent not in text section
+working/GLOBAL.s:38: Warning: .end not in text section

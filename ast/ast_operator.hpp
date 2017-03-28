@@ -139,12 +139,26 @@ public:
             std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
             std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
             std::cout << "or\t$t1,\t$t0,\t$t1" << '\n';
+        }else if (opcode == "&&"){
+            std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
+            std::cout << "andi\t$t0,\t$t0,\t1" << '\n';
+            std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
+            std::cout << "andi\t$t1,\t$t1,\t1" << '\n';
+            std::cout << "and\t$t1,\t$t0,\t$t1" << '\n';
+        }else if (opcode == "||"){
+            std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
+            std::cout << "andi\t$t0,\t$t0,\t1" << '\n';
+            std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
+            std::cout << "andi\t$t1,\t$t1,\t1" << '\n';
+            std::cout << "or\t$t1,\t$t0,\t$t1" << '\n';
         }//else if (opcode == "&&"){
         //     std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
         //     std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
         //     std::string s1 = ptr->makeName(labelbase);
         // }
     }
+
+    
 
     virtual void returnprint(ALL *ptr) const override{
         //std::cout << "int Initializer declarationPrint" << '\n';
@@ -235,6 +249,18 @@ public:
         }else if (opcode == "|"){
             std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
             std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
+            std::cout << "or\t$t1,\t$t0,\t$t1" << '\n';
+        }else if (opcode == "&&"){
+            std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
+            std::cout << "andi\t$t0,\t$t0,\t1" << '\n';
+            std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
+            std::cout << "andi\t$t1,\t$t1,\t1" << '\n';
+            std::cout << "and\t$t1,\t$t0,\t$t1" << '\n';
+        }else if (opcode == "||"){
+            std::cout << "lw\t$t0,\t" << ptr->numberMap[s1] << "($sp)" <<'\n';
+            std::cout << "andi\t$t0,\t$t0,\t1" << '\n';
+            std::cout << "lw\t$t1,\t" << ptr->numberMap[s2] << "($sp)" <<'\n';
+            std::cout << "andi\t$t1,\t$t1,\t1" << '\n';
             std::cout << "or\t$t1,\t$t0,\t$t1" << '\n';
         }
         std::cout << "move\t$t0,\t$t1" << '\n';
@@ -512,4 +538,20 @@ public:
 
 };
 
+
+class OroR
+    : public Operator
+{
+protected:
+    virtual const char *getOpcode() const override
+    { return "||"; }
+public:
+    OroR(const Program *_left, const Program *_right)
+        : Operator(_left, _right)
+    {}
+
+    virtual void print(ALL *ptr) const override{};
+
+
+};
 #endif

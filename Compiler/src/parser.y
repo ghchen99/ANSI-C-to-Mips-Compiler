@@ -87,7 +87,7 @@ DECLARATOR : DIRECT_DECLARATOR { $$ = $1; }
 
 DIRECT_DECLARATOR : T_VARIABLE { $$ = new Variable(*$1); }
 
-INITIALIZER : ADDITIVE_EXPRESSION { $$ = new Initializer($1);}
+INITIALIZER : ASSIGNMENT_EXPRESSION { $$ = new Initializer($1);}
             /*| INITIALIZER_LIST { $$ = $1; }
 
 INITIALIZER_LIST : INITIALIZER { $$ = $1; }
@@ -107,8 +107,8 @@ UNARY_EXPRESSION : POSTFIX_EXPRESSION { $$ = $1; }
 POSTFIX_EXPRESSION : PRIMARY_EXPRESSION { $$ = $1; }
                    | POSTFIX_EXPRESSION T_LBRACKET T_RBRACKET  { $$ = new PostFixFunction($1); }
                    | POSTFIX_EXPRESSION T_LBRACKET INIT_DECLARATOR_LIST T_RBRACKET { $$ = new PostFixFunctionParam($1,$3);}
-                //   | POSTFIX_EXPRESSION T_INC_OP  { $$ = new PostFixIncrement($1); }
-                 //  | POSTFIX_EXPRESSION T_DEC_OP { $$ = new PostFixDecrement($1); }
+                   | POSTFIX_EXPRESSION T_INC_OP  { $$ = new PostFixIncrement($1); }
+                   | POSTFIX_EXPRESSION T_DEC_OP { $$ = new PostFixDecrement($1); }
 
 PRIMARY_EXPRESSION : T_VARIABLE { $$ = new Variable(*$1); }
                    | T_NUMBER { $$ = new Number($1);}
@@ -162,13 +162,13 @@ ASSIGNMENT_EXPRESSION : CONDITIONAL_EXPRESSION { $$ = $1;}
                       | UNARY_EXPRESSION ASSIGNMENT_OPERATOR ASSIGNMENT_EXPRESSION { $$  = new ReDeclare($1,*$2,$3); }
 
 CONDITIONAL_EXPRESSION : LOGICAL_OR_EXPRESSION { $$ = $1;}
-                       | LOGICAL_OR_EXPRESSION T_QUESTIONMARK EXPRESSION T_COLOUMN CONDITIONAL_EXPRESSION { $$ = new Empty();}
+                       | LOGICAL_OR_EXPRESSION T_QUESTIONMARK EXPRESSION T_COLOUMN CONDITIONAL_EXPRESSION { $$ = new ConditionExpr($1,$3,$5);}
 
 LOGICAL_OR_EXPRESSION : LOGICAL_AND_EXPRESSION { $$ = $1;}
-                      | LOGICAL_AND_EXPRESSION T_OR_OP INCLUSIVE_OR_EXPRESSION {$$ = new Program_call($1,$3);}
+                      | LOGICAL_AND_EXPRESSION T_OR_OP INCLUSIVE_OR_EXPRESSION {$$ = new OroR($1,$3);}
 
 LOGICAL_AND_EXPRESSION : INCLUSIVE_OR_EXPRESSION { $$ = $1;}
-                       | LOGICAL_AND_EXPRESSION T_AND_OP INCLUSIVE_OR_EXPRESSION {$$ = new Program_call($1,$3);}
+                       | LOGICAL_AND_EXPRESSION T_AND_OP INCLUSIVE_OR_EXPRESSION {$$ = new andand($1,$3);}
 
 INCLUSIVE_OR_EXPRESSION : EXCLUSIVE_OR_EXPRESSION { $$ = $1;}
                         | INCLUSIVE_OR_EXPRESSION T_INEXCLUS_OR EXCLUSIVE_OR_EXPRESSION {$$ = new Or($1,$3);}
