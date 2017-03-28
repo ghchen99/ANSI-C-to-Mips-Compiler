@@ -17,6 +17,7 @@
 #include "ast_if.hpp"
 #include "ast_while.hpp"
 #include "ast_postfix.hpp"
+#include "ast_unary.hpp"
 
 extern const Program *parseAST();
 

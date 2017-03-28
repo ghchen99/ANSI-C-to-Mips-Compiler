@@ -1,4 +1,6 @@
-int f(int x1,int x2){
+int main(){
+int x1 = 10;
+int x2 = 20;
  if(x1 < x2){
     if(x1 > 0){
 	if(x2 > 0){
@@ -7,7 +9,7 @@ int f(int x1,int x2){
     }
  }else{
     if(x2 > 0){
-	if((x2 >= 0)){
+	if((x2 >= 0)&&(x1 >= 0)){
             return x2;
 	}
     }

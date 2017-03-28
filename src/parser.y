@@ -103,6 +103,8 @@ MULTIPLICATIVE_EXPRESSION : UNARY_EXPRESSION { $$ = $1;}
                           | MULTIPLICATIVE_EXPRESSION T_MOD UNARY_EXPRESSION {$$ = new ModOperator($1,$3);}
 
 UNARY_EXPRESSION : POSTFIX_EXPRESSION { $$ = $1; }
+                 | T_DEC_OP UNARY_EXPRESSION { $$ = new UnaryDecrement($2);}
+                 | T_INC_OP UNARY_EXPRESSION { $$ = new UnaryIncrement($2);}
 
 POSTFIX_EXPRESSION : PRIMARY_EXPRESSION { $$ = $1; }
                    | POSTFIX_EXPRESSION T_LBRACKET T_RBRACKET  { $$ = new PostFixFunction($1); }
